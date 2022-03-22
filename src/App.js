@@ -15,6 +15,12 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
+import ButtonGroup from "@mui/material/ButtonGroup";
+
+import IconButton from "@mui/material/IconButton";
+import AddRoundedIcon from "@mui/icons-material/AddRounded";
+import RemoveRoundedIcon from '@mui/icons-material/RemoveRounded';
+
 function App() {
   const Item = styled(Paper)(({ theme }) => ({
     ...theme.typography.body2,
@@ -76,6 +82,7 @@ function App() {
                       InputLabelProps={{
                         shrink: true,
                       }}
+                      inputProps={{style: { textAlign: 'center' }}}
                       variant="standard"
                     />
                     <Box sx={{marginLeft: '1ch', marginRight: '1ch'}}>
@@ -85,11 +92,12 @@ function App() {
                       id="total-pv-input" 
                       label=" "
                       defaultValue="99"
-                      type="number"
+                      type="text"
                       variant="standard" 
                       InputProps={{ 
                         readOnly: true,
                       }}
+                      inputProps={{style: { textAlign: 'center' }}}
                     />
                   </Box>
                 </Grid>
@@ -98,12 +106,13 @@ function App() {
                     <TextField 
                       id="lvl-input" 
                       label="LVL"
-                      type="number"
+                      type="text"
                       defaultValue="1"
                       variant="standard" 
                       InputProps={{ 
                         readOnly: true,
                       }}
+                      inputProps={{style: { textAlign: 'center' }}}
                     />
                     <Box sx={{marginLeft: '2ch', marginRight: '1ch'}}>
                     </Box>
@@ -112,10 +121,11 @@ function App() {
                       label="XP"
                       type="number"
                       defaultValue="0"
+                      variant="standard"
                       InputLabelProps={{
                         shrink: true,
                       }}
-                      variant="standard"
+                      inputProps={{style: { textAlign: 'center' }}}
                     />
                   </Box>
                 </Grid>
@@ -123,11 +133,109 @@ function App() {
             </Box>
           </Grid>
           <Grid item sm={2} xs={6}>
-            //Atributos A
-            
+            <Box sx={{ display: 'flex', alignItems: 'center', width: '100%'}}>
+              <Box sx={{ width: '8ch'}}>
+                {'FUE:'}
+              </Box>
+              <ButtonGroup variant="outlined" aria-label="primary button group">
+                <IconButton aria-label="delete">
+                  <RemoveRoundedIcon fontSize="inherit"/>
+                </IconButton>
+                <TextField 
+                hiddenLabel 
+                size='small' 
+                id="atqTxt" 
+                variant="standard" 
+                inputProps={{style: { textAlign: 'center' }}}
+                />
+                <IconButton aria-label="delete">
+                  <AddRoundedIcon fontSize="inherit" />
+                </IconButton>
+              </ButtonGroup>
+            </Box>
+            <Box sx={{ display: 'flex', alignItems: 'center', width: '100%'}}>
+              <Box sx={{ width: '8ch'}}>
+                {'DES:'}
+              </Box>
+              <ButtonGroup variant="outlined" aria-label="primary button group">
+                <IconButton aria-label="delete">
+                  <RemoveRoundedIcon fontSize="inherit"/>
+                </IconButton>
+                <TextField 
+                hiddenLabel 
+                size='small' 
+                id="atqTxt" 
+                variant="standard"
+                inputProps={{min: 0, style: { textAlign: 'center' }}}
+                />
+                <IconButton aria-label="delete">
+                  <AddRoundedIcon fontSize="inherit" />
+                </IconButton>
+              </ButtonGroup>
+            </Box>
           </Grid>
+
           <Grid item sm={2} xs={6}>
-            <Item>atribs b</Item>
+          <Box sx={{ display: 'flex', alignItems: 'center', width: '100%'}}>
+              <Box sx={{ width: '8ch'}}>
+                {'ATQ:'}
+              </Box>
+              <ButtonGroup variant="outlined" aria-label="primary button group">
+                <IconButton aria-label="delete">
+                  <RemoveRoundedIcon fontSize="inherit"/>
+                </IconButton>
+                <TextField 
+                hiddenLabel 
+                size='small' 
+                id="atqTxt" 
+                variant="standard" 
+                inputProps={{style: { textAlign: 'center' }}}
+                />
+                <IconButton aria-label="delete">
+                  <AddRoundedIcon fontSize="inherit" />
+                </IconButton>
+              </ButtonGroup>
+            </Box>
+            <Box sx={{ display: 'flex', alignItems: 'center', width: '100%'}}>
+              <Box sx={{ width: '8ch'}}>
+                {'DES:'}
+              </Box>
+              <ButtonGroup variant="outlined" aria-label="primary button group">
+                <IconButton aria-label="delete">
+                  <RemoveRoundedIcon fontSize="inherit"/>
+                </IconButton>
+                <TextField 
+                hiddenLabel 
+                size='small' 
+                id="atqTxt" 
+                variant="standard"
+                inputProps={{min: 0, style: { textAlign: 'center' }}}
+                />
+                <IconButton aria-label="delete">
+                  <AddRoundedIcon fontSize="inherit" />
+                </IconButton>
+              </ButtonGroup>
+            </Box>
+            <Box sx={{ display: 'flex', alignItems: 'center', width: '100%'}}>
+              <Box sx={{ width: '8ch'}}>
+                {'POD:'}
+              </Box>
+              <ButtonGroup variant="outlined" aria-label="primary button group">
+                <IconButton aria-label="delete">
+                  <RemoveRoundedIcon fontSize="inherit"/>
+                </IconButton>
+                <TextField 
+                hiddenLabel 
+                size='small' 
+                id="atqTxt" 
+                variant="standard"
+                inputProps={{min: 0, style: { textAlign: 'center' }}}
+                />
+                <IconButton aria-label="delete">
+                  <AddRoundedIcon fontSize="inherit" />
+                </IconButton>
+              </ButtonGroup>
+            </Box>
           </Grid>
           <Grid item sm={8} xs={12}>
             <Item>skills</Item>
@@ -136,6 +244,9 @@ function App() {
             <Item>equip</Item>
           </Grid>
           <Grid item sm={6} xs={12}>
+            <Item>inv</Item>
+          </Grid>
+          <Grid item sm={12} xs={12}>
             <Item>inv</Item>
           </Grid>
         </Grid>
