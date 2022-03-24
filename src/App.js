@@ -11,7 +11,7 @@ function App() {
   return (
     <Router>
       <HeadBar />
-      <Routes>
+      <Routes basename={process.env.PUBLIC_URL}>
         <Route path="/react-charsheet" element={ <Home /> }/>
         <Route path="/react-charsheet/character" element={ <Character /> }/>
         <Route path="/react-charsheet/*" element={ <NotFoundPage /> }/>
