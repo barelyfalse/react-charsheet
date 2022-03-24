@@ -17,6 +17,7 @@ import ListItemButton from '@mui/material/ListItemButton';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import ReceiptLongRoundedIcon from '@mui/icons-material/ReceiptLongRounded';
 import MenuBookRoundedIcon from '@mui/icons-material/MenuBookRounded';
+import CottageRoundedIcon from '@mui/icons-material/CottageRounded';
 
 export function HeadBar() {
   const [state, setState] = React.useState({
@@ -42,12 +43,20 @@ export function HeadBar() {
     onKeyDown={toggleDrawer(anchor, false)}
   >
     <List>
-      <ListItemButton key='char' component="a" href="react-charsheet/character">
+      <ListItemButton key='home' component="a" href="/react-charsheet/">
+        <ListItemIcon>
+            <CottageRoundedIcon />  
+        </ListItemIcon>
+        <ListItemText primary='Home' />
+      </ListItemButton>
+      <Divider />
+      <ListItemButton key='char' component="a" href="/react-charsheet/character">
         <ListItemIcon>
             <ReceiptLongRoundedIcon />  
         </ListItemIcon>
         <ListItemText primary='Character' />
       </ListItemButton>
+      
       <ListItem button key='newchar'>
         <ListItemIcon>
           <AddCircleOutlineRoundedIcon />  
