@@ -14,7 +14,7 @@ function App() {
       <Routes>
         <Route path="/react-charsheet" element={ <Home /> }/>
         <Route path="/react-charsheet/character" element={ <Character /> }/>
-        <Route path="*" element={ <NotFoundPage /> }/>
+        <Route path="/react-charsheet/*" element={ <NotFoundPage /> }/>
       </Routes>
     </Router>
   );
