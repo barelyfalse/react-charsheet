@@ -12,8 +12,8 @@ function App() {
     <Router>
       <HeadBar />
       <Routes>
-        <Route path="/" element={ <Home /> }/>
-        <Route path="/character" element={ <Character /> }/>
+        <Route path="/react-charsheet" element={ <Home /> }/>
+        <Route path="/react-charsheet/character" element={ <Character /> }/>
         <Route path="*" element={ <NotFoundPage /> }/>
       </Routes>
     </Router>
