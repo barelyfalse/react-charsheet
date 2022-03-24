@@ -19,6 +19,8 @@ import ReceiptLongRoundedIcon from '@mui/icons-material/ReceiptLongRounded';
 import MenuBookRoundedIcon from '@mui/icons-material/MenuBookRounded';
 import CottageRoundedIcon from '@mui/icons-material/CottageRounded';
 
+import { Link } from 'react-router-dom';
+
 export function HeadBar() {
   const [state, setState] = React.useState({
     top: false,
@@ -43,26 +45,27 @@ export function HeadBar() {
     onKeyDown={toggleDrawer(anchor, false)}
   >
     <List>
-      <ListItemButton key='home' component="a" href="/react-charsheet/">
+      <ListItemButton key='home' component="a" href="/">
         <ListItemIcon>
             <CottageRoundedIcon />  
         </ListItemIcon>
         <ListItemText primary='Home' />
       </ListItemButton>
       <Divider />
-      <ListItemButton key='char' component="a" href="/react-charsheet/character">
+      <ListItemButton key='char' component="a" href="/character">
         <ListItemIcon>
             <ReceiptLongRoundedIcon />  
         </ListItemIcon>
         <ListItemText primary='Character' />
       </ListItemButton>
-      
+      <Link to={'/character'}>
       <ListItem button key='newchar'>
         <ListItemIcon>
           <AddCircleOutlineRoundedIcon />  
         </ListItemIcon>
         <ListItemText primary='New Character' />
       </ListItem>
+      </Link>
       <ListItem button key='system'>
         <ListItemIcon>
           <MenuBookRoundedIcon />  
