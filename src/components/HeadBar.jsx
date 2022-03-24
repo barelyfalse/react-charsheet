@@ -42,7 +42,7 @@ export function HeadBar() {
     onKeyDown={toggleDrawer(anchor, false)}
   >
     <List>
-      <ListItemButton key='char' component="a" href="/react-charsheet/character">
+      <ListItemButton key='char' component="a" href="react-charsheet/character">
         <ListItemIcon>
             <ReceiptLongRoundedIcon />  
         </ListItemIcon>
