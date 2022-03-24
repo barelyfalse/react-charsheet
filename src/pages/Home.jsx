@@ -8,6 +8,9 @@ function Home() {
         <Typography variant="h4">
           Welcome to Character Rol Sheet
         </Typography>
+        <Typography variant="h3">
+          v.1
+        </Typography>
       </Box>
     </Box>
   )
