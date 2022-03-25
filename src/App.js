@@ -13,9 +13,9 @@ function App() {
       <HeadBar />
       <Routes>
         <Route path="/" element={ <Home /> }>
-          <Route path="/character" element={ <Character /> }/>
-          <Route path="/*" element={ <NotFoundPage /> }/>
         </Route>
+        <Route path="/character" element={ <Character /> }/>
+        <Route path="/*" element={ <NotFoundPage /> }/>
       </Routes>
     </>
     
