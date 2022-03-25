@@ -58,12 +58,20 @@ export function HeadBar() {
         </ListItemIcon>
         <ListItemText primary='Character' />
       </ListItemButton>
-      <Link to={'/character'}>
+      <Link to={'character'}>
       <ListItem button key='newchar'>
         <ListItemIcon>
           <AddCircleOutlineRoundedIcon />  
         </ListItemIcon>
         <ListItemText primary='New Character' />
+      </ListItem>
+      </Link>
+      <Link to={'/'}>
+      <ListItem button key='newchar'>
+        <ListItemIcon>
+          <AddCircleOutlineRoundedIcon />  
+        </ListItemIcon>
+        <ListItemText primary='Home' />
       </ListItem>
       </Link>
       <ListItem button key='system'>

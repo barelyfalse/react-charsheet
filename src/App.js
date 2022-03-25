@@ -1,6 +1,6 @@
 import * as React from 'react';
 import './App.css';
-import { BrowserRouter as Router, Routes, Route, Switch } from 'react-router-dom';
+import { Routes, Route } from 'react-router-dom';
 import { HeadBar } from './components/HeadBar';
 import Character from './pages/Character';
 import Home from './pages/Home';
@@ -14,8 +14,8 @@ function App() {
       <Routes>
         <Route path="/" element={ <Home /> }>
         </Route>
-        <Route path="/character" element={ <Character /> }/>
-        <Route path="/*" element={ <NotFoundPage /> }/>
+        <Route path="character" element={ <Character /> }/>
+        <Route path="*" element={ <NotFoundPage /> }/>
       </Routes>
     </>
     
