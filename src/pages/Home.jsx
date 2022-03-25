@@ -9,7 +9,7 @@ function Home() {
           Welcome to Character Rol Sheet
         </Typography>
         <Typography variant="h3">
-          v.1
+          v.2
         </Typography>
       </Box>
     </Box>
