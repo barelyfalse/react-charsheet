@@ -13,7 +13,6 @@ import Divider from '@mui/material/Divider';
 import ListItem from '@mui/material/ListItem';
 import ListItemIcon from '@mui/material/ListItemIcon';
 import ListItemText from '@mui/material/ListItemText';
-import ListItemButton from '@mui/material/ListItemButton';
 import AddCircleOutlineRoundedIcon from '@mui/icons-material/AddCircleOutlineRounded';
 import ReceiptLongRoundedIcon from '@mui/icons-material/ReceiptLongRounded';
 import MenuBookRoundedIcon from '@mui/icons-material/MenuBookRounded';
@@ -45,42 +44,45 @@ export function HeadBar() {
     onKeyDown={toggleDrawer(anchor, false)}
   >
     <List>
-      <ListItemButton key='home' component="a" href="/">
-        <ListItemIcon>
-            <CottageRoundedIcon />  
-        </ListItemIcon>
-        <ListItemText primary='Home' />
-      </ListItemButton>
+      <Link to={'/'} style={{color: 'black', textDecoration: 'none'}}>
+        <ListItem button key='newchar'>
+          <ListItemIcon>
+            <CottageRoundedIcon />   
+          </ListItemIcon>
+          <ListItemText primary='Home' />
+        </ListItem>
+      </Link>
+
       <Divider />
-      <ListItemButton key='char' component="a" href="/character">
-        <ListItemIcon>
+
+      <Link to={'character'} style={{color: 'black', textDecoration: 'none'}}>
+        <ListItem button key='newchar'>
+          <ListItemIcon>
             <ReceiptLongRoundedIcon />  
-        </ListItemIcon>
-        <ListItemText primary='Character' />
-      </ListItemButton>
-      <Link to={'character'}>
-      <ListItem button key='newchar'>
-        <ListItemIcon>
-          <AddCircleOutlineRoundedIcon />  
-        </ListItemIcon>
-        <ListItemText primary='New Character' />
-      </ListItem>
+          </ListItemIcon>
+          <ListItemText primary='Character' />
+        </ListItem>
       </Link>
-      <Link to={'/'}>
-      <ListItem button key='newchar'>
-        <ListItemIcon>
-          <AddCircleOutlineRoundedIcon />  
-        </ListItemIcon>
-        <ListItemText primary='Home' />
-      </ListItem>
+
+      <Link to={'/'} style={{color: 'black', textDecoration: 'none'}}>
+        <ListItem button key='newchar'>
+          <ListItemIcon>
+            <AddCircleOutlineRoundedIcon />  
+          </ListItemIcon>
+          <ListItemText primary='New Character' />
+        </ListItem>
       </Link>
-      <ListItem button key='system'>
-        <ListItemIcon>
-          <MenuBookRoundedIcon />  
-        </ListItemIcon>
-        <ListItemText primary='Rol System' />
-      </ListItem>
+
+      <Link to={'/'} style={{color: 'black', textDecoration: 'none'}}>
+        <ListItem button key='newchar'>
+          <ListItemIcon>
+            <MenuBookRoundedIcon />  
+          </ListItemIcon>
+          <ListItemText primary='Rol System' />
+        </ListItem>
+      </Link>
     </List>
+
     <Divider />
   </Box>
   );
