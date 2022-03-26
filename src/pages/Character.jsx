@@ -19,7 +19,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
 function Character() {
-  //pv controlers
+  //pv controllers
   const [pv, setPv] = useState(0)
 
   function addPv() {
@@ -42,12 +42,35 @@ function Character() {
     }
   }
 
-  //class select controlers
+  //class select controllers
   const [rolClass, setRolClass] = React.useState('');
 
   const handleClassSelChange = (event) => {
     setRolClass(event.target.value);
   };
+
+  //pod controllers
+  const [pod, setPod] = useState(0)
+
+  function addPod() {
+    setPod(prevPod => prevPod + 1);
+  }
+
+  function decreasePod() {
+    setPod(prevPod => { 
+      if(prevPod != 0) {
+        return prevPod - 1;
+      } else {
+        return 0;
+      }
+    });
+  }
+
+  const handlePodUpdate = (event) => {
+    if(!isNaN(event.target.value) && !isNaN(parseInt(event.target.value))) {
+      setPod(parseInt(event.target.value));
+    }
+  }
 
   return (
     <>
@@ -159,7 +182,7 @@ function Character() {
             </Card>
           </Grid>
 
-          <Grid item sm={2} xs={6}>
+          <Grid item md={2} xs={6}>
             <Card>
               <CardContent>
                 <Box sx={{display: 'flex', alignItems: 'center'}}>
@@ -261,80 +284,74 @@ function Character() {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item sm={2} xs={6}>
+          <Grid item md={2} xs={6}>
             <Card sx={{height: '1'}}>
-              <CardContent sx={{height: '1', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
-                <Box sx={{display: 'flex', alignItems: 'center'}}>
-                  <Typography sx={{fontWeight: 'bold', width: '16ch'}}>
+              <CardContent sx={{height: '95%', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+                <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-around'}}>
+                  <Typography sx={{fontWeight: 'bold', width: '30%'}}>
                     {'ATQ:'}
                   </Typography>
-                  <Box>
-                    <TextField 
-                    hiddenLabel
-                    size="small"
-                    fullWidth
-                    id="atqText"
-                    variant="outlined"
-                    inputProps={{style: { textAlign: 'center' }}}
-                    />
-                  </Box>
+                  
+                  <Typography sx={{fontWeight: 'bold', width: '25%', textAlign: 'center'}} variant="h6">
+                    {'+99'}
+                  </Typography>
                 </Box>
 
-                <Box sx={{display: 'flex', alignItems: 'center', mt: '1ch'}}>
-                  <Typography sx={{fontWeight: 'bold', width: '16ch'}}>
+                <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-around'}}>
+                  <Typography sx={{fontWeight: 'bold', width: '30%'}}>
                     {'DEF:'}
                   </Typography>
-                  <Box>
-                    <TextField 
-                    hiddenLabel
-                    size="small"
-                    fullWidth
-                    id="defText"
-                    variant="outlined"
-                    inputProps={{style: { textAlign: 'center' }}}
-                    />
-                  </Box>
+
+                  <Typography sx={{fontWeight: 'bold', width: '25%', textAlign: 'center'}} variant="h6">
+                    {'+99'}
+                  </Typography>
                 </Box>
 
-                <Box sx={{display: 'flex', alignItems: 'center', mt: '1ch'}}>
-                  <Typography sx={{fontWeight: 'bold', width: '16ch'}}>
+                <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-around'}}>
+                  <Typography sx={{fontWeight: 'bold', width: '30%'}}>
                     {'POD:'}
                   </Typography>
-                  <Box>
-                    <TextField 
-                    hiddenLabel
-                    size="small"
-                    fullWidth
-                    id="podText"
-                    variant="outlined"
-                    inputProps={{style: { textAlign: 'center' }}}
-                    />
-                  </Box>
+                  
+                  <Typography sx={{fontWeight: 'bold', width: '25%', textAlign: 'center'}} variant="h6">
+                    {'+99'}
+                  </Typography>
                 </Box>
 
-                <Box sx={{display: 'flex', alignItems: 'center', mt: '1ch', mb:'3ch'}}>
-                  <Typography sx={{fontWeight: 'bold', width: '16ch'}}>
-                    {'INS:'}
-                  </Typography>
-                  <Box>
+                <Box sx={{
+                  display: 'flex', 
+                  alignItems: 'center', 
+                  justifyContent: 'center'
+                }}>
+                  <IconButton aria-label="delete" size="small" onClick={() => {decreasePod()}}>
+                    <RemoveCircleRoundedIcon fontSize="inherit"/>
+                  </IconButton>
+                  <Box sx={{mt: '0ch', width: '1'}}>
                     <TextField 
                     hiddenLabel
-                    size="small"
                     fullWidth
-                    id="insText"
+                    size="small"
+                    id="podText" 
                     variant="outlined"
-                    inputProps={{style: { textAlign: 'center' }}}
+                    defaultValue={pod}
+                    value={pod}
+                    inputProps={{ style: { textAlign: 'center'}}}
+                    onChange={handlePodUpdate}
                     />
                   </Box>
+                  <IconButton aria-label="delete" size="small" onClick={() => {addPod()}}>
+                    <AddCircleRoundedIcon fontSize="inherit" />
+                  </IconButton>
                 </Box>
               </CardContent>
             </Card>
           </Grid>
 
-          <Grid item sm={8} xs={12}>
+          <Grid item md={8} xs={12}>
             <Card>
               <CardContent>
-                Skills
+                <Typography variant="h6">
+                  Skills
+                </Typography>
               </CardContent>
             </Card>
           </Grid>
