@@ -18,7 +18,23 @@ import MenuItem from '@mui/material/MenuItem';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 
+import Stack from '@mui/material/Stack';
+import Skill from '../components/Skill';
+
 function Character() {
+
+  const charData = {
+    name: "a",
+    rolClass: 0,
+    lvl: 0,
+    xp: 0,
+    actualPv: 0,
+    totalPv: 0,
+    stats: [0, 0, 0, 0, 0, 0],
+    skills: [0, 1, 2],
+    actualPod: 0,
+  }
+
   //pv controllers
   const [pv, setPv] = useState(0)
 
@@ -28,7 +44,7 @@ function Character() {
 
   function decreasePv() {
     setPv(prevPv => { 
-      if(prevPv != 0) {
+      if(prevPv !== 0) {
         return prevPv - 1;
       } else {
         return 0;
@@ -58,7 +74,7 @@ function Character() {
 
   function decreasePod() {
     setPod(prevPod => { 
-      if(prevPod != 0) {
+      if(prevPod !== 0) {
         return prevPod - 1;
       } else {
         return 0;
@@ -76,7 +92,7 @@ function Character() {
     <>
       <Container maxWidth="lg" sx={{mt: '2ch'}}>
         <Grid container spacing={1}>
-          <Grid item sm={8} xs={12}>
+          <Grid item sm={7} xs={12}>
             <Card>
               <CardContent>
                 <TextField
@@ -107,7 +123,7 @@ function Character() {
             </Card>
           </Grid>
 
-          <Grid item sm={4} xs={12}>
+          <Grid item sm={5} xs={12}>
             <Card>
               <CardContent>
                 <Box sx={{display: 'flex', alignItems: 'center'}}>
@@ -347,11 +363,20 @@ function Character() {
           </Grid>
 
           <Grid item md={8} xs={12}>
-            <Card>
+            <Card sx={{height: '1'}}>
               <CardContent>
                 <Typography variant="h6">
                   Skills
                 </Typography>
+                <Box>
+                  <Stack>
+                    {
+                      charData.skills.map((skillid, index) => {
+                        return <Skill rolClass={charData.rolClass} skillIndex={skillid} />
+                      })
+                    }
+                  </Stack>
+                </Box>
               </CardContent>
             </Card>
           </Grid>
