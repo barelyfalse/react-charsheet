@@ -42,7 +42,21 @@ const rolClasses = [
         duration: 0
       },
     ]
-  }
+  },
+
+  { name: "Mago",
+    description: "",
+    advance: [
+      { level: 0, mods: { atq: 0, def: 0, int: 0, pod: 0} },
+    ],
+    skills: [
+      { name: "",
+        description: "",
+        cost: 0, 
+        duration: 0
+      },
+    ]
+  },
 
 ];
 

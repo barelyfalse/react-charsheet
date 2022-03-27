@@ -1,10 +1,10 @@
 import React from 'react';
-import {rolClasses} from '../data/Data.js';
+import { rolClasses } from '../data/Data.js';
 import { 
   Box, 
   Paper, 
   Typography, 
-  Button, 
+  Button,
   IconButton, 
   Tooltip, 
   Dialog, 
@@ -18,16 +18,15 @@ import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
 
 const da = rolClasses;
 
-function Skill(props) {
-  const skill = da[props.rolClass].skills[props.skillIndex];
+function Skill({rolClass, skillIndex, reducePod }) {
+  const skill = da[rolClass].skills[skillIndex];
   var info = '';
-  if(skill.cost == 0 && skill.duration == 0) {
+  if(skill.cost === 0 && skill.duration === 0) {
     info = 'pasiva'
   } else {
     info = 'costo: ' + skill.cost;
   }
 
-  console.log(info.localeCompare('pasiva'));
   const [open, setOpen] = React.useState(false);
 
   const handleClickOpen = () => {
@@ -36,6 +35,10 @@ function Skill(props) {
 
   const handleClose = () => {
     setOpen(false);
+  };
+
+  const handleClickUseSkill = () => {
+    reducePod(skill.cost);
   };
 
   return (
@@ -51,17 +54,19 @@ function Skill(props) {
         <Typography>
           <strong>{skill.name}</strong> ({info})
         </Typography>
-        <Box>
+        <Box sx={{display: 'flex', alignItems: 'center',}}>
           <Tooltip title="infomación">
             <IconButton aria-label="delete" color="primary" onClick={handleClickOpen}>
               <InfoOutlinedIcon />
             </IconButton>        
           </Tooltip>
           
-          <Tooltip title="Usar">
-            <Button variant="contained" disabled={!info.localeCompare('pasiva')} size="small" endIcon={<DoubleArrowRoundedIcon />}>
-              Usar
-            </Button>
+          <Tooltip title="Usar habilidad">
+            <div>
+              <Button variant="contained" disabled={!info.localeCompare('pasiva')} size="small" endIcon={<DoubleArrowRoundedIcon />} onClick={handleClickUseSkill}>
+                Usar
+              </Button>
+            </div>
           </Tooltip>
         </Box>
       </Paper>

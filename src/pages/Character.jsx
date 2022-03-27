@@ -1,28 +1,33 @@
 import React, { useState } from 'react';
-import Container from '@mui/material/Container';
-import Grid from '@mui/material/Grid';
+import { Container, 
+  Grid, 
+  Card, 
+  CardContent, 
+  TextField, 
+  ButtonGroup,
+  IconButton,
+  Typography,
+  Box,
+  InputLabel,
+  MenuItem,
+  FormControl,
+  Select,
+  Stack,
+  Tooltip,
+  Button
+} from '@mui/material';
 
-import Card from '@mui/material/Card';
-import CardContent from '@mui/material/CardContent';
-
-import TextField from '@mui/material/TextField';
-import ButtonGroup from '@mui/material/ButtonGroup';
-import IconButton from '@mui/material/IconButton';
-import Typography from '@mui/material/Typography';
 import RemoveCircleRoundedIcon from '@mui/icons-material/RemoveCircleRounded';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
-import { Box } from '@mui/material';
+import EditRoundedIcon from '@mui/icons-material/EditRounded';
+import AddRoundedIcon from '@mui/icons-material/AddRounded';
 
-import InputLabel from '@mui/material/InputLabel';
-import MenuItem from '@mui/material/MenuItem';
-import FormControl from '@mui/material/FormControl';
-import Select from '@mui/material/Select';
-
-import Stack from '@mui/material/Stack';
 import Skill from '../components/Skill';
+import Stat from '../components/Stat';
+
+import { rolClasses } from '../data/Data.js';
 
 function Character() {
-
   const charData = {
     name: "a",
     rolClass: 0,
@@ -30,13 +35,33 @@ function Character() {
     xp: 0,
     actualPv: 0,
     totalPv: 0,
-    stats: [0, 0, 0, 0, 0, 0],
+    stats: [
+      {name: 'FUE', full: 'Fuerza', value: 1}, 
+      {name: 'DES', full: 'Destreza', value: 6}, 
+      {name: 'CON', full: 'Constitución', value: 6},
+      {name: 'CAR', full: 'Carisma', value: 2},
+      {name: 'INT', full: 'Inteligencia', value: 2}, 
+      {name: 'PER', full: 'Percepción', value: 3},
+    ],
     skills: [0, 1, 2],
     actualPod: 0,
+  };
+
+  //chardata controllers
+  const [charStats, setCharStats] = useState(charData.stats.map(stat =>stat.value));
+
+  function updateStats(statId, value) {
+    //console.log('trying to update ' + statId + ' with ' + value);
+    setCharStats(prevCharStats => {
+      const newCharStats = [...prevCharStats];
+      newCharStats[statId] = value;
+      return newCharStats;
+    })
   }
 
+
   //pv controllers
-  const [pv, setPv] = useState(0)
+  const [pv, setPv] = useState(charData.actualPv)
 
   function addPv() {
     setPv(prevPv => prevPv + 1);
@@ -59,14 +84,14 @@ function Character() {
   }
 
   //class select controllers
-  const [rolClass, setRolClass] = React.useState('');
+  const [rolClass, setRolClass] = useState(charData.rolClass);
 
   const handleClassSelChange = (event) => {
     setRolClass(event.target.value);
   };
 
   //pod controllers
-  const [pod, setPod] = useState(0)
+  const [pod, setPod] = useState(charData.actualPod)
 
   function addPod() {
     setPod(prevPod => prevPod + 1);
@@ -78,6 +103,17 @@ function Character() {
         return prevPod - 1;
       } else {
         return 0;
+      }
+    });
+  }
+
+  function reducePodSkill(skillCost) {
+    setPod(prevPod => { 
+      if(prevPod - skillCost >= 0) {
+        return prevPod - skillCost;
+      } else {
+        return prevPod;
+        //snackbar
       }
     });
   }
@@ -114,9 +150,11 @@ function Character() {
                     onChange={handleClassSelChange}
                   >
                     <MenuItem disabled value=""><em>Clase</em></MenuItem>
-                    <MenuItem value={1}>Samurai</MenuItem>
-                    <MenuItem value={2}>Guerrero</MenuItem>
-                    <MenuItem value={3}>Asesino</MenuItem>
+                    {
+                      rolClasses.map(stat => stat.name).map((rolClass, index) => {
+                        return <MenuItem value={index}>{rolClass}</MenuItem>
+                      })
+                    }
                   </Select>
                 </FormControl>
               </CardContent>
@@ -207,101 +245,19 @@ function Character() {
           <Grid item md={2} xs={6}>
             <Card>
               <CardContent>
-                <Box sx={{display: 'flex', alignItems: 'center'}}>
-                  <Typography sx={{mr: '1ch', fontWeight: 'bold', width: '7ch'}}>
-                    {'FUE:'}
-                  </Typography>
-                  <Box sx={{mt: '0ch', width:'1'}}>
-                    <TextField 
-                    hiddenLabel
-                    size="small"
-                    fullWidth
-                    id="strText"
-                    variant="outlined"
-                    inputProps={{min: 0, style: { textAlign: 'center' }}}
-                    />
-                  </Box>
-                </Box>
-
-                <Box sx={{display: 'flex', alignItems: 'center'}}>
-                  <Typography sx={{mr: '1ch', fontWeight: 'bold', width: '7ch'}}>
-                    {'DES:'}
-                  </Typography>
-                  <Box sx={{mt: '1ch', width:'1'}}>
-                    <TextField 
-                    hiddenLabel
-                    size="small"
-                    fullWidth
-                    id="dexText"
-                    variant="outlined"
-                    inputProps={{min: 0, style: { textAlign: 'center' }}}
-                    />
-                  </Box>
-                </Box>
-
-                <Box sx={{display: 'flex', alignItems: 'center'}}>
-                  <Typography sx={{mr: '1ch', fontWeight: 'bold', width: '7ch'}}>
-                    {'CON:'}
-                  </Typography>
-                  <Box sx={{mt: '1ch', width:'1'}}>
-                    <TextField 
-                    hiddenLabel
-                    size="small"
-                    fullWidth
-                    id="conText"
-                    variant="outlined"
-                    inputProps={{min: 0, style: { textAlign: 'center' }}}
-                    />
-                  </Box>
-                </Box>
-
-                <Box sx={{display: 'flex', alignItems: 'center'}}>
-                  <Typography sx={{mr: '1ch', fontWeight: 'bold', width: '7ch'}}>
-                    {'CAR:'}
-                  </Typography>
-                  <Box sx={{mt: '1ch', width:'1'}}>
-                    <TextField 
-                    hiddenLabel
-                    size="small"
-                    fullWidth
-                    id="carText"
-                    variant="outlined"
-                    inputProps={{min: 0, style: { textAlign: 'center' }}}
-                    />
-                  </Box>
-                </Box>
-
-                <Box sx={{display: 'flex', alignItems: 'center'}}>
-                  <Typography sx={{mr: '1ch', fontWeight: 'bold', width: '7ch'}}>
-                    {'INT:'}
-                  </Typography>
-                  <Box sx={{mt: '1ch', width:'1'}}>
-                    <TextField 
-                    hiddenLabel
-                    size="small"
-                    fullWidth
-                    id="intText"
-                    variant="outlined"
-                    inputProps={{min: 0, style: { textAlign: 'center' }}}
-                    />
-                  </Box>
-                </Box>
-
-                <Box sx={{display: 'flex', alignItems: 'center'}}>
-                  <Typography sx={{mr: '1ch', fontWeight: 'bold', width: '7ch'}}>
-                    {'PER:'}
-                  </Typography>
-                  <Box sx={{mt: '1ch', width:'1'}}>
-                    <TextField 
-                    hiddenLabel
-                    size="small"
-                    fullWidth
-                    id="perText"
-                    variant="outlined"
-                    inputProps={{min: 0, style: { textAlign: 'center' }}}
-                    />
-                  </Box>
-                </Box>
+                <Stack>
+                  {
+                    charData.stats.map((stat, index) => {
+                      return <Stat 
+                      statIndex={index} 
+                      statName={stat.name} 
+                      fullStat={stat.full} 
+                      statValue={charStats[index]} 
+                      updateStatState={updateStats} 
+                      />
+                    })
+                  }
+                </Stack>
 
               </CardContent>
             </Card>
@@ -338,31 +294,33 @@ function Character() {
                     {'+99'}
                   </Typography>
                 </Box>
-
-                <Box sx={{
-                  display: 'flex', 
-                  alignItems: 'center', 
-                  justifyContent: 'center'
-                }}>
-                  <IconButton aria-label="delete" size="small" onClick={() => {decreasePod()}}>
-                    <RemoveCircleRoundedIcon fontSize="inherit"/>
-                  </IconButton>
-                  <Box sx={{mt: '0ch', width: '1'}}>
-                    <TextField 
-                    hiddenLabel
-                    fullWidth
-                    size="small"
-                    id="podText" 
-                    variant="outlined"
-                    defaultValue={pod}
-                    value={pod}
-                    inputProps={{ style: { textAlign: 'center'}}}
-                    onChange={handlePodUpdate}
-                    />
+                <Box sx={{display: 'flex', justifyContent: 'center'}}>
+                  <Box sx={{
+                    display: 'flex', 
+                    alignItems: 'center', 
+                    justifyContent: 'center', 
+                    maxWidth: '20ch'
+                  }}>
+                    <IconButton aria-label="delete" size="small" onClick={() => {decreasePod()}}>
+                      <RemoveCircleRoundedIcon fontSize="inherit"/>
+                    </IconButton>
+                    <Box sx={{mt: '0ch', width: '1'}}>
+                      <TextField 
+                      hiddenLabel
+                      fullWidth
+                      size="small"
+                      id="podText" 
+                      variant="outlined"
+                      defaultValue={pod}
+                      value={pod}
+                      inputProps={{ style: { textAlign: 'center'}}}
+                      onChange={handlePodUpdate}
+                      />
+                    </Box>
+                    <IconButton aria-label="delete" size="small" onClick={() => {addPod()}}>
+                      <AddCircleRoundedIcon fontSize="inherit" />
+                    </IconButton>
                   </Box>
-                  <IconButton aria-label="delete" size="small" onClick={() => {addPod()}}>
-                    <AddCircleRoundedIcon fontSize="inherit" />
-                  </IconButton>
                 </Box>
               </CardContent>
             </Card>
@@ -371,14 +329,24 @@ function Character() {
           <Grid item md={8} xs={12}>
             <Card sx={{height: '1'}}>
               <CardContent>
-                <Typography variant="h6">
-                  Skills
-                </Typography>
+                <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+                  <Typography variant="h6">
+                    Skills
+                  </Typography>
+                  <Box>
+                    <Tooltip title="Añadir habilidad">
+                      <IconButton color="primary" aria-label="add to shopping cart">
+                        <AddRoundedIcon />
+                      </IconButton>
+                    </Tooltip>
+                  </Box>
+                </Box>
+                
                 <Box>
                   <Stack>
                     {
                       charData.skills.map((skillid, index) => {
-                        return <Skill rolClass={charData.rolClass} skillIndex={skillid} />
+                        return <Skill key={index} rolClass={charData.rolClass} skillIndex={skillid} reducePod={reducePodSkill} />
                       })
                     }
                   </Stack>
@@ -404,11 +372,13 @@ function Character() {
           </Grid>
 
           <Grid item sm={12} xs={12}>
-            <Card>
-              <CardContent>
-                Boton de editar
-              </CardContent>
-            </Card>
+            <Box sx={{width: 1, mt: '1ch', display: 'flex', justifyContent: 'center'}}>
+              <Tooltip title="Editar hoja">
+                <Button variant="contained" endIcon={<EditRoundedIcon />}>
+                  Editar
+                </Button>
+              </Tooltip>
+            </Box>
           </Grid>
         </Grid>
       </Container>
