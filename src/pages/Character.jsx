@@ -131,7 +131,7 @@ function Character() {
                     {'PV:'}
                   </Typography>
                   <ButtonGroup variant="outlined" aria-label="primary button group">
-                    <IconButton aria-label="delete" onClick={() => {decreasePv();}}>
+                    <IconButton aria-label="delete" size="small" onClick={() => {decreasePv();}}>
                       <RemoveCircleRoundedIcon fontSize="inherit"/>
                     </IconButton>
                     <Box sx={{mt: '0ch'}}>
@@ -147,21 +147,21 @@ function Character() {
                       onChange={handlePvUpdate}
                       />
                     </Box>
-                    <IconButton aria-label="delete" onClick={() => {addPv();}}>
+                    <IconButton aria-label="delete" size="small" onClick={() => {addPv();}}>
                       <AddCircleRoundedIcon fontSize="inherit" />
                     </IconButton>
                   </ButtonGroup>
                   <Typography sx={{mr: '1ch', fontWeight: 'bold'}}>
                     {'/'}
                   </Typography>
-                  <Box sx={{mt: '0ch'}}>
+                  <Box sx={{mt: '0ch', width: 1/1.5}}>
                     <TextField 
                     hiddenLabel
                     size="small"
                     fullWidth
                     id="totalPvText" 
                     variant="outlined"
-                    inputProps={{ style: { textAlign: 'center' }, disabled: true}}
+                    inputProps={{ style: { textAlign: 'center' }, disabled: false}}
                     />
                   </Box>
                 </Box>
@@ -190,7 +190,6 @@ function Character() {
                     <Box sx={{mt: '0ch'}}>
                       <TextField 
                       hiddenLabel
-                      type="number"
                       size="small"
                       fullWidth
                       id="xpText" 
