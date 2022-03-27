@@ -130,11 +130,11 @@ function Character() {
                   <Typography sx={{ fontWeight: 'bold' }}>
                     {'PV:'}
                   </Typography>
-                  <ButtonGroup variant="outlined" aria-label="primary button group" >
+                  <ButtonGroup variant="outlined" aria-label="primary button group">
                     <IconButton aria-label="delete" onClick={() => {decreasePv();}}>
                       <RemoveCircleRoundedIcon fontSize="inherit"/>
                     </IconButton>
-                    <Box sx={{mt: '0ch', width: '1/2'}}>
+                    <Box sx={{mt: '0ch'}}>
                       <TextField 
                       hiddenLabel
                       size="small"
@@ -154,7 +154,7 @@ function Character() {
                   <Typography sx={{mr: '1ch', fontWeight: 'bold'}}>
                     {'/'}
                   </Typography>
-                  <Box sx={{mt: '0ch', width: '1/2'}}>
+                  <Box sx={{mt: '0ch'}}>
                     <TextField 
                     hiddenLabel
                     size="small"
@@ -167,32 +167,39 @@ function Character() {
                 </Box>
 
                 <Box sx={{display: 'flex', alignItems: 'center', mt: '2ch'}}>
-                  <Typography sx={{mr: '1ch', fontWeight: 'bold' }}>
-                    {'Nivel:'}
-                  </Typography>
-                  <Box sx={{mt: '0ch', width: '1/2'}}>
-                    <TextField 
-                    hiddenLabel
-                    size="small"
-                    fullWidth
-                    id="lvlText" 
-                    variant="outlined"
-                    inputProps={{ style: { textAlign: 'center' }}}
-                    />
+                  <Box sx={{display: 'flex', alignItems: 'center', width: 1/2}}>
+                    <Typography sx={{mr: '1ch', fontWeight: 'bold' }}>
+                      {'Nivel:'}
+                    </Typography>
+                    <Box sx={{mt: '0ch'}}>
+                      <TextField 
+                      hiddenLabel
+                      size="small"
+                      fullWidth
+                      id="lvlText" 
+                      variant="outlined"
+                      inputProps={{ style: { textAlign: 'center' }}}
+                      />
+                    </Box>
                   </Box>
-                  <Typography sx={{mx: '1ch', fontWeight: 'bold'}}>
-                    {'XP:'}
-                  </Typography>
-                  <Box sx={{mt: '0ch', width: '1/2'}}>
-                    <TextField 
-                    hiddenLabel
-                    size="small"
-                    fullWidth
-                    id="xpText" 
-                    variant="outlined"
-                    inputProps={{ style: { textAlign: 'center' }}}
-                    />
+                  
+                  <Box sx={{display: 'flex', alignItems: 'center', width: 1/2}}>
+                    <Typography sx={{mx: '1ch', fontWeight: 'bold'}}>
+                      {'XP:'}
+                    </Typography>
+                    <Box sx={{mt: '0ch'}}>
+                      <TextField 
+                      hiddenLabel
+                      type="number"
+                      size="small"
+                      fullWidth
+                      id="xpText" 
+                      variant="outlined"
+                      inputProps={{ style: { textAlign: 'center' }}}
+                      />
+                    </Box>
                   </Box>
+                  
                 </Box>
               </CardContent>
             </Card>
@@ -202,10 +209,10 @@ function Character() {
             <Card>
               <CardContent>
                 <Box sx={{display: 'flex', alignItems: 'center'}}>
-                  <Typography sx={{mr: '1ch', fontWeight: 'bold', width: '16ch'}}>
+                  <Typography sx={{mr: '1ch', fontWeight: 'bold', width: '7ch'}}>
                     {'FUE:'}
                   </Typography>
-                  <Box sx={{mt: '0ch'}}>
+                  <Box sx={{mt: '0ch', width:'1'}}>
                     <TextField 
                     hiddenLabel
                     size="small"
@@ -218,10 +225,10 @@ function Character() {
                 </Box>
 
                 <Box sx={{display: 'flex', alignItems: 'center'}}>
-                  <Typography sx={{mr: '1ch', fontWeight: 'bold', width: '16ch'}}>
+                  <Typography sx={{mr: '1ch', fontWeight: 'bold', width: '7ch'}}>
                     {'DES:'}
                   </Typography>
-                  <Box sx={{mt: '1ch'}}>
+                  <Box sx={{mt: '1ch', width:'1'}}>
                     <TextField 
                     hiddenLabel
                     size="small"
@@ -234,10 +241,10 @@ function Character() {
                 </Box>
 
                 <Box sx={{display: 'flex', alignItems: 'center'}}>
-                  <Typography sx={{mr: '1ch', fontWeight: 'bold', width: '16ch'}}>
+                  <Typography sx={{mr: '1ch', fontWeight: 'bold', width: '7ch'}}>
                     {'CON:'}
                   </Typography>
-                  <Box sx={{mt: '1ch'}}>
+                  <Box sx={{mt: '1ch', width:'1'}}>
                     <TextField 
                     hiddenLabel
                     size="small"
@@ -250,10 +257,10 @@ function Character() {
                 </Box>
 
                 <Box sx={{display: 'flex', alignItems: 'center'}}>
-                  <Typography sx={{mr: '1ch', fontWeight: 'bold', width: '16ch'}}>
+                  <Typography sx={{mr: '1ch', fontWeight: 'bold', width: '7ch'}}>
                     {'CAR:'}
                   </Typography>
-                  <Box sx={{mt: '1ch'}}>
+                  <Box sx={{mt: '1ch', width:'1'}}>
                     <TextField 
                     hiddenLabel
                     size="small"
@@ -266,10 +273,10 @@ function Character() {
                 </Box>
 
                 <Box sx={{display: 'flex', alignItems: 'center'}}>
-                  <Typography sx={{mr: '1ch', fontWeight: 'bold', width: '16ch'}}>
+                  <Typography sx={{mr: '1ch', fontWeight: 'bold', width: '7ch'}}>
                     {'INT:'}
                   </Typography>
-                  <Box sx={{mt: '1ch'}}>
+                  <Box sx={{mt: '1ch', width:'1'}}>
                     <TextField 
                     hiddenLabel
                     size="small"
@@ -282,10 +289,10 @@ function Character() {
                 </Box>
 
                 <Box sx={{display: 'flex', alignItems: 'center'}}>
-                  <Typography sx={{mr: '1ch', fontWeight: 'bold', width: '16ch'}}>
+                  <Typography sx={{mr: '1ch', fontWeight: 'bold', width: '7ch'}}>
                     {'PER:'}
                   </Typography>
-                  <Box sx={{mt: '1ch'}}>
+                  <Box sx={{mt: '1ch', width:'1'}}>
                     <TextField 
                     hiddenLabel
                     size="small"
