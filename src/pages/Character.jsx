@@ -24,17 +24,18 @@ import AddRoundedIcon from '@mui/icons-material/AddRounded';
 
 import Skill from '../components/Skill';
 import Stat from '../components/Stat';
+import SkillSelect from '../components/SkillSelect';
 
 import { rolClasses } from '../data/Data.js';
 
 function Character() {
   const charData = {
-    name: "a",
+    name: "Nombre",
     rolClass: 0,
-    lvl: 0,
+    lvl: 1,
     xp: 0,
-    actualPv: 0,
-    totalPv: 0,
+    actualPv: 10,
+    totalPv: 10,
     stats: [
       {name: 'FUE', full: 'Fuerza', value: 1}, 
       {name: 'DES', full: 'Destreza', value: 6}, 
@@ -43,8 +44,8 @@ function Character() {
       {name: 'INT', full: 'Inteligencia', value: 2}, 
       {name: 'PER', full: 'Percepción', value: 3},
     ],
-    skills: [0, 1, 2],
-    actualPod: 0,
+    skills: [0, 2],
+    actualPod: 10,
   };
 
   //chardata controllers
@@ -58,7 +59,6 @@ function Character() {
       return newCharStats;
     })
   }
-
 
   //pv controllers
   const [pv, setPv] = useState(charData.actualPv)
@@ -123,6 +123,23 @@ function Character() {
       setPod(parseInt(event.target.value));
     }
   }
+
+  //skill selection controllers
+  const [skillSelectOpen, setskillSelectOpen] = React.useState(false);
+  const [skillSelectValue, setskillSelectValue] = React.useState(0);
+
+  const handleClickSkillSelect = () => {
+    setskillSelectOpen(true);
+  };
+
+  const handleSkillSelectClose = (newValue) => {
+    setskillSelectOpen(false);
+
+    if (newValue) {
+      setskillSelectValue(newValue);
+      console.log(newValue);
+    }
+  };
 
   return (
     <>
@@ -335,13 +352,21 @@ function Character() {
                   </Typography>
                   <Box>
                     <Tooltip title="Añadir habilidad">
-                      <IconButton color="primary" aria-label="add to shopping cart">
+                      <IconButton color="primary" aria-label="add to shopping cart" onClick={handleClickSkillSelect}>
                         <AddRoundedIcon />
                       </IconButton>
                     </Tooltip>
                   </Box>
                 </Box>
-                
+                <SkillSelect 
+                  id="ringtone-menu"
+                  keepMounted
+                  open={skillSelectOpen}
+                  onClose={handleSkillSelectClose}
+                  value={skillSelectValue}
+                  rolClassSkills={rolClasses[charData.rolClass].skills}
+                  selectedRolClassSkills={charData.skills}
+                />
                 <Box>
                   <Stack>
                     {
