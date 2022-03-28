@@ -128,6 +128,15 @@ function Character() {
     }
   }
 
+  //lvl controllers
+  const [xp, setXp] = useLocalStorage('xp', 0);
+
+  const handleXpUpdate = (event) => {
+    if(!isNaN(event.target.value) && !isNaN(parseInt(event.target.value))) {
+      setXp(parseInt(event.target.value));
+    }
+  }
+
   //pod controllers
   const [pod, setPod] = useLocalStorage('currentPod', 0);
 
@@ -292,6 +301,8 @@ function Character() {
                       id="xpText" 
                       variant="outlined"
                       inputProps={{ style: { textAlign: 'center' }}}
+                      onChange={handleXpUpdate}
+                      value={xp}
                       />
                     </Box>
                   </Box>
