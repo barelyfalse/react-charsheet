@@ -44,7 +44,7 @@ export function HeadBar() {
     onKeyDown={toggleDrawer(anchor, false)}
   >
     <List>
-      <Link to={'/'} style={{color: 'black', textDecoration: 'none'}}>
+      <Link to={'/'} style={{color: 'white', textDecoration: 'none'}}>
         <ListItem button key='newchar'>
           <ListItemIcon>
             <CottageRoundedIcon />   
@@ -55,7 +55,7 @@ export function HeadBar() {
 
       <Divider />
 
-      <Link to={'character'} style={{color: 'black', textDecoration: 'none'}}>
+      <Link to={'character'} style={{color: 'white', textDecoration: 'none'}}>
         <ListItem button key='newchar'>
           <ListItemIcon>
             <ReceiptLongRoundedIcon />  
@@ -64,7 +64,7 @@ export function HeadBar() {
         </ListItem>
       </Link>
 
-      <Link to={'/'} style={{color: 'black', textDecoration: 'none'}}>
+      <Link to={'/'} style={{color: 'white', textDecoration: 'none'}}>
         <ListItem button key='newchar'>
           <ListItemIcon>
             <AddCircleOutlineRoundedIcon />  
@@ -73,7 +73,7 @@ export function HeadBar() {
         </ListItem>
       </Link>
 
-      <Link to={'/'} style={{color: 'black', textDecoration: 'none'}}>
+      <Link to={'/'} style={{color: 'white', textDecoration: 'none'}}>
         <ListItem button key='newchar'>
           <ListItemIcon>
             <MenuBookRoundedIcon />  
