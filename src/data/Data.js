@@ -1,3 +1,12 @@
+const rolCharStats = [
+  {name: 'fuerza', short: 'FUE'},
+  {name: 'destreza', short: 'DES'},
+  {name: 'constitución', short: 'CON'},
+  {name: 'carisma', short: 'CAR'},
+  {name: 'inteligencia', short: 'INT'},
+  {name: 'percepción', short: 'PER'},
+];
+
 const rolClasses = [
   { name: "Druida",
     description: "Amos de la naturaleza. Combate o conjuros tanto de ataque como apoyo.",
@@ -60,4 +69,4 @@ const rolClasses = [
 
 ];
 
-export {rolClasses};
+export {rolClasses, rolCharStats};

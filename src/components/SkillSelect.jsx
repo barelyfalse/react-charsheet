@@ -8,11 +8,7 @@ import Dialog from '@mui/material/Dialog';
 import RadioGroup from '@mui/material/RadioGroup';
 import Radio from '@mui/material/Radio';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Accordion from '@mui/material/Accordion';
-import AccordionSummary from '@mui/material/AccordionSummary';
-import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
-import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Paper from '@mui/material/Paper';
 
 function SkillSelect(props) {
@@ -71,7 +67,7 @@ function SkillSelect(props) {
                 info = 'costo: ' + skill.cost + ', duración: ' + skill.duration;
               }
               return <Paper
-              
+              elevation={selectedRolClassSkills.includes(index) ? 6 : 4}
               sx={{
                 px: '1ch',
                 my: '.5ch',

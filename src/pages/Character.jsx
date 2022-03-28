@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Container, 
   Grid, 
   Card, 
@@ -26,30 +26,25 @@ import Skill from '../components/Skill';
 import Stat from '../components/Stat';
 import SkillSelect from '../components/SkillSelect';
 
-import { rolClasses } from '../data/Data.js';
+import { rolClasses, rolCharStats } from '../data/Data.js';
+import { useLocalStorage } from "../useLocalStorage";
 
 function Character() {
   var charData = {
+    charId: 123,
     name: "Nombre",
     rolClass: 0,
     lvl: 1,
     xp: 0,
     actualPv: 10,
     totalPv: 10,
-    stats: [
-      {name: 'FUE', full: 'Fuerza', value: 1}, 
-      {name: 'DES', full: 'Destreza', value: 6}, 
-      {name: 'CON', full: 'Constitución', value: 6},
-      {name: 'CAR', full: 'Carisma', value: 2},
-      {name: 'INT', full: 'Inteligencia', value: 2}, 
-      {name: 'PER', full: 'Percepción', value: 3},
-    ],
-    skills: [0, 2],
+    stats: [ 2, 4, 3, 5, 2, 3 ],
+    skills: [ 0, 2 ],
     actualPod: 10,
   };
 
   //chardata controllers
-  const [charStats, setCharStats] = useState(charData.stats.map(stat =>stat.value));
+  const [charStats, setCharStats] = useLocalStorage('stats', []);
 
   function updateStats(statId, value) {
     //console.log('trying to update ' + statId + ' with ' + value);
@@ -60,7 +55,7 @@ function Character() {
     })
   }
 
-  const [charSkills, setCharSkills] = useState(charData.skills.map(skill => skill));
+  const [charSkills, setCharSkills] = useLocalStorage('skills', []);
 
   function addSkill(skillId) {
     setCharSkills(prevSkills => {
@@ -70,11 +65,33 @@ function Character() {
     })
   }
 
+  //name controllers 
+  const [charName, setCharName] = useLocalStorage('name', '');
+
+  const handleNameUpdate = (event) => {
+    setCharName(event.target.value);
+  }
+
+  //total pv controllers
+  const [totalPv, setTotalPv] = useLocalStorage('totalPv', 0);
+
+  const handleTotalPvUpdate = (event) => {
+    if(!isNaN(event.target.value) && !isNaN(parseInt(event.target.value))) {
+      setTotalPv(parseInt(event.target.value));
+    }
+  }
+
   //pv controllers
-  const [pv, setPv] = useState(charData.actualPv)
+  const [pv, setPv] = useLocalStorage('actualPv', 0);
 
   function addPv() {
-    setPv(prevPv => prevPv + 1);
+    setPv(prevPv => { 
+      if(prevPv < totalPv) {
+        return prevPv + 1;
+      } else {
+        return prevPv;
+      }
+    });
   }
 
   function decreasePv() {
@@ -94,11 +111,20 @@ function Character() {
   }
 
   //class select controllers
-  const [rolClass, setRolClass] = useState(charData.rolClass);
+  const [rolClass, setRolClass] = useLocalStorage('rolClass', '');
 
   const handleClassSelChange = (event) => {
     setRolClass(event.target.value);
   };
+
+  //lvl controllers
+  const [lvl, setLvl] = useLocalStorage('lvl', 1);
+
+  const handleLvlUpdate = (event) => {
+    if(!isNaN(event.target.value) && !isNaN(parseInt(event.target.value))) {
+      setLvl(parseInt(event.target.value));
+    }
+  }
 
   //pod controllers
   const [pod, setPod] = useState(charData.actualPod)
@@ -164,7 +190,8 @@ function Character() {
                 id="outlined-basic" 
                 label="Nombre" 
                 variant="outlined" 
-                
+                value={charName}
+                onChange={handleNameUpdate}
                 />
                 <FormControl fullWidth sx={{ mt: '2ch' }}>
                   <InputLabel id="rol-class-selection-lbl">Clase</InputLabel>
@@ -227,6 +254,8 @@ function Character() {
                     id="totalPvText" 
                     variant="outlined"
                     inputProps={{ style: { textAlign: 'center' }, disabled: false}}
+                    onChange={handleTotalPvUpdate}
+                    value={totalPv}
                     />
                   </Box>
                 </Box>
@@ -244,6 +273,8 @@ function Character() {
                       id="lvlText" 
                       variant="outlined"
                       inputProps={{ style: { textAlign: 'center' }}}
+                      value={lvl}
+                      onChange={handleLvlUpdate}
                       />
                     </Box>
                   </Box>
@@ -274,12 +305,12 @@ function Character() {
               <CardContent>
                 <Stack>
                   {
-                    charData.stats.map((stat, index) => {
+                    rolCharStats.map((stat, index) => {
                       return <Stat 
                       key={index}
                       statIndex={index} 
-                      statName={stat.name} 
-                      fullStat={stat.full} 
+                      statName={stat.short} 
+                      fullStat={stat.name} 
                       statValue={charStats[index]} 
                       updateStatState={updateStats} 
                       />
