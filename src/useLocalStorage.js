@@ -6,19 +6,19 @@ function getStoredCharData(key, defaultValue) {
   if(saved === null) {
     var charData = {
       charId: 123,
-      name: "",
-      rolClass: 0,
+      name: '',
+      rolClass: ' ',
       lvl: 1,
       xp: 0,
       actualPv: 0,
       totalPv: 0,
-      stats: [ ],
+      stats: [ 0, 0, 0, 0, 0, 0 ],
       skills: [ ],
       actualPod: 0,
     };
     saved = JSON.stringify(charData)
   }
-  const initial = JSON.parse(saved)[key];
+  var initial = JSON.parse(saved)[key];
   return initial || defaultValue;
 }
 
@@ -28,8 +28,8 @@ function getStoredCharDataFull() {
   if(saved === null) {
     var charData = {
       charId: 123,
-      name: "",
-      rolClass: null,
+      name: '',
+      rolClass: ' ',
       lvl: 1,
       xp: 0,
       currentPv: 0,

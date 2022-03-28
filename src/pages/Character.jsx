@@ -116,7 +116,7 @@ function Character() {
   const [rolClass, setRolClass] = useLocalStorage('rolClass', '');
 
   const handleClassSelChange = (event) => {
-    setRolClass(event.target.value);
+    setRolClass(event.target.value.toString());
   };
 
   //lvl controllers
@@ -206,7 +206,6 @@ function Character() {
                 />
                 <FormControl fullWidth sx={{ mt: '2ch' }}>
                   <TextField
-                    labelId="rol-class-selection-lbl"
                     id="rol-class-selection"
                     select
                     size="small"
