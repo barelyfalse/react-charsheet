@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
+import { v4 as uuid } from 'uuid';
 import { Container, 
   Grid, 
   Card, 
@@ -36,11 +37,12 @@ function Character() {
     rolClass: 0,
     lvl: 1,
     xp: 0,
-    actualPv: 10,
-    totalPv: 10,
+    currentPv: 10,
+    maxPv: 10,
     stats: [ 2, 4, 3, 5, 2, 3 ],
     skills: [ 0, 2 ],
-    actualPod: 10,
+    currentPod: 10,
+    maxPod: 10
   };
 
   //chardata controllers
@@ -72,21 +74,21 @@ function Character() {
     setCharName(event.target.value);
   }
 
-  //total pv controllers
-  const [totalPv, setTotalPv] = useLocalStorage('totalPv', 0);
+  //max pv controllers
+  const [currentPv, setCurrentPv] = useLocalStorage('maxPv', 0);
 
-  const handleTotalPvUpdate = (event) => {
+  const handleCurrentPvUpdate = (event) => {
     if(!isNaN(event.target.value) && !isNaN(parseInt(event.target.value))) {
-      setTotalPv(parseInt(event.target.value));
+      setCurrentPv(parseInt(event.target.value));
     }
   }
 
   //pv controllers
-  const [pv, setPv] = useLocalStorage('actualPv', 0);
+  const [pv, setPv] = useLocalStorage('currentPv', 0);
 
   function addPv() {
     setPv(prevPv => { 
-      if(prevPv < totalPv) {
+      if(prevPv < currentPv) {
         return prevPv + 1;
       } else {
         return prevPv;
@@ -127,7 +129,7 @@ function Character() {
   }
 
   //pod controllers
-  const [pod, setPod] = useState(charData.actualPod)
+  const [pod, setPod] = useLocalStorage('currentPod', 0);
 
   function addPod() {
     setPod(prevPod => prevPod + 1);
@@ -233,7 +235,6 @@ function Character() {
                       fullWidth
                       id="pvText" 
                       variant="outlined"
-                      defaultValue={pv}
                       value={pv}
                       inputProps={{ style: { textAlign: 'center' }}}
                       onChange={handlePvUpdate}
@@ -251,11 +252,11 @@ function Character() {
                     hiddenLabel
                     size="small"
                     fullWidth
-                    id="totalPvText" 
+                    id="currentPvText" 
                     variant="outlined"
                     inputProps={{ style: { textAlign: 'center' }, disabled: false}}
-                    onChange={handleTotalPvUpdate}
-                    value={totalPv}
+                    onChange={handleCurrentPvUpdate}
+                    value={currentPv}
                     />
                   </Box>
                 </Box>
@@ -370,7 +371,6 @@ function Character() {
                       size="small"
                       id="podText" 
                       variant="outlined"
-                      defaultValue={pod}
                       value={pod}
                       inputProps={{ style: { textAlign: 'center'}}}
                       onChange={handlePodUpdate}

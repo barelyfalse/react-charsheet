@@ -73,10 +73,10 @@ function SkillSelect(props) {
                 my: '.5ch',
                 py: '1ch',
               }}
+              key={index}
               >
                 <FormControlLabel
                   value={index}
-                  key={index}
                   control={<Radio />}
                   label={skill.name}
                   disabled={selectedRolClassSkills.includes(index)}
