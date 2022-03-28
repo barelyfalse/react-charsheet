@@ -43,7 +43,9 @@ function Skill({rolClass, skillIndex, reducePod }) {
 
   return (
     <Box>
-      <Paper sx={{
+      <Paper
+        elevation='1'
+        sx={{
         py: '1ch',
         px: '1.5ch',
         mt: '1ch',

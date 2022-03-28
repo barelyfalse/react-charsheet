@@ -29,7 +29,7 @@ import SkillSelect from '../components/SkillSelect';
 import { rolClasses } from '../data/Data.js';
 
 function Character() {
-  const charData = {
+  var charData = {
     name: "Nombre",
     rolClass: 0,
     lvl: 1,
@@ -57,6 +57,16 @@ function Character() {
       const newCharStats = [...prevCharStats];
       newCharStats[statId] = value;
       return newCharStats;
+    })
+  }
+
+  const [charSkills, setCharSkills] = useState(charData.skills.map(skill => skill));
+
+  function addSkill(skillId) {
+    setCharSkills(prevSkills => {
+      var newSkills = [...prevSkills];
+      newSkills.push(parseInt(skillId));
+      return newSkills;
     })
   }
 
@@ -136,8 +146,8 @@ function Character() {
     setskillSelectOpen(false);
 
     if (newValue) {
-      setskillSelectValue(newValue);
-      console.log(newValue);
+      setskillSelectValue( parseInt(newValue));
+      addSkill(newValue);
     }
   };
 
@@ -169,7 +179,7 @@ function Character() {
                     <MenuItem disabled value=""><em>Clase</em></MenuItem>
                     {
                       rolClasses.map(stat => stat.name).map((rolClass, index) => {
-                        return <MenuItem value={index}>{rolClass}</MenuItem>
+                        return <MenuItem key={index} value={index}>{rolClass}</MenuItem>
                       })
                     }
                   </Select>
@@ -266,6 +276,7 @@ function Character() {
                   {
                     charData.stats.map((stat, index) => {
                       return <Stat 
+                      key={index}
                       statIndex={index} 
                       statName={stat.name} 
                       fullStat={stat.full} 
@@ -359,18 +370,18 @@ function Character() {
                   </Box>
                 </Box>
                 <SkillSelect 
-                  id="ringtone-menu"
+                  id="skill-selection-menu"
                   keepMounted
                   open={skillSelectOpen}
                   onClose={handleSkillSelectClose}
                   value={skillSelectValue}
                   rolClassSkills={rolClasses[charData.rolClass].skills}
-                  selectedRolClassSkills={charData.skills}
+                  selectedRolClassSkills={charSkills}
                 />
                 <Box>
                   <Stack>
                     {
-                      charData.skills.map((skillid, index) => {
+                      charSkills.map((skillid, index) => {
                         return <Skill key={index} rolClass={charData.rolClass} skillIndex={skillid} reducePod={reducePodSkill} />
                       })
                     }

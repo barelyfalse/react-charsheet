@@ -8,12 +8,12 @@ import Dialog from '@mui/material/Dialog';
 import RadioGroup from '@mui/material/RadioGroup';
 import Radio from '@mui/material/Radio';
 import FormControlLabel from '@mui/material/FormControlLabel';
-import Box from '@mui/material/Box';
 import Accordion from '@mui/material/Accordion';
 import AccordionSummary from '@mui/material/AccordionSummary';
 import AccordionDetails from '@mui/material/AccordionDetails';
 import Typography from '@mui/material/Typography';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import Paper from '@mui/material/Paper';
 
 function SkillSelect(props) {
   const { onClose, value: valueProp, open, rolClassSkills, selectedRolClassSkills, ...other } = props;
@@ -22,7 +22,7 @@ function SkillSelect(props) {
 
   React.useEffect(() => {
     if (!open) {
-      setValue(valueProp);
+      setValue(null);
     }
   }, [valueProp, open]);
 
@@ -53,7 +53,7 @@ function SkillSelect(props) {
       open={open}
       {...other}
     >
-      <DialogTitle>Nueva habilidad</DialogTitle>
+      <DialogTitle>Elegir nueva habilidad</DialogTitle>
       <DialogContent>
         <RadioGroup
           ref={radioGroupRef}
@@ -70,29 +70,29 @@ function SkillSelect(props) {
               } else {
                 info = 'costo: ' + skill.cost + ', duración: ' + skill.duration;
               }
-              return <Accordion disabled={selectedRolClassSkills.includes(index)}>
-                <AccordionSummary
-                  expandIcon={<ExpandMoreIcon />}
-                  aria-controls="panel1a-content"
-                  id="panel1a-header"
-                  sx={{my: '0'}}
-                >
-                  <FormControlLabel
-                    value={index}
-                    key={index}
-                    control={<Radio />}
-                    label={skill.name}
-                  />
-                </AccordionSummary>
-                <AccordionDetails>
-                  <Typography>
-                    {skill.description} 
-                  </Typography>
-                  <Typography>
-                    ({info})
-                  </Typography>
-                </AccordionDetails>
-              </Accordion>
+              return <Paper
+              
+              sx={{
+                px: '1ch',
+                my: '.5ch',
+                py: '1ch',
+              }}
+              >
+                <FormControlLabel
+                  value={index}
+                  key={index}
+                  control={<Radio />}
+                  label={skill.name}
+                  disabled={selectedRolClassSkills.includes(index)}
+                />
+                <Typography sx={selectedRolClassSkills.includes(index) ? {color: 'gray'}:{}}>
+                  {skill.description}
+                </Typography>
+                <Typography sx={{color: 'gray', mt: '1ch'}}>
+                  {!selectedRolClassSkills.includes(index) ? info : ''}
+                </Typography>
+                
+              </Paper>
             })
           }
         </RadioGroup>
@@ -111,7 +111,7 @@ SkillSelect.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
   value: PropTypes.number.isRequired,
-  rolClassSkills: PropTypes.object.isRequired,
+  rolClassSkills: PropTypes.array.isRequired,
   selectedRolClassSkills: PropTypes.array.isRequired
 };
 
