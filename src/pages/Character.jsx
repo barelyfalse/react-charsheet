@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { v4 as uuid } from 'uuid';
 import { Container, 
   Grid, 
@@ -46,7 +46,7 @@ function Character() {
   };
 
   //chardata controllers
-  const [charStats, setCharStats] = useLocalStorage('stats', []);
+  const [charStats, setCharStats] = useLocalStorage('stats', [0, 0, 0, 0, 0, 0]);
 
   function updateStats(statId, value) {
     //console.log('trying to update ' + statId + ' with ' + value);
@@ -172,18 +172,18 @@ function Character() {
   }
 
   //skill selection controllers
-  const [skillSelectOpen, setskillSelectOpen] = React.useState(false);
-  const [skillSelectValue, setskillSelectValue] = React.useState(0);
+  const [skillSelectOpen, setSkillSelectOpen] = React.useState(false);
+  const [skillSelectValue, setSkillSelectValue] = React.useState(0);
 
   const handleClickSkillSelect = () => {
-    setskillSelectOpen(true);
+    setSkillSelectOpen(true);
   };
 
   const handleSkillSelectClose = (newValue) => {
-    setskillSelectOpen(false);
+    setSkillSelectOpen(false);
 
     if (newValue) {
-      setskillSelectValue( parseInt(newValue));
+      setSkillSelectValue( parseInt(newValue));
       addSkill(newValue);
     }
   };
@@ -205,13 +205,13 @@ function Character() {
                 onChange={handleNameUpdate}
                 />
                 <FormControl fullWidth sx={{ mt: '2ch' }}>
-                  <InputLabel id="rol-class-selection-lbl">Clase</InputLabel>
-                  <Select
+                  <TextField
                     labelId="rol-class-selection-lbl"
                     id="rol-class-selection"
+                    select
                     size="small"
-                    value={rolClass}
                     label="Clase"
+                    value={rolClass}
                     onChange={handleClassSelChange}
                   >
                     <MenuItem disabled value=""><em>Clase</em></MenuItem>
@@ -220,7 +220,7 @@ function Character() {
                         return <MenuItem key={index} value={index}>{rolClass}</MenuItem>
                       })
                     }
-                  </Select>
+                  </TextField>
                 </FormControl>
               </CardContent>
             </Card>
@@ -234,7 +234,7 @@ function Character() {
                     {'PV:'}
                   </Typography>
                   <ButtonGroup variant="outlined" aria-label="primary button group">
-                    <IconButton aria-label="delete" size="small" onClick={() => {decreasePv();}}>
+                    <IconButton color="primary" aria-label="delete" size="small" onClick={() => {decreasePv();}}>
                       <RemoveCircleRoundedIcon fontSize="inherit"/>
                     </IconButton>
                     <Box sx={{mt: '0ch'}}>
@@ -249,7 +249,7 @@ function Character() {
                       onChange={handlePvUpdate}
                       />
                     </Box>
-                    <IconButton aria-label="delete" size="small" onClick={() => {addPv();}}>
+                    <IconButton color="primary" aria-label="delete" size="small" onClick={() => {addPv();}}>
                       <AddCircleRoundedIcon fontSize="inherit" />
                     </IconButton>
                   </ButtonGroup>
@@ -335,7 +335,7 @@ function Character() {
           </Grid>
           <Grid item md={2} xs={6}>
             <Card sx={{height: '1'}}>
-              <CardContent sx={{height: '95%', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
+              <CardContent sx={{height: '1', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
                 <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-around'}}>
                   <Typography sx={{fontWeight: 'bold', width: '30%'}}>
                     {'ATQ:'}

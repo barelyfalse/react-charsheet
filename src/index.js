@@ -9,7 +9,7 @@ ReactDOM.render(
   <React.StrictMode>
     <Router
     >
-      <App />
+      <App sx={{backgroundColor: 'black'}} />
     </Router>
   </React.StrictMode>,
   document.getElementById('root')

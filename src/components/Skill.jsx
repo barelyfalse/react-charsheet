@@ -65,7 +65,13 @@ function Skill({rolClass, skillIndex, reducePod }) {
           
           <Tooltip title="Usar habilidad">
             <div>
-              <Button variant="contained" disabled={!info.localeCompare('pasiva')} size="small" endIcon={<DoubleArrowRoundedIcon />} onClick={handleClickUseSkill}>
+              <Button 
+                variant="contained" 
+                disabled={!info.localeCompare('pasiva')} 
+                size="small" 
+                endIcon={<DoubleArrowRoundedIcon />} 
+                onClick={handleClickUseSkill}
+              >
                 Usar
               </Button>
             </div>
