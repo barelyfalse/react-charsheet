@@ -312,8 +312,8 @@ function Character() {
           </Grid>
 
           <Grid item md={2} xs={6}>
-            <Card>
-              <CardContent>
+            <Card sx={{height: '1'}}>
+              <CardContent sx={{height: '1', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
                 <Stack>
                   {
                     rolCharStats.map((stat, index) => {
@@ -328,7 +328,6 @@ function Character() {
                     })
                   }
                 </Stack>
-
               </CardContent>
             </Card>
           </Grid>
@@ -396,7 +395,7 @@ function Character() {
           </Grid>
 
           <Grid item md={8} xs={12}>
-            <Card sx={{height: '1'}}>
+            <Card sx={{}}>
               <CardContent>
                 <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
                   <Typography variant="h6">
@@ -435,7 +434,9 @@ function Character() {
           <Grid item sm={6} xs={12}>
             <Card>
               <CardContent>
-                Equipo
+                <Typography variant="h6">
+                  Equipo
+                </Typography>
               </CardContent>
             </Card>
           </Grid>
