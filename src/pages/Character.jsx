@@ -9,10 +9,8 @@ import { Container,
   IconButton,
   Typography,
   Box,
-  InputLabel,
   MenuItem,
   FormControl,
-  Select,
   Stack,
   Tooltip,
   Button
@@ -27,7 +25,7 @@ import Skill from '../components/Skill';
 import Stat from '../components/Stat';
 import SkillSelect from '../components/SkillSelect';
 
-import { rolClasses, rolCharStats } from '../data/Data.js';
+import { rolClasses, rolCharStats, rolItemTypes } from '../data/Data.js';
 import { useLocalStorage } from "../useLocalStorage";
 
 function Character() {
@@ -42,7 +40,12 @@ function Character() {
     stats: [ 2, 4, 3, 5, 2, 3 ],
     skills: [ 0, 2 ],
     currentPod: 10,
-    maxPod: 10
+    maxPod: 10,
+    inventory: [ 
+      { qty: 1, item: {type: 1, name: 'Espada pro', description: 'Espada olvidada', mods: { dmg: 1 }}},
+      { qty: 1, item: {type: 2, name: 'Peto pro', description: 'Peto oxidado', mods: { def: 1 }}},
+      { qty: 2, item: {type: 3, name: 'Poción de resistencia', description: 'Espada olvidada', mods: { dmg: 1 }}},
+    ]
   };
 
   //chardata controllers
@@ -117,6 +120,13 @@ function Character() {
 
   const handleClassSelChange = (event) => {
     setRolClass(event.target.value.toString());
+  };
+
+  //race select controllers
+  const [rolRace, setRolRace] = useLocalStorage('rolRace', '');
+
+  const handleRaceSelChange = (event) => {
+    setRolRace(event.target.value.toString());
   };
 
   //lvl controllers
@@ -204,23 +214,57 @@ function Character() {
                 value={charName}
                 onChange={handleNameUpdate}
                 />
-                <FormControl fullWidth sx={{ mt: '2ch' }}>
-                  <TextField
-                    id="rol-class-selection"
-                    select
-                    size="small"
-                    label="Clase"
-                    value={rolClass}
-                    onChange={handleClassSelChange}
-                  >
-                    <MenuItem disabled value=""><em>Clase</em></MenuItem>
-                    {
-                      rolClasses.map(stat => stat.name).map((rolClass, index) => {
-                        return <MenuItem key={index} value={index}>{rolClass}</MenuItem>
-                      })
-                    }
-                  </TextField>
-                </FormControl>
+                <Grid container spacing={1}>
+                  <Grid item md={8} sm={6} xs={6}>
+                    <FormControl fullWidth sx={{ mt: '2ch' }}>
+                      <TextField
+                        id="rol-class-selection"
+                        select
+                        size="small"
+                        label="Clase"
+                        value={rolClass}
+                        onChange={handleClassSelChange}
+                      >
+                        <MenuItem disabled value=""><em>Clase</em></MenuItem>
+                        {
+                          rolClasses.map(stat => stat.name).map((rolClass, index) => {
+                            return <MenuItem key={index} value={index}>{rolClass}</MenuItem>
+                          })
+                        }
+                      </TextField>
+                    </FormControl>
+                  </Grid>
+                  
+                  <Grid item md={4} sm={6} xs={6}>
+                    <FormControl fullWidth sx={{ mt: '2ch' }}>
+                      <TextField
+                        id="rol-race-selection"
+                        select
+                        size="small"
+                        label="Raza"
+                        value={rolRace}
+                        onChange={handleRaceSelChange}
+                      >
+                        <MenuItem disabled value=""><em>Raza</em></MenuItem>
+                        {
+                          [
+                            'Humano', 
+                            'Enano',
+                            'Elfo',
+                            'Medio elfo',
+                            'Nomo',
+                            'Draconito',
+                            'Medio orco',
+                          ].map((rolClass, index) => {
+                            return <MenuItem key={index} value={index}>{rolClass}</MenuItem>
+                          })
+                        }
+                      </TextField>
+                    </FormControl>
+                  </Grid>
+                </Grid>
+                
+
               </CardContent>
             </Card>
           </Grid>
@@ -311,7 +355,7 @@ function Character() {
             </Card>
           </Grid>
 
-          <Grid item md={2} xs={6}>
+          <Grid item md={3} xs={6}>
             <Card sx={{height: '1'}}>
               <CardContent sx={{height: '1', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
                 <Stack>
@@ -334,35 +378,22 @@ function Character() {
           <Grid item md={2} xs={6}>
             <Card sx={{height: '1'}}>
               <CardContent sx={{height: '1', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
-                <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-around'}}>
-                  <Typography sx={{fontWeight: 'bold', width: '30%'}}>
-                    {'ATQ:'}
-                  </Typography>
-                  
-                  <Typography sx={{fontWeight: 'bold', width: '25%', textAlign: 'center'}} variant="h6">
-                    {'+99'}
-                  </Typography>
-                </Box>
-
-                <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-around'}}>
-                  <Typography sx={{fontWeight: 'bold', width: '30%'}}>
-                    {'DEF:'}
-                  </Typography>
-
-                  <Typography sx={{fontWeight: 'bold', width: '25%', textAlign: 'center'}} variant="h6">
-                    {'+99'}
-                  </Typography>
-                </Box>
-
-                <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-around'}}>
-                  <Typography sx={{fontWeight: 'bold', width: '30%'}}>
-                    {'POD:'}
-                  </Typography>
-                  
-                  <Typography sx={{fontWeight: 'bold', width: '25%', textAlign: 'center'}} variant="h6">
-                    {'+99'}
-                  </Typography>
-                </Box>
+                {
+                  ['ATQ', 'DEF', 'INS', 'POD'].map((mod, index) =>{
+                    return <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-around'}}>
+                      <Typography sx={{fontWeight: 'bold', width: '30%', textAlign: 'center' }}>
+                        {mod+':'}
+                      </Typography>
+                      <Typography sx={{fontWeight: 'bold', width: '25%', textAlign: 'center'}} variant="h6">
+                        {'+99'}
+                      </Typography>
+                      <Typography sx={{width: '20%', textAlign: 'center'}} color='secondary'>
+                        {'+0'}
+                      </Typography>
+                    </Box>
+                  })
+                }
+                
                 <Box sx={{display: 'flex', justifyContent: 'center'}}>
                   <Box sx={{
                     display: 'flex', 
@@ -370,7 +401,7 @@ function Character() {
                     justifyContent: 'center', 
                     maxWidth: '20ch'
                   }}>
-                    <IconButton aria-label="delete" size="small" onClick={() => {decreasePod()}}>
+                    <IconButton color="primary" aria-label="delete" size="small" onClick={() => {decreasePod()}}>
                       <RemoveCircleRoundedIcon fontSize="inherit"/>
                     </IconButton>
                     <Box sx={{mt: '0ch', width: '1'}}>
@@ -385,7 +416,7 @@ function Character() {
                       onChange={handlePodUpdate}
                       />
                     </Box>
-                    <IconButton aria-label="delete" size="small" onClick={() => {addPod()}}>
+                    <IconButton color="primary" aria-label="delete" size="small" onClick={() => {addPod()}}>
                       <AddCircleRoundedIcon fontSize="inherit" />
                     </IconButton>
                   </Box>
@@ -394,7 +425,7 @@ function Character() {
             </Card>
           </Grid>
 
-          <Grid item md={8} xs={12}>
+          <Grid item md={7} xs={12}>
             <Card sx={{}}>
               <CardContent>
                 <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
@@ -403,7 +434,7 @@ function Character() {
                   </Typography>
                   <Box>
                     <Tooltip title="Añadir habilidad">
-                      <IconButton color="primary" aria-label="add to shopping cart" onClick={handleClickSkillSelect}>
+                      <IconButton color="primary" aria-label="Añadir habilidad" onClick={handleClickSkillSelect}>
                         <AddRoundedIcon />
                       </IconButton>
                     </Tooltip>
@@ -434,9 +465,11 @@ function Character() {
           <Grid item sm={6} xs={12}>
             <Card>
               <CardContent>
-                <Typography variant="h6">
-                  Equipo
-                </Typography>
+                <Box>
+                  <Typography variant="h6">
+                    Equipo
+                  </Typography>
+                </Box>
               </CardContent>
             </Card>
           </Grid>
@@ -444,13 +477,26 @@ function Character() {
           <Grid item sm={6} xs={12}>
             <Card>
               <CardContent>
-                Inventario
+                <Box>
+                  <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+                    <Typography variant="h6">
+                      Inventario
+                    </Typography>
+                    <Box>
+                      <Tooltip title="Añadir habilidad">
+                        <IconButton color="primary" aria-label="Añadir al inventario">
+                          <AddRoundedIcon />
+                        </IconButton>
+                      </Tooltip>
+                    </Box>
+                  </Box>
+                </Box>
               </CardContent>
             </Card>
           </Grid>
 
           <Grid item sm={12} xs={12}>
-            <Box sx={{width: 1, mt: '1ch', display: 'flex', justifyContent: 'center'}}>
+            <Box sx={{width: 1, my: '1ch', display: 'flex', justifyContent: 'center'}}>
               <Tooltip title="Editar hoja">
                 <Button variant="contained" endIcon={<EditRoundedIcon />}>
                   Editar

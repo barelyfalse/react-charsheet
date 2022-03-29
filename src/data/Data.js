@@ -7,6 +7,26 @@ const rolCharStats = [
   {name: 'percepción', short: 'PER'},
 ];
 
+const rolItemTypes = [
+  'Arma', 'Armadura', 'Consumible', 'Accesorio', 'Misceláneo'
+];
+
+const commonItems = [
+  { type: 1, 
+    name: 'Espada pro', 
+    description: 'Espada olvidada', 
+    mods: { dmg: 1 }
+  },
+  { type: 1, 
+    name: 'Espada pro', 
+    description: 'Espada olvidada', 
+    mods: { dmg: 1 }},
+  { type: 1, 
+    name: 'Espada pro', 
+    description: 'Espada olvidada', 
+    mods: { dmg: 1 }},
+]
+
 const rolClasses = [
   { name: "Druida",
     description: "Amos de la naturaleza. Combate o conjuros tanto de ataque como apoyo.",
@@ -42,7 +62,7 @@ const rolClasses = [
   { name: "Hechicero",
     description: "",
     advance: [
-      { level: 0, mods: { atq: 0, def: 0, int: 0, pod: 0} },
+      { level: 0, mods: { atq: 0, def: 0, ins: 0, pod: 0} },
     ],
     skills: [
       { name: "",
@@ -56,7 +76,7 @@ const rolClasses = [
   { name: "Mago",
     description: "",
     advance: [
-      { level: 0, mods: { atq: 0, def: 0, int: 0, pod: 0} },
+      { level: 0, mods: { atq: 0, def: 0, ins: 0, pod: 0} },
     ],
     skills: [
       { name: "",
@@ -69,4 +89,4 @@ const rolClasses = [
 
 ];
 
-export {rolClasses, rolCharStats};
+export {rolClasses, rolCharStats, rolItemTypes};

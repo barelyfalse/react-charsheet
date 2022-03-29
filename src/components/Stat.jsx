@@ -14,13 +14,13 @@ function Stat({statIndex, statName, fullStat, updateStatState, statValue}) {
   }
 
   return (
-    <Box sx={{display: 'flex', alignItems: 'center', mt: '1ch'}}>
+    <Box sx={{display: 'flex', alignItems: 'center', mt: '1ch', flexDirection: 'row', justifyContent: 'space-around'}}>
       <Tooltip title={fullStat}>
-        <Typography sx={{mr: '1ch', fontWeight: 'bold', width: '7ch'}}>
+        <Typography sx={{fontWeight: 'bold', width: '6ch', textAlign: 'center'}}>
           {statName}:
         </Typography>
       </Tooltip>
-      <Box sx={{mt: '0ch', width:'1'}}>
+      <Box sx={{width:'10ch'}}>
         <TextField 
         hiddenLabel
         size="small"
@@ -32,6 +32,11 @@ function Stat({statIndex, statName, fullStat, updateStatState, statValue}) {
         onChange={handleStatUpdate}
         />
       </Box>
+      <Tooltip title={'Modificador de raza'}>
+        <Typography color="secondary" sx={{ml: '1ch', fontWeight: 'bold', width: '4ch'}}>
+          {'+ 99'}
+        </Typography>
+      </Tooltip>
     </Box>
   )
 }

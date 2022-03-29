@@ -24,7 +24,7 @@ function App() {
       },
       secondary: {
         light: '#0066ff',
-        main: '#0044ff',
+        main: '#00ff5e',
         // dark: will be calculated from palette.secondary.main,
         contrastText: '#ffcc00',
       },
@@ -40,7 +40,9 @@ function App() {
 
   return (
     <>
+      <link href="https://fonts.googleapis.com/css2?family=Inspiration&display=swap" rel="stylesheet" /> 
       <ThemeProvider theme={darkTheme}>
+        
         <CssBaseline />
         <HeadBar />
         <Routes>
