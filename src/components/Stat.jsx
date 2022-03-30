@@ -33,8 +33,8 @@ function Stat({statIndex, statName, fullStat, updateStatState, statValue}) {
         />
       </Box>
       <Tooltip title={'Modificador de raza'}>
-        <Typography color="secondary" sx={{ml: '1ch', fontWeight: 'bold', width: '4ch'}}>
-          {'+ 99'}
+        <Typography color="secondary" sx={{ml: '1ch', width: '4ch', textAlign: 'center' }}>
+          {'+ 9'}
         </Typography>
       </Tooltip>
     </Box>

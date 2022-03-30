@@ -8,23 +8,31 @@ const rolCharStats = [
 ];
 
 const rolItemTypes = [
-  'Arma', 'Armadura', 'Consumible', 'Accesorio', 'Misceláneo'
+  'Arma', 'Accesorio', 'Consumible', 'Misceláneo'
 ];
 
 const commonItems = [
-  { type: 1, 
+  { id: '1',
+    type: 0, 
     name: 'Espada pro', 
-    description: 'Espada olvidada', 
-    mods: { dmg: 1 }
-  },
-  { type: 1, 
-    name: 'Espada pro', 
-    description: 'Espada olvidada', 
+    description: 'Una espada olvidada por los antiguos ocupantes de la ciudad.', 
     mods: { dmg: 1 }},
-  { type: 1, 
-    name: 'Espada pro', 
-    description: 'Espada olvidada', 
-    mods: { dmg: 1 }},
+  { id: '2',
+    type: 1, 
+    name: 'Peto del tonto', 
+    description: 'Peto mágico oxidado.', 
+    mods: { def: 1, per: 1, des: -1 }},
+  { id: '3',
+    type: 2, 
+    name: 'Poción de fuerza', 
+    description: 'Poción que mejora la fuerza del que la consume por un corto espacio de tiempo.', 
+    uses: 1,
+    duration: 2, 
+    mods: { fue: 1 }},
+  { id: '4',
+    type: 3,
+    name: 'Pase de la puerta del norte',
+    descripción: 'Un pase otorgado por el mismisimo Lord Carios para tener libre paso en la puerta norte de la muralla.'}
 ]
 
 const rolClasses = [
@@ -89,4 +97,4 @@ const rolClasses = [
 
 ];
 
-export {rolClasses, rolCharStats, rolItemTypes};
+export {rolClasses, rolCharStats, rolItemTypes, commonItems};

@@ -24,6 +24,7 @@ import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import Skill from '../components/Skill';
 import Stat from '../components/Stat';
 import SkillSelect from '../components/SkillSelect';
+import InventoryObject from '../components/InventoryObject';
 
 import { rolClasses, rolCharStats, rolItemTypes } from '../data/Data.js';
 import { useLocalStorage } from "../useLocalStorage";
@@ -42,9 +43,31 @@ function Character() {
     currentPod: 10,
     maxPod: 10,
     inventory: [ 
-      { qty: 1, item: {type: 1, name: 'Espada pro', description: 'Espada olvidada', mods: { dmg: 1 }}},
-      { qty: 1, item: {type: 2, name: 'Peto pro', description: 'Peto oxidado', mods: { def: 1 }}},
-      { qty: 2, item: {type: 3, name: 'Poción de resistencia', description: 'Espada olvidada', mods: { dmg: 1 }}},
+      { qty: 1, item: {
+        id: uuid(),
+        type: 0, 
+        name: 'Espada pro', 
+        description: 'Una espada olvidada por los antiguos ocupantes de la ciudad.', 
+        mods: { dmg: 1 }}},
+      { qty: 1, item:  { 
+        id: uuid(),
+        type: 1, 
+        name: 'Peto torpe', 
+        description: 'Peto mágico oxidado.', 
+        mods: { def: 2, per: 1, des: -1 }}},
+      { qty: 2, item: { 
+        id: uuid(),
+        type: 2, 
+        name: 'Poción de fuerza', 
+        description: 'Poción que mejora la fuerza del que la consume por un corto espacio de tiempo.', 
+        uses: 1,
+        duration: 2, 
+        mods: { fue: 1 }}},
+      { qty: 1, item: { 
+        id: uuid(),
+        type: 3,
+        name: 'Pase',
+        description: 'Un pase otorgado por el mismisimo Lord Carios para tener libre paso en la puerta norte de la muralla.'}},
     ]
   };
 
@@ -138,7 +161,7 @@ function Character() {
     }
   }
 
-  //lvl controllers
+  //xp controllers
   const [xp, setXp] = useLocalStorage('xp', 0);
 
   const handleXpUpdate = (event) => {
@@ -385,10 +408,10 @@ function Character() {
                         {mod+':'}
                       </Typography>
                       <Typography sx={{fontWeight: 'bold', width: '25%', textAlign: 'center'}} variant="h6">
-                        {'+99'}
+                        {'+9'}
                       </Typography>
                       <Typography sx={{width: '20%', textAlign: 'center'}} color='secondary'>
-                        {'+0'}
+                        {'+9'}
                       </Typography>
                     </Box>
                   })
@@ -462,7 +485,7 @@ function Character() {
             </Card>
           </Grid>
 
-          <Grid item sm={6} xs={12}>
+          <Grid item lg={6} md={12} xs={12}>
             <Card>
               <CardContent>
                 <Box>
@@ -474,22 +497,29 @@ function Character() {
             </Card>
           </Grid>
 
-          <Grid item sm={6} xs={12}>
+          <Grid item lg={6} md={12} xs={12}>
             <Card>
               <CardContent>
-                <Box>
-                  <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
-                    <Typography variant="h6">
-                      Inventario
-                    </Typography>
-                    <Box>
-                      <Tooltip title="Añadir habilidad">
-                        <IconButton color="primary" aria-label="Añadir al inventario">
-                          <AddRoundedIcon />
-                        </IconButton>
-                      </Tooltip>
-                    </Box>
+                <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
+                  <Typography variant="h6">
+                    Inventario
+                  </Typography>
+                  <Box>
+                    <Tooltip title="Añadir al inventario">
+                      <IconButton color="primary" aria-label="Añadir al inventario">
+                        <AddRoundedIcon />
+                      </IconButton>
+                    </Tooltip>
                   </Box>
+                </Box>
+                <Box>
+                  <Stack>
+                    {
+                      charData.inventory.map((slot, index) => {
+                        return <InventoryObject key={index} qty={slot.qty} item={slot.item} />
+                      })
+                    }
+                  </Stack>
                 </Box>
               </CardContent>
             </Card>
