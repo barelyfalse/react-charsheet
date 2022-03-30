@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { rolItemTypes } from '../data/Data.js';
+import { rolItemTypes, rolCharStats } from '../data/Data.js';
 import { 
   Box,
   Typography, 
@@ -96,18 +96,18 @@ function ModificatorDetails(props) {
   */
   return (
     <Grid item xs={12}>
-      <Box sx={{display: 'flex', justifyContent: 'center', mt: '1ch'}}>
+      <Stack direction="row" justifyContent="center" spacing={2} sx={{mt: '1ch'}}>
         {
           Object.getOwnPropertyNames(props.item.mods).map((mod, index) => {
             return <Chip 
               key={index} 
               label={mod.toUpperCase() + ' ' + props.item.mods[mod]}
               color={props.item.mods[mod] > 0 ? 'success' : 'error'}
-              sx={{mx: '1ch'}}
+              variant={rolCharStats.map((skill) => { return skill.short }).includes(mod.toUpperCase()) ? "outlined" : ""}
             />
           })
         }
-      </Box>
+      </Stack>
     </Grid>
   );
 }
