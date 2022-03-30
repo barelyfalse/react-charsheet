@@ -13,7 +13,9 @@ import { Container,
   FormControl,
   Stack,
   Tooltip,
-  Button
+  Button,
+  OutlinedInput,
+  InputAdornment
 } from '@mui/material';
 
 import RemoveCircleRoundedIcon from '@mui/icons-material/RemoveCircleRounded';
@@ -336,44 +338,41 @@ function Character() {
                   </Box>
                 </Box>
 
-                <Box sx={{display: 'flex', alignItems: 'center', mt: '2ch'}}>
-                  <Box sx={{display: 'flex', alignItems: 'center', width: 1/2}}>
-                    <Typography sx={{mr: '1ch', fontWeight: 'bold' }}>
-                      {'Nivel:'}
-                    </Typography>
-                    <Box sx={{mt: '0ch'}}>
-                      <TextField 
-                      hiddenLabel
+                <Stack direction="row" spacing={2} sx={{mt: '2ch'}}>
+                  <FormControl>
+                    <OutlinedInput
+                      id="lvl-tex" 
                       size="small"
-                      fullWidth
-                      id="lvlText" 
-                      variant="outlined"
-                      inputProps={{ style: { textAlign: 'center' }}}
                       value={lvl}
                       onChange={handleLvlUpdate}
-                      />
-                    </Box>
-                  </Box>
-                  
-                  <Box sx={{display: 'flex', alignItems: 'center', width: 1/2}}>
-                    <Typography sx={{mx: '1ch', fontWeight: 'bold'}}>
-                      {'XP:'}
-                    </Typography>
-                    <Box sx={{mt: '0ch'}}>
-                      <TextField 
-                      hiddenLabel
+                      startAdornment={
+                        <Tooltip title={'Nivel del personaje'}>
+                          <InputAdornment position="start">
+                            {'Nivel:'}
+                          </InputAdornment>
+                        </Tooltip>
+                      }
+                      inputProps={{ style: { textAlign: 'center'} }}
+                    />
+                  </FormControl>
+              
+                  <FormControl>
+                    <OutlinedInput
+                      id="xp-text" 
                       size="small"
-                      fullWidth
-                      id="xpText" 
-                      variant="outlined"
-                      inputProps={{ style: { textAlign: 'center' }}}
-                      onChange={handleXpUpdate}
                       value={xp}
-                      />
-                    </Box>
-                  </Box>
-                  
-                </Box>
+                      onChange={handleXpUpdate}
+                      startAdornment={
+                        <Tooltip title={'Puntos de experiencia'}>
+                          <InputAdornment position="start">
+                            {'XP:'}
+                          </InputAdornment>
+                        </Tooltip>
+                      }
+                      inputProps={{ style: { textAlign: 'center'} }}
+                    />
+                  </FormControl>
+                </Stack>
               </CardContent>
             </Card>
           </Grid>

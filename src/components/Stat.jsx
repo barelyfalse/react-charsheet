@@ -3,7 +3,11 @@ import {
   TextField, 
   Typography,
   Box,
-  Tooltip
+  Tooltip,
+  FormControl,
+  OutlinedInput,
+  InputAdornment,
+  Stack
 } from '@mui/material';
 
 function Stat({statIndex, statName, fullStat, updateStatState, statValue}) {
@@ -14,30 +18,35 @@ function Stat({statIndex, statName, fullStat, updateStatState, statValue}) {
   }
 
   return (
-    <Box sx={{display: 'flex', alignItems: 'center', mt: '1ch', flexDirection: 'row', justifyContent: 'space-around'}}>
-      <Tooltip title={fullStat}>
-        <Typography sx={{fontWeight: 'bold', width: '6ch', textAlign: 'center'}}>
-          {statName}:
-        </Typography>
-      </Tooltip>
-      <Box sx={{width:'10ch'}}>
-        <TextField 
-        hiddenLabel
-        size="small"
-        fullWidth
-        id={'stat' + statIndex}
-        variant="outlined"
-        inputProps={{min: 0, style: { textAlign: 'center' }}}
-        value={statValue}
-        onChange={handleStatUpdate}
+    <Stack 
+      direction="row"
+      justifyContent="space-around"
+      alignItems="center"
+      spacing={1}
+      sx={{mt: '1ch'}}
+    >
+      <FormControl sx={{width: '15ch'}}>
+        <OutlinedInput
+          id="item-detail" 
+          size="small"
+          value={statValue}
+          onChange={handleStatUpdate}
+          startAdornment={
+            <Tooltip title={fullStat}>
+              <InputAdornment position="start">
+                {statName}
+              </InputAdornment>
+            </Tooltip>
+          }
+          inputProps={{ style: { textAlign: 'center'} }}
         />
-      </Box>
+      </FormControl>
       <Tooltip title={'Modificador de raza'}>
         <Typography color="secondary" sx={{ml: '1ch', width: '4ch', textAlign: 'center' }}>
           {'+ 9'}
         </Typography>
       </Tooltip>
-    </Box>
+    </Stack>
   )
 }
 
