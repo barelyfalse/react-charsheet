@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { v4 as uuid } from 'uuid';
 import { 
   TextField, 
   Typography,
@@ -19,6 +20,7 @@ function Stat({statIndex, statName, fullStat, updateStatState, statValue}) {
 
   return (
     <Stack 
+      key={uuid()}
       direction="row"
       justifyContent="space-around"
       alignItems="center"

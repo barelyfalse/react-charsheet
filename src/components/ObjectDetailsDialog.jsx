@@ -31,7 +31,7 @@ function BasicDetails(props) {
           <OutlinedInput
             id="item-detail" 
             value={
-              props.item.type === 0 ? props.item.mods['dmg'] : props.item.mods['def']
+              props.item.type === 0 ? props.item['dmg'] : props.item.mods['def']
             }
             startAdornment={<InputAdornment position="start">
             {

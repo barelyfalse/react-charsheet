@@ -27,6 +27,7 @@ import Skill from '../components/Skill';
 import Stat from '../components/Stat';
 import SkillSelect from '../components/SkillSelect';
 import InventoryObject from '../components/InventoryObject';
+import AddObjectDialog from '../components/AddObjectDialog';
 
 import { rolClasses, rolCharStats, rolItemTypes } from '../data/Data.js';
 import { useLocalStorage } from "../useLocalStorage";
@@ -50,7 +51,7 @@ function Character() {
         type: 0, 
         name: 'Espada pro', 
         description: 'Una espada olvidada por los antiguos ocupantes de la ciudad.', 
-        mods: { dmg: 1 }}},
+        dmg: 1 }},
       { qty: 1, item:  { 
         id: uuid(),
         type: 1, 
@@ -218,10 +219,36 @@ function Character() {
     setSkillSelectOpen(false);
 
     if (newValue) {
-      setSkillSelectValue( parseInt(newValue));
+      setSkillSelectValue(parseInt(newValue));
       addSkill(newValue);
     }
   };
+
+  //add item to inventory controllers
+  const [addItemOpen, setAddItemOpen] = React.useState(false);
+
+  const handleClickAddItem = () => {
+    setAddItemOpen(true);
+  };
+
+  const handleAddItemClose = (newItem) => {
+    setAddItemOpen(false);
+    
+    if (newItem) {
+      addItemToInventory(newItem);
+    }
+  };
+
+  //inventory controllers
+  const [inventory, setInventory] = useLocalStorage('inventory', []);
+
+  const addItemToInventory = (item) => {
+    setInventory(prevInventory => {
+      let newInventory = [...prevInventory];
+      newInventory.push({qty: 1, item: item});
+      return newInventory
+    })
+  }
 
   return (
     <>
@@ -231,13 +258,13 @@ function Character() {
             <Card>
               <CardContent>
                 <TextField
-                size="small"
-                fullWidth 
-                id="outlined-basic" 
-                label="Nombre" 
-                variant="outlined" 
-                value={charName}
-                onChange={handleNameUpdate}
+                  size="small"
+                  fullWidth 
+                  id="outlined-basic" 
+                  label="Nombre" 
+                  variant="outlined" 
+                  value={charName}
+                  onChange={handleNameUpdate}
                 />
                 <Grid container spacing={1}>
                   <Grid item md={8} sm={6} xs={6}>
@@ -402,7 +429,7 @@ function Character() {
               <CardContent sx={{height: '1', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
                 {
                   ['ATQ', 'DEF', 'INS', 'POD'].map((mod, index) =>{
-                    return <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-around'}}>
+                    return <Box key={index} sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-around'}}>
                       <Typography sx={{fontWeight: 'bold', width: '30%', textAlign: 'center' }}>
                         {mod+':'}
                       </Typography>
@@ -505,7 +532,7 @@ function Character() {
                   </Typography>
                   <Box>
                     <Tooltip title="Añadir al inventario">
-                      <IconButton color="primary" aria-label="Añadir al inventario">
+                      <IconButton color="primary" aria-label="Añadir al inventario" onClick={handleClickAddItem}>
                         <AddRoundedIcon />
                       </IconButton>
                     </Tooltip>
@@ -514,7 +541,7 @@ function Character() {
                 <Box>
                   <Stack>
                     {
-                      charData.inventory.map((slot, index) => {
+                      inventory.map((slot, index) => {
                         return <InventoryObject key={index} qty={slot.qty} item={slot.item} />
                       })
                     }
@@ -522,6 +549,12 @@ function Character() {
                 </Box>
               </CardContent>
             </Card>
+            <AddObjectDialog 
+              id="add-item-menu"
+              keepMounted
+              open={addItemOpen}
+              onClose={handleAddItemClose}
+            />
           </Grid>
 
           <Grid item sm={12} xs={12}>
