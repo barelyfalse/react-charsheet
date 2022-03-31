@@ -26,7 +26,7 @@ import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import Skill from '../components/Skill';
 import Stat from '../components/Stat';
 import SkillSelect from '../components/SkillSelect';
-import InventoryObject from '../components/InventoryObject';
+import InventorySlot from '../components/InventorySlot';
 import AddObjectDialog from '../components/AddObjectDialog';
 
 import { rolClasses, rolCharStats, rolItemTypes } from '../data/Data.js';
@@ -233,7 +233,7 @@ function Character() {
 
   const handleAddItemClose = (newItem) => {
     setAddItemOpen(false);
-    
+
     if (newItem) {
       addItemToInventory(newItem);
     }
@@ -247,6 +247,27 @@ function Character() {
       let newInventory = [...prevInventory];
       newInventory.push({qty: 1, item: item});
       return newInventory
+    })
+  }
+
+  const handleItemQtyUpdate = (qty, id) => {
+    setInventory(prevInventory => {
+      let newInventory = [...prevInventory];
+      newInventory.find(o => o.item.id == id).qty = qty;
+      return newInventory;
+    })
+  }
+
+  const removeItemFromInventory = (id) => {
+    setInventory(prevInventory => {
+      let newInventory = [...prevInventory];
+      const index = newInventory.indexOf(newInventory.find(o => o.item.id == id));
+      if (index > -1) {
+          let removed = newInventory.splice(index, 1); // 2nd parameter means remove one item only
+          console.log(removed)
+          console.log(newInventory)
+          return newInventory;
+      }
     })
   }
 
@@ -542,7 +563,7 @@ function Character() {
                   <Stack>
                     {
                       inventory.map((slot, index) => {
-                        return <InventoryObject key={index} qty={slot.qty} item={slot.item} />
+                        return <InventorySlot key={index} qty={slot.qty} item={slot.item} itemQtyUpdate={handleItemQtyUpdate} onDelete={removeItemFromInventory} />
                       })
                     }
                   </Stack>

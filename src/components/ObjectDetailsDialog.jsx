@@ -22,7 +22,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import DownloadForOfflineRoundedIcon from '@mui/icons-material/DownloadForOfflineRounded';
 
 function BasicDetails(props) {
-  if(props.item.type !== 0 && props.item.type !== 1)
+  if(props.item.type !== 0)
     return <></>;
   return (
     <Grid item xs={12}>
@@ -31,11 +31,11 @@ function BasicDetails(props) {
           <OutlinedInput
             id="item-detail" 
             value={
-              props.item.type === 0 ? props.item['dmg'] : props.item.mods['def']
+              props.item['dmg']
             }
             startAdornment={<InputAdornment position="start">
             {
-              props.item.type === 0 ? 'Daño:' : 'Defensa:'
+              'Daño:'
             }</InputAdornment>}
             inputProps={{ style: { textAlign: 'center'} }}
             disabled={true}
@@ -112,17 +112,19 @@ function ModificatorDetails(props) {
   );
 }
 
-function ObjectDetailsDialog(props) {
-  const { onClose, item: valueProp, open, qty, ...other } = props;
-  const [item, setItem] = React.useState(valueProp);
 
-  const handleCancel = () => {
-    onClose();
-  };
+function ObjectDetailsDialog(props) {
+  const { onClose, onDelete, item: valueProp, open, qty, ...other } = props;
+  const [item, setItem] = React.useState(valueProp);
 
   const handleOk = () => {
     onClose(item);
   };
+
+  const handleItemRemove = () => {
+    onDelete(item.id);
+    onClose(item);
+  }
 
   return (
     <Dialog
@@ -181,13 +183,10 @@ function ObjectDetailsDialog(props) {
           </IconButton>
         </Tooltip>
         <Tooltip title="Descartar item">
-          <IconButton aria-label="delete">
+          <IconButton aria-label="delete" onClick={handleItemRemove}>
             <DeleteIcon />
           </IconButton>
         </Tooltip>
-        <Button autoFocus onClick={handleCancel}>
-          Cancelar
-        </Button>
         <Button onClick={handleOk}>Aceptar</Button>
       </DialogActions>
     </Dialog>

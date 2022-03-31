@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useState} from 'react'
 import { rolItemTypes } from '../data/Data.js';
 import ObjectDetailsDialog from './ObjectDetailsDialog';
 import { Box, 
@@ -9,11 +9,21 @@ import { Box,
   ButtonBase,} from '@mui/material'
 
 
-function InventoryObject({qty, item}) {
+function InventorySlot({qty, item, itemQtyUpdate, onDelete}) {
 
-  //invetory detail controllers
+  //inventory detail controllers
   const [objDetailsOpen, setObjDetailsOpen] = React.useState(false);
   //add new set state if want to set new values to objects
+  
+  //item quantity controllers
+  const [itemQty, setItemQty] = useState(qty);
+
+  const handleItemQtyUpdate = (event) => {
+    if(!isNaN(event.target.value) && !isNaN(parseInt(event.target.value))) {
+      setItemQty(parseInt(event.target.value));
+      itemQtyUpdate(parseInt(event.target.value), item.id);
+    }
+  }
 
   const handleClickObjInfo = () => {
     setObjDetailsOpen(true);
@@ -40,10 +50,11 @@ function InventoryObject({qty, item}) {
         variant="standard"
         size="small"
         inputProps={{ style: { textAlign: 'center' }}}
-        value={qty}
+        value={itemQty}
         sx={{
           width: '6ch',
         }}
+        onChange={handleItemQtyUpdate}
       />
       <ButtonBase 
         onClick={handleClickObjInfo}
@@ -71,6 +82,7 @@ function InventoryObject({qty, item}) {
         keepMounted
         open={objDetailsOpen}
         onClose={handleObjInfoClose}
+        onDelete={onDelete}
         item={item}
         qty={qty}
       />
@@ -78,4 +90,4 @@ function InventoryObject({qty, item}) {
   )
 }
 
-export default InventoryObject
+export default InventorySlot
