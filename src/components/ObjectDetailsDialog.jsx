@@ -1,6 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { rolItemTypes, rolCharStats } from '../data/Data.js';
+import { rolCharStats } from '../data/Data.js';
 import { 
   Box,
   Typography, 
@@ -112,7 +112,7 @@ function ModificatorDetails(props) {
   );
 }
 
-function ObjectDetails(props) {
+function ObjectDetailsDialog(props) {
   const { onClose, item: valueProp, open, qty, ...other } = props;
   const [item, setItem] = React.useState(valueProp);
 
@@ -194,11 +194,11 @@ function ObjectDetails(props) {
   )
 }
 
-ObjectDetails.propTypes = {
+ObjectDetailsDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
   item: PropTypes.object.isRequired,
   qty: PropTypes.number.isRequired
 };
 
-export default ObjectDetails
+export default ObjectDetailsDialog

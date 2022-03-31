@@ -1,21 +1,12 @@
 import React from 'react'
 import { rolItemTypes } from '../data/Data.js';
-import ObjectDetails from './ObjectDetails';
+import ObjectDetailsDialog from './ObjectDetailsDialog';
 import { Box, 
   Paper, 
   Typography,
   TextField, 
   Chip,
-  Button,
-  ButtonBase,
-  IconButton, 
-  Tooltip, 
-  Dialog, 
-  DialogContent, 
-  DialogActions, 
-  DialogContentText, 
-  DialogTitle,
-  Backdrop } from '@mui/material'
+  ButtonBase,} from '@mui/material'
 
 
 function InventoryObject({qty, item}) {
@@ -75,7 +66,7 @@ function InventoryObject({qty, item}) {
           <Chip label={rolItemTypes[item.type]} size="small" sx={{ml: '1ch'}}/>
         </Paper>
       </ButtonBase>
-      <ObjectDetails
+      <ObjectDetailsDialog
         id={item.id+'-details'}
         keepMounted
         open={objDetailsOpen}
