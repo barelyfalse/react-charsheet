@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react'
 import PropTypes from 'prop-types';
-import { rolCharStats, rolCharSkillStats, rolItemTypes } from '../data/Data.js';
+import { rolCharStats, rolCharSkillStats, rolItemTypes, rolCharBasicStats } from '../data/Data.js';
 import { v4 as uuid } from 'uuid';
 import { 
   Box,
@@ -28,15 +28,20 @@ function AddObjectDialog(props) {
   };
 
   const handleOk = () => {
+    if(isNaN(parseInt(itemType)) || parseInt(itemType) < 0 || itemName === "") {
+      return
+    }
+      
     let newItem = {
       id: uuid(),
-      type: itemType, 
+      type: parseInt(itemType), 
       name: itemName, 
       description: itemDesc 
     };
     
     if(itemType === 0) {
-      newItem.dmg = weaponDamage;
+      newItem.mods = {};
+      newItem.mods.dmg = weaponDamage;
     }
 
     if(itemType === 1 || itemType === 2) {
@@ -44,10 +49,11 @@ function AddObjectDialog(props) {
     }
 
     if(itemType === 2) {
+      if(isNaN(consUses) || consUses < 0 || isNaN(consDuration) || consDuration < 0)
+        return
       newItem.uses = consUses;
       newItem.duration = consDuration;
     }
-    
     onClose(newItem);
   };
 
@@ -76,19 +82,26 @@ function AddObjectDialog(props) {
   const [weaponDamage, setWeaponDamage] = useState(0);
 
   const handleWeaponDamageUpdate = (event) => {
-    setWeaponDamage(parseInt(event.target.value));
+    if(!isNaN(event.target.value) && !isNaN(parseInt(event.target.value))) {
+      setWeaponDamage(parseInt(event.target.value));
+    }
   }
 
   //use duration controllers
   const [consUses, setConsUses] = useState(1);
 
   const handleConsUsesUpdate = (event) => {
-    setConsUses(event.target.value);
+    if(!isNaN(event.target.value) && !isNaN(parseInt(event.target.value))) {
+      setConsUses(parseInt(event.target.value));
+    }
   }
   const [consDuration, setConsDuration] = useState(0);
 
   const handleConsDurationUpdate = (event) => {
-    setConsDuration(event.target.value);
+    if(!isNaN(event.target.value) && !isNaN(parseInt(event.target.value))) {
+      setConsDuration(parseInt(event.target.value));
+    }
+    
   }
 
   //mod selection controllers
@@ -99,12 +112,12 @@ function AddObjectDialog(props) {
   }
 
   //mod value controllers
-  const inputRef = useRef();
   const [modValue, setModValue] = useState(0);
   
   const handleModValueUpdate = (event) => {
-    inputRef.current.focus();
-    setModValue(event.target.value);
+    if(!isNaN(event.target.value) && !isNaN(parseInt(event.target.value))) {
+      setModValue(parseInt(event.target.value));
+    }
     
   }
 
@@ -191,7 +204,7 @@ function AddObjectDialog(props) {
     let mod = props.mod;
     return (
       <Chip
-        label={mod.toUpperCase() + ' ' + mods[mod]}
+        label={mod.toUpperCase() + ' ' + (mods[mod] > 0 ? '+':'') + mods[mod]}
         color={mods[mod] > 0 ? 'success' : 'error'}
         variant={rolCharStats.map((skill) => { return skill.short }).includes(mod.toUpperCase()) ? "outlined" : ""}
         onDelete={() => {deleteMod(mod)}}
@@ -206,8 +219,10 @@ function AddObjectDialog(props) {
     return(
       <Grid item xs={12}>
         <Stack direction="row" justifyContent="center" spacing={2} sx={{mt: '1ch'}}>
-          <FormControl sx={{width: '1', maxWidth: '15ch'}}>
+          <FormControl sx={{width: '1', maxWidth: '20ch'}}>
             <TextField
+            
+              key={'keypro'}
               id="mod-selection"
               select 
               size="small"
@@ -218,8 +233,6 @@ function AddObjectDialog(props) {
                 startAdornment: (
                   <InputAdornment position="start">
                     <TextField
-                      key={'keypro'}
-                      ref={inputRef}
                       size="small"
                       id="char-name-text" 
                       hiddenLabel
@@ -228,7 +241,7 @@ function AddObjectDialog(props) {
                       onChange={handleModValueUpdate}
                       inputProps={{ style: { textAlign: 'center' } }}
                       InputProps={{ disableUnderline: true }}
-                      sx={{width: '5ch', mt: '.5ch'}}
+                      sx={{width: '6ch', mt: '.5ch'}}
                     />
                   </InputAdornment>
                 ),
@@ -243,10 +256,19 @@ function AddObjectDialog(props) {
 
               <MenuItem disabled value=""><em>Basic stats</em></MenuItem>
               {
-                rolCharStats.map((stat) => { return stat.short }).map((stat, index) => {
+                rolCharBasicStats.map((stat) => { return stat.short }).map((stat, index) => {
                   return <MenuItem key={index + rolCharSkillStats.length} value={stat.toLowerCase()}>{stat}</MenuItem>
                 })
               }
+
+              <MenuItem disabled value=""><em>Base stats</em></MenuItem>
+              {
+                rolCharStats.map((stat) => { return stat.short }).map((stat, index) => {
+                  return <MenuItem key={index + rolCharSkillStats.length + rolCharBasicStats.length} value={stat.toLowerCase()}>{stat}</MenuItem>
+                })
+              }
+
+              
               
             </TextField>
           </FormControl>

@@ -14,6 +14,11 @@ const rolCharSkillStats = [
   {name: 'Poder', short: 'POD'},
 ]
 
+ const rolCharBasicStats = [
+   {name: 'Puntos de vida', short: 'PV'},
+   {name: 'Daño', short: 'DMG'},
+ ]
+
 const rolItemTypes = [
   'Arma', 'Accesorio', 'Consumible', 'Misceláneo'
 ];
@@ -104,4 +109,11 @@ const rolClasses = [
 
 ];
 
-export {rolClasses, rolCharStats, rolCharSkillStats, rolItemTypes, commonItems};
+export {
+  rolClasses, 
+  rolCharStats, 
+  rolCharSkillStats, 
+  rolItemTypes, 
+  commonItems, 
+  rolCharBasicStats
+};

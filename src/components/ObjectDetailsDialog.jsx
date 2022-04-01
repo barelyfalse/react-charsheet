@@ -21,31 +21,6 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete';
 import DownloadForOfflineRoundedIcon from '@mui/icons-material/DownloadForOfflineRounded';
 
-function BasicDetails(props) {
-  if(props.item.type !== 0)
-    return <></>;
-  return (
-    <Grid item xs={12}>
-      <Box sx={{display: 'flex', justifyContent: 'center', mt: '1ch'}}>
-        <FormControl sx={{width: '15ch'}}>
-          <OutlinedInput
-            id="item-detail" 
-            value={
-              props.item['dmg']
-            }
-            startAdornment={<InputAdornment position="start">
-            {
-              'Daño:'
-            }</InputAdornment>}
-            inputProps={{ style: { textAlign: 'center'} }}
-            disabled={true}
-          />
-        </FormControl>
-      </Box>
-    </Grid>
-  );
-}
-
 function UseDetails(props) {
   if(props.item.type !== 2)
     return <></>;
@@ -87,13 +62,15 @@ function UseDetails(props) {
 }
 
 function ModificatorDetails(props) {
-  if(props.item.type !== 1 && props.item.type !== 2)
-    return <></>;
   /*
   Object.getOwnPropertyNames(props.item.mods).map((mod, index) => {
     console.log(mod + ' ' + props.item.mods[mod]);
   })
   */
+  if(props.item.type === 3)
+    return <></>;
+
+  
   return (
     <Grid item xs={12}>
       <Stack direction="row" justifyContent="center" spacing={2} sx={{mt: '1ch'}}>
@@ -101,7 +78,7 @@ function ModificatorDetails(props) {
           Object.getOwnPropertyNames(props.item.mods).map((mod, index) => {
             return <Chip 
               key={index} 
-              label={mod.toUpperCase() + ' ' + props.item.mods[mod]}
+              label={mod.toUpperCase() + ' ' + (props.item.mods[mod] > 0 ? '+':'') +props.item.mods[mod]}
               color={props.item.mods[mod] > 0 ? 'success' : 'error'}
               variant={rolCharStats.map((skill) => { return skill.short }).includes(mod.toUpperCase()) ? "outlined" : ""}
             />
@@ -171,7 +148,6 @@ function ObjectDetailsDialog(props) {
               disabled={true}
             />
           </Grid>
-          <BasicDetails item={item} />
           <UseDetails item={item} />
           <ModificatorDetails item={item} />
         </Grid>

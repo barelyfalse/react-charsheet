@@ -253,7 +253,7 @@ function Character() {
   const handleItemQtyUpdate = (qty, id) => {
     setInventory(prevInventory => {
       let newInventory = [...prevInventory];
-      newInventory.find(o => o.item.id == id).qty = qty;
+      newInventory.find(o => o.item.id === id).qty = qty;
       return newInventory;
     })
   }
@@ -261,11 +261,9 @@ function Character() {
   const removeItemFromInventory = (id) => {
     setInventory(prevInventory => {
       let newInventory = [...prevInventory];
-      const index = newInventory.indexOf(newInventory.find(o => o.item.id == id));
+      const index = newInventory.indexOf(newInventory.find(o => o.item.id === id));
       if (index > -1) {
-          let removed = newInventory.splice(index, 1); // 2nd parameter means remove one item only
-          console.log(removed)
-          console.log(newInventory)
+          let removed = newInventory.splice(index, 1);
           return newInventory;
       }
     })
@@ -562,8 +560,8 @@ function Character() {
                 <Box>
                   <Stack>
                     {
-                      inventory.map((slot, index) => {
-                        return <InventorySlot key={index} qty={slot.qty} item={slot.item} itemQtyUpdate={handleItemQtyUpdate} onDelete={removeItemFromInventory} />
+                      inventory.map((slot) => {
+                        return <InventorySlot key={uuid()} qty={slot.qty} item={slot.item} itemQtyUpdate={handleItemQtyUpdate} onDelete={removeItemFromInventory} />
                       })
                     }
                   </Stack>
