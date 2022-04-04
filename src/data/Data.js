@@ -1,10 +1,10 @@
 const rolCharStats = [
-  {name: 'fuerza', short: 'FUE'},
-  {name: 'destreza', short: 'DES'},
-  {name: 'constitución', short: 'CON'},
-  {name: 'carisma', short: 'CAR'},
-  {name: 'inteligencia', short: 'INT'},
-  {name: 'percepción', short: 'PER'},
+  {name: 'Fuerza', short: 'FUE'},
+  {name: 'Destreza', short: 'DES'},
+  {name: 'Constitución', short: 'CON'},
+  {name: 'Carisma', short: 'CAR'},
+  {name: 'Inteligencia', short: 'INT'},
+  {name: 'Percepción', short: 'PER'},
 ];
 
 const rolCharSkillStats = [
@@ -51,9 +51,9 @@ const rolClasses = [
   { name: "Druida",
     description: "Amos de la naturaleza. Combate o conjuros tanto de ataque como apoyo.",
     advance: [
-      { level: 1, mods: { atq: 1, def: 0, int: 0, pod: 2} },
-      { level: 2, mods: { atq: 2, def: 0, int: 0, pod: 3} },
-      { level: 3, mods: { atq: 2, def: 0, int: 1, pod: 4} },
+      { level: 1, mods: { atq: 1, def: 0, ins: 0, pod: 2} },
+      { level: 2, mods: { atq: 2, def: 0, ins: 0, pod: 3} },
+      { level: 3, mods: { atq: 2, def: 0, ins: 1, pod: 4} },
     ],
     skills: [
       { name: "Ataques múltiples",
@@ -82,7 +82,7 @@ const rolClasses = [
   { name: "Hechicero",
     description: "",
     advance: [
-      { level: 0, mods: { atq: 0, def: 0, ins: 0, pod: 0} },
+      { level: 1, mods: { atq: 0, def: 0, ins: 0, pod: 0} },
     ],
     skills: [
       { name: "",
@@ -109,11 +109,88 @@ const rolClasses = [
 
 ];
 
+const rolRaces = [
+  { name: "Humano",
+    description: "",
+    mods: { mis: 3 },
+    skills: []
+  },
+  { name: "Enano",
+    description: "",
+    mods: { con: 2 },
+    skills: [      
+      { name: "Resilencia enana",
+        description: "Resistencia a venenos.",
+        cost: 0, 
+        duration: 0
+      },
+      { name: "Habilidad con las herramientas",
+        description: "Facilidad para utilizar herramientas",
+        cost: 0, 
+        duration: 0
+      },
+    ]
+  },
+  { name: "Elfo",
+    description: "",
+    mods: { des: 2 },
+    skills: [      
+      { name: "Visión oscura",
+        description: "Puede ver con poca luz.",
+        cost: 0, 
+        duration: 0
+      },
+      { name: "Antepasado mágico",
+        description: "Estirpe mágica, resiste hechizos, +1 INS en salvadas contra talentos mágicos.",
+        cost: 0, 
+        duration: 0
+      },
+    ]
+  },
+  { name: "Elfo oscuro",
+    description: "",
+    mods: { int: 2 },
+    skills: [      
+      { name: "Visión nocturna",
+        description: "Puede ver sin luz.",
+        cost: 0, 
+        duration: 0
+      },
+      { name: "Ancestralidad",
+        description: "Ataque elemental mágico en area",
+        cost: 2, 
+        duration: 0
+      },
+    ]
+  },
+  { name: "Medio",
+    description: "",
+    mods: { des: 2, car: 1 },
+    skills: [ ]
+  },
+  { name: "Draconito",
+    description: "Desendiente de dragones.",
+    mods: { fue: 2, car: 1 },
+    skills: [ ]
+  },
+  { name: "Medio orco",
+    description: "Mitad orco, mitad humano",
+    mods: { con: 2, fue: 1 },
+    skills: [ ]
+  },
+  { name: "Medio elfo",
+    description: "Mitad elfo, mitad humano",
+    mods: { car: 2, mis: 1 },
+    skills: [ ]
+  },
+]
+
 export {
   rolClasses, 
   rolCharStats, 
   rolCharSkillStats, 
   rolItemTypes, 
   commonItems, 
-  rolCharBasicStats
+  rolCharBasicStats,
+  rolRaces
 };

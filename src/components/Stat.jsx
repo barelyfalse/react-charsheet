@@ -10,44 +10,65 @@ import {
   InputAdornment,
   Stack
 } from '@mui/material';
+import { rolCharStats, rolRaces } from '../data/Data.js';
 
-function Stat({statIndex, statName, fullStat, updateStatState, statValue}) {
+function Stat({statIndex, statName, fullStat, updateStatState, statValue, race}) {
   const handleStatUpdate = (event) => {
     if(!isNaN(event.target.value) && !isNaN(parseInt(event.target.value))) {
       updateStatState(statIndex, parseInt(event.target.value));
     }
   }
 
+  let mod = 0;
+
+
+
+  if(race !== '' && !isNaN(race) && Object.getOwnPropertyNames(rolRaces[race].mods).includes(statName.toLowerCase())) {
+    mod = rolRaces[race].mods[statName.toLowerCase()]
+  }
+
+  function ModLabel() {
+    if(race === '0'){
+      return <></>
+    } else {
+      return (
+        <Tooltip title={'Modificador de raza'} arrow>
+          <Typography color="secondary" sx={{ml: '1ch', width: '4ch', textAlign: 'center' }}>
+            {mod !== 0 ? '+ ' + mod : ''}
+          </Typography>
+        </Tooltip>
+      )
+    }
+    
+  }
+
   return (
     <Stack 
       key={uuid()}
       direction="row"
-      justifyContent="space-around"
+      justifyContent="center"
       alignItems="center"
       spacing={1}
       sx={{mt: '1ch'}}
     >
-      <FormControl sx={{width: '15ch'}}>
+      <FormControl>
         <OutlinedInput
           id="item-detail" 
           size="small"
           value={statValue}
           onChange={handleStatUpdate}
           startAdornment={
-            <Tooltip title={fullStat}>
+            <Tooltip title={fullStat} arrow>
               <InputAdornment position="start">
                 {statName}
               </InputAdornment>
             </Tooltip>
           }
           inputProps={{ style: { textAlign: 'center'} }}
+          sx={{width: (race === 0 ? '1' : '15ch')}}
         />
       </FormControl>
-      <Tooltip title={'Modificador de raza'}>
-        <Typography color="secondary" sx={{ml: '1ch', width: '4ch', textAlign: 'center' }}>
-          {'+ 9'}
-        </Typography>
-      </Tooltip>
+      <ModLabel/>
     </Stack>
   )
 }

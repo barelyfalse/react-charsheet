@@ -65,7 +65,7 @@ function AddObjectDialog(props) {
   }
 
   //item type select controllers
-  const [itemType, setItemType] = useState('');
+  const [itemType, setItemType] = useState(3);
 
   const handleItemTypeChange = (event) => {
     setItemType(event.target.value);

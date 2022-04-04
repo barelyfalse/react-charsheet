@@ -29,7 +29,7 @@ import SkillSelect from '../components/SkillSelect';
 import InventorySlot from '../components/InventorySlot';
 import AddObjectDialog from '../components/AddObjectDialog';
 
-import { rolClasses, rolCharStats, rolItemTypes } from '../data/Data.js';
+import { rolClasses, rolCharStats, rolItemTypes, rolRaces } from '../data/Data.js';
 import { useLocalStorage } from "../useLocalStorage";
 
 function Character() {
@@ -318,24 +318,26 @@ function Character() {
                       >
                         <MenuItem disabled value=""><em>Raza</em></MenuItem>
                         {
-                          [
-                            'Humano', 
-                            'Enano',
-                            'Elfo',
-                            'Medio elfo',
-                            'Nomo',
-                            'Draconito',
-                            'Medio orco',
-                          ].map((rolClass, index) => {
-                            return <MenuItem key={index} value={index}>{rolClass}</MenuItem>
+                          rolRaces.map((race, index) => {
+                            let modsLabel = '';
+                            Object.getOwnPropertyNames(race.mods).map((mod) => {
+                              modsLabel += ' ' + mod.toUpperCase() + ' +' + race.mods[mod];
+                            });
+                            return (
+                              <MenuItem key={index} value={index}>
+                                <Tooltip title={modsLabel} arrow>
+                                  <Typography sx={{width: '1'}}>
+                                    {race.name}
+                                  </Typography>
+                                </Tooltip>
+                              </MenuItem>
+                            )
                           })
                         }
                       </TextField>
                     </FormControl>
                   </Grid>
                 </Grid>
-                
-
               </CardContent>
             </Card>
           </Grid>
@@ -423,7 +425,7 @@ function Character() {
             </Card>
           </Grid>
 
-          <Grid item md={3} xs={6}>
+          <Grid item lg={3} md={3} xs={6}>
             <Card sx={{height: '1'}}>
               <CardContent sx={{height: '1', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
                 <Stack>
@@ -435,7 +437,8 @@ function Character() {
                       statName={stat.short} 
                       fullStat={stat.name} 
                       statValue={charStats[index]} 
-                      updateStatState={updateStats} 
+                      updateStatState={updateStats}
+                      race={rolRace}
                       />
                     })
                   }
@@ -443,21 +446,23 @@ function Character() {
               </CardContent>
             </Card>
           </Grid>
-          <Grid item md={2} xs={6}>
+          <Grid item lg={2} md={3} xs={6}>
             <Card sx={{height: '1'}}>
               <CardContent sx={{height: '1', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
                 {
-                  ['ATQ', 'DEF', 'INS', 'POD'].map((mod, index) =>{
+                  ['atq', 'def', 'ins', 'pod'].map((mod, index) =>{
+                    const modValue = rolClass !== '' ? rolClasses[rolClass].advance.find(adv => adv.level === 1).mods[mod] : 0;
                     return <Box key={index} sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-around'}}>
                       <Typography sx={{fontWeight: 'bold', width: '30%', textAlign: 'center' }}>
-                        {mod+':'}
+                        {mod.toUpperCase()+':'}
                       </Typography>
                       <Typography sx={{fontWeight: 'bold', width: '25%', textAlign: 'center'}} variant="h6">
-                        {'+9'}
+                        {(modValue >= 0 ? '+ ' : '') + modValue}
                       </Typography>
-                      <Typography sx={{width: '20%', textAlign: 'center'}} color='secondary'>
-                        {'+9'}
+                      <Typography sx={{width: '20%', textAlign: 'center', }} color='secondary'>
+                        {'+ 9'}
                       </Typography>
+                      
                     </Box>
                   })
                 }
@@ -493,7 +498,7 @@ function Character() {
             </Card>
           </Grid>
 
-          <Grid item md={7} xs={12}>
+          <Grid item lg={7} md={6} xs={12}>
             <Card sx={{}}>
               <CardContent>
                 <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
