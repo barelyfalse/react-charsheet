@@ -49,11 +49,18 @@ const commonItems = [
 
 const rolClasses = [
   { name: "Druida",
-    description: "Amos de la naturaleza. Combate o conjuros tanto de ataque como apoyo.",
+    description: "Amos de la naturaleza. Combate o conjuros tanto de ataque como apoyo. Invocación de seres del bosque.",
     advance: [
-      { level: 1, mods: { atq: 1, def: 0, ins: 0, pod: 2} },
-      { level: 2, mods: { atq: 2, def: 0, ins: 0, pod: 3} },
-      { level: 3, mods: { atq: 2, def: 0, ins: 1, pod: 4} },
+      { level: 1, mods: { atq: 1, def: 0, ins: 1, pod: 3} },
+      { level: 2, mods: { atq: 2, def: 0, ins: 1, pod: 3} },
+      { level: 3, mods: { atq: 2, def: 0, ins: 2, pod: 4} },
+      { level: 4, mods: { atq: 2, def: 0, ins: 3, pod: 4} },
+      { level: 5, mods: { atq: 2, def: 1, ins: 3, pod: 4} },
+      { level: 6, mods: { atq: 2, def: 1, ins: 4, pod: 5} },
+      { level: 7, mods: { atq: 3, def: 2, ins: 4, pod: 5} },
+      { level: 8, mods: { atq: 4, def: 2, ins: 5, pod: 6} },
+      { level: 9, mods: { atq: 5, def: 2, ins: 5, pod: 6} },
+      { level: 10, mods: { atq: 5, def: 2, ins: 6, pod: 7} },
     ],
     skills: [
       { name: "Ataques múltiples",
@@ -80,9 +87,19 @@ const rolClasses = [
   },
 
   { name: "Hechicero",
-    description: "",
+    description: "Conjuros, manipulación e ilusiones, conjuros de control y daños no elementales.",
     advance: [
-      { level: 1, mods: { atq: 0, def: 0, ins: 0, pod: 0} },
+      { level: 1,	mods: { atq:0, def: 0, ins: 2, pod: 2} },
+      { level: 2,	mods: { atq:0, def: 0, ins: 2, pod: 2} },
+      { level: 3,	mods: { atq:0, def: 0, ins: 3, pod: 3} },
+      { level: 4,	mods: { atq:0, def: 0, ins: 4, pod: 4} },
+      { level: 5,	mods: { atq:0, def: 0, ins: 4, pod: 5} },
+      { level: 6,	mods: { atq:0, def: 0, ins: 5, pod: 6} },
+      { level: 7,	mods: { atq:0, def: 0, ins: 6, pod: 7} },
+      { level: 8,	mods: { atq:0, def: 0, ins: 7, pod: 8} },
+      { level: 9,	mods: { atq:0, def: 0, ins: 8, pod: 9} },
+      { level: 10, mods: { atq:0, def: 0, ins: 9, pod: 11} },
+
     ],
     skills: [
       { name: "",
@@ -94,9 +111,18 @@ const rolClasses = [
   },
 
   { name: "Mago",
-    description: "",
+    description: "Curiosos y ansiosos por conocimiento. Conjuros elementales centrados en daño, conjuros específicos y prácticos.",
     advance: [
-      { level: 0, mods: { atq: 0, def: 0, ins: 0, pod: 0} },
+      { level: 1,	mods: { atq: 0,	def: 0, ins: 2,	pod: 2} },
+      { level: 2,	mods: { atq: 0,	def: 0, ins: 4,	pod: 2} },
+      { level: 3,	mods: { atq: 0,	def: 0, ins: 5,	pod: 3} },
+      { level: 4,	mods: { atq: 0,	def: 0, ins: 6,	pod: 3} },
+      { level: 5,	mods: { atq: 0,	def: 0, ins: 7,	pod: 4} },
+      { level: 6,	mods: { atq: 0,	def: 0, ins: 8,	pod: 5} },
+      { level: 7,	mods: { atq: 0,	def: 0, ins: 9, pod: 6} },
+      { level: 8,	mods: { atq: 0,	def: 0, ins: 10, pod: 7} },
+      { level: 9,	mods: { atq: 0,	def: 0, ins: 10, pod: 8} },
+      { level: 10, mods: { atq: 0,	def: 0, ins: 11, pod: 10} },
     ],
     skills: [
       { name: "",
@@ -106,6 +132,214 @@ const rolClasses = [
       },
     ]
   },
+  { name: "Sacerdote",
+    description: "Profesa su fe, sigue un código de conducta, no se centra en el combate más bien en sanar las heridas de sus compañeros y dar magias de soporte.",
+    advance: [
+      { level: 1, mods: { atq: -2, def: 0, ins:	4, pod: 3} },
+      { level: 2, mods: { atq: -1, def: 0, ins:	4, pod: 3} },
+      { level: 3, mods: { atq: -1, def: 0, ins:	5, pod: 4} },
+      { level: 4, mods: { atq: -1, def: 0, ins:	5, pod: 5} },
+      { level: 5,	mods: { atq: 0, def: 0, ins: 6,	pod: 5} },
+      { level: 6,	mods: { atq: 0, def: 0, ins: 6, pod: 6} },
+      { level: 7, mods: { atq: 0, def: 0, ins: 7,	pod: 6} },
+      { level: 8, mods: { atq: 0, def: 0, ins: 8,	pod: 7} },
+      { level: 9, mods: { atq: 1, def: 0, ins: 9, pod: 8} },
+      { level: 10, mods: { atq: 1, def: 0, ins:	10,	pod: 9} },
+
+    ],
+    skills: [
+      { name: "",
+        description: "",
+        cost: 0, 
+        duration: 0
+      },
+    ]
+  },
+
+  { name: "Mago oscuro",
+    description: "Magia negra, maleficios, posesiones, nigromancia y uso de magia prohibida.",
+    advance: [
+      { level: 1, mods: { atq: -2, def: -1, ins: 3, pod: 5} },
+      { level: 2, mods: {	atq: -1, def:	-1, ins: 3, pod: 5} },
+      { level: 3, mods: {	atq: -1, def:	-1, ins: 3, pod: 6} },
+      { level: 4, mods: {	atq: -1, def:	0, ins: 4, pod: 7} },
+      { level: 5, mods: {	atq: -1, def:	0, ins: 5, pod: 7} },
+      { level: 6, mods: { atq: 0,	def: 0, ins: 6, pod: 8} },
+      { level: 7, mods: { atq: 0,	def: 0, ins: 6, pod: 8} },
+      { level: 8, mods: { atq: 0,	def: 0, ins: 6, pod: 9} },
+      { level: 9, mods: { atq: 0,	def: 1, ins: 7, pod: 10} },
+      { level: 10, mods: { atq: 1, def: 1, ins: 7, pod: 11} },
+    ],
+    skills: [
+      { name: "",
+        description: "",
+        cost: 0, 
+        duration: 0
+      },
+    ]
+  },
+
+  { name: "Paladín",
+    description: "Bendecido, campeón. Lucha contra el mal y por la justicia. Apoyo y defensa. Gran calidad de valores morales.",
+    advance: [
+      { level: 1, mods: { atq: 0, def: 2, ins: 0, pod: 2} },
+      { level: 2, mods: { atq: 0, def: 3, ins: 0, pod: 2} },
+      { level: 3, mods: { atq: 0, def: 4, ins: 1, pod: 2} },
+      { level: 4, mods: { atq: 1, def: 4, ins: 2, pod: 2} },
+      { level: 5, mods: { atq: 1, def: 4, ins: 3, pod: 2} },
+      { level: 6, mods: { atq: 1, def: 5, ins: 4, pod: 3} },
+      { level: 7, mods: { atq: 1, def: 5, ins: 5, pod: 3} },
+      { level: 8, mods: { atq: 2, def: 5, ins: 5, pod: 4} },
+      { level: 9, mods: { atq: 2, def: 5, ins: 6, pod: 5} },
+      { level: 10, mods: { atq: 2, def: 6, ins: 6, pod: 6} },
+    ],
+    skills: [
+      { name: "",
+        description: "",
+        cost: 0, 
+        duration: 0
+      },
+    ]
+  },
+
+  { name: "Guerrero",
+    description: "Combatiente. Adaptabilidad en combate cuerpo a cuerpo. Uso de armadura y gran variedad de armas de todo porte.",
+    advance: [
+      { level: 1, mods: { atq: 4, def: 2, ins: -2, pod: 1} },
+      { level: 2, mods: { atq: 4, def: 2, ins: -2, pod: 2} },
+      { level: 3, mods: { atq: 4, def: 2, ins: -1, pod: 2} },
+      { level: 4, mods: { atq: 4, def: 3, ins: -1, pod: 2} },
+      { level: 5, mods: { atq: 5, def: 4, ins: -1, pod: 2} },
+      { level: 6, mods: { atq: 5, def: 5, ins: 0, pod: 2} },
+      { level: 7, mods: { atq: 5, def: 6, ins: 0, pod: 3} },
+      { level: 8, mods: { atq: 6, def: 7, ins: 0, pod: 3} },
+      { level: 9, mods: { atq: 7, def: 8, ins: 0, pod: 4} },
+      { leve: 10, mods: { atq: 8, def: 9, ins: 0, pod: 4} },
+    ],
+    skills: [
+      { name: "",
+        description: "",
+        cost: 0, 
+        duration: 0
+      },
+    ]
+  },
+
+  { name: "Samurái",
+    description: "Guerrero, honor y virtud, centrado en la precisión, habilidad más que fuerza.",
+    advance: [
+      { level: 1, mods: { atq: 4, def: -2, ins: 0, pod: 3} },
+      { level: 2, mods: { atq: 5, def: -2, ins: 0, pod: 3} },
+      { level: 3, mods: { atq: 5, def: -1, ins: 0, pod: 3} },
+      { level: 4, mods: { atq: 6, def: -1, ins: 0, pod: 4} },
+      { level: 5, mods: { atq: 6, def: -1, ins: 0, pod: 5} },
+      { level: 6, mods: { atq: 7, def: 0, ins: 0, pod: 5} },
+      { level: 7, mods: { atq: 8, def: 1, ins: 0, pod: 6} },
+      { level: 8, mods: { atq: 9, def: 1, ins: 0, pod: 6} },
+      { level: 9, mods: { atq: 10, def: 2, ins: 1, pod: 6} },
+      { level: 10, mods: {aqt: 11, def: 2, ins: 2, pod: 6} },
+    ],
+    skills: [
+      { name: "",
+        description: "",
+        cost: 0, 
+        duration: 0
+      },
+    ]
+  },
+
+  { name: "Asesino",
+    description: "Sigilo y oportunismo, infiltración, rápido y gran daño.",
+    advance: [
+      { level: 1, mods: { atq: 4, def: 0, ins: 0, pod: 1} },
+      { level: 2, mods: { atq: 4, def: 0, ins: 0, pod: 2} },
+      { level: 3, mods: { atq: 4, def: 0, ins: 1, pod: 2} },
+      { level: 4, mods: { atq: 4, def: 0, ins: 1, pod: 3} },
+      { level: 5, mods: { atq: 6, def: 0, ins: 2, pod: 3} },
+      { level: 6, mods: { atq: 6, def: 1, ins: 2, pod: 4} },
+      { level: 7, mods: { atq: 7, def: 1, ins: 2, pod: 4} },
+      { level: 8, mods: { atq: 7, def: 2, ins: 2, pod: 4} },
+      { level: 9, mods: { atq: 8, def: 2, ins: 3, pod: 5} },
+      { level: 10, mods: { atq: 9, def: 3, ins: 3, pod: 5} },
+    ],
+    skills: [
+      { name: "",
+        description: "",
+        cost: 0, 
+        duration: 0
+      },
+    ]
+  },
+
+  { name: "Pícaro",
+    description: "Oportunismo, manipulación con grandes habilidades de carisma, engaño e ilusión.",
+    advance: [
+      { level: 1, mods: { atq: 2, def: -1, ins: 0, pod: 1} },
+      { level: 2, mods: { atq: 3, def: -1, ins: 0, pod: 2} },
+      { level: 3, mods: { atq: 3, def: -1, ins: 1, pod: 3} },
+      { level: 4, mods: { atq: 4, def: 0, ins: 1, pod: 3} },
+      { level: 5, mods: { atq: 4, def: 0, ins: 2, pod: 4} },
+      { level: 6, mods: { atq: 5, def: 1, ins: 2, pod: 4} },
+      { level: 7, mods: { atq: 5, def: 1, ins: 2, pod: 4} },
+      { level: 8, mods: { atq: 6, def: 2, ins: 2, pod: 5} },
+      { level: 9, mods: { atq: 6, def: 2, ins: 3, pod: 5} },
+      { level: 10, mods: { atq: 7, def: 3, ins: 4, pod: 6} },
+    ],
+    skills: [
+      { name: "",
+        description: "",
+        cost: 0, 
+        duration: 0
+      },
+    ]
+  },
+
+  { name: "Explorador",
+    description: "Cazador por excelencia, ataque a distancia, gran agilidad y movilidad.",
+    advance: [
+      { level: 1, mods: { atq: 4, def: -2, ins: 0, pod: 3} },
+      { level: 2, mods: { atq: 4, def: -2, ins: 0, pod: 3} },
+      { level: 3, mods: { atq: 5, def: -1, ins: 0, pod: 3} },
+      { level: 4, mods: { atq: 5, def: -1, ins: 0, pod: 4} },
+      { level: 5, mods: { atq: 6, def: -1, ins: 0, pod: 4} },
+      { level: 6, mods: { atq: 6, def: 0, ins: 1, pod: 4} },
+      { level: 7, mods: { atq: 7, def: 0, ins: 1, pod: 5} },
+      { level: 8, mods: { atq: 8, def: 1, ins: 2, pod: 5} },
+      { level: 9, mods: { atq: 9, def: 1, ins: 2, pod: 6} },
+      { level: 10, mods: { atq: 9, def: 2, ins: 3, pod: 6} },
+    ],
+    skills: [
+      { name: "",
+        description: "",
+        cost: 0, 
+        duration: 0
+      },
+    ]
+  },
+
+  { name: "Artificiero",
+    description: "Pensador, crea artefactos que le ayudan a combatir, armas, accesorios, trampas.",
+    advance: [
+      { level: 1, mods: { atq: 4, def: 2, ins: -1, pod: 0} },
+      { level: 2, mods: { atq: 4, def: 2, ins: -1, pod: 1} },
+      { level: 3, mods: { atq: 4, def: 2, ins: -1, pod: 2} },
+      { level: 4, mods: { atq: 4, def: 3, ins: 0, pod: 3} },
+      { level: 5, mods: { atq: 4, def: 3, ins: 0, pod: 4} },
+      { level: 6, mods: { atq: 5, def: 3, ins: 0, pod: 5} },
+      { level: 7, mods: { atq: 5, def: 3, ins: 0, pod: 6} },
+      { level: 8, mods: { atq: 5, def: 4, ins: 0, pod: 7} },
+      { level: 9, mods: { atq: 5, def: 4, ins: 0, pod: 8} },
+      { level: 10, mods: { atq: 5, def: 4, ins: 0, pod: 9} },
+    ],
+    skills: [
+      { name: "",
+        description: "",
+        cost: 0, 
+        duration: 0
+      },
+    ]
+  },
+
 
 ];
 
