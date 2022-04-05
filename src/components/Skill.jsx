@@ -57,13 +57,13 @@ function Skill({rolClass, skillIndex, reducePod }) {
           <strong>{skill.name}</strong> ({info})
         </Typography>
         <Box sx={{display: 'flex', alignItems: 'center',}}>
-          <Tooltip title="infomación">
+          <Tooltip title="infomación" arrow>
             <IconButton aria-label="delete" color="primary" onClick={handleClickOpen}>
               <InfoOutlinedIcon />
             </IconButton>        
           </Tooltip>
           
-          <Tooltip title="Usar habilidad">
+          <Tooltip title={!info.localeCompare('pasiva') ? 'Habilidad pasiva' : 'Usar habilidad'} arrow>
             <div>
               <Button 
                 variant="contained" 

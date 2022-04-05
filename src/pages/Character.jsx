@@ -335,47 +335,54 @@ function Character() {
           <Grid item sm={5} xs={12}>
             <Card>
               <CardContent>
-                <Box sx={{display: 'flex', alignItems: 'center'}}>
-                  <Typography sx={{ fontWeight: 'bold' }}>
-                    {'PV:'}
-                  </Typography>
-                  <ButtonGroup variant="outlined" aria-label="primary button group">
-                    <IconButton color="primary" aria-label="delete" size="small" onClick={() => {decreasePv();}}>
-                      <RemoveCircleRoundedIcon fontSize="inherit"/>
-                    </IconButton>
-                    <Box sx={{mt: '0ch'}}>
-                      <TextField 
-                      hiddenLabel
-                      size="small"
-                      fullWidth
-                      id="pvText" 
-                      variant="outlined"
-                      value={pv}
-                      inputProps={{ style: { textAlign: 'center' }}}
-                      onChange={handlePvUpdate}
-                      />
-                    </Box>
-                    <IconButton color="primary" aria-label="delete" size="small" onClick={() => {addPv();}}>
-                      <AddCircleRoundedIcon fontSize="inherit" />
-                    </IconButton>
-                  </ButtonGroup>
-                  <Typography sx={{mr: '1ch', fontWeight: 'bold'}}>
-                    {'/'}
-                  </Typography>
-                  <Box sx={{mt: '0ch', width: 1/1.5}}>
-                    <TextField 
-                    hiddenLabel
-                    size="small"
-                    fullWidth
-                    id="currentPvText" 
-                    variant="outlined"
-                    inputProps={{ style: { textAlign: 'center' }, disabled: false}}
-                    onChange={handleCurrentPvUpdate}
-                    value={currentPv}
-                    />
+                
+                  <Box sx={{display: 'flex', alignItems: 'center'}}>
+                    <Tooltip title="Puntos de vida" arrow>
+                      <Typography sx={{ fontWeight: 'bold' }}>
+                        {'PV:'}
+                      </Typography>
+                    </Tooltip>
+                    <Tooltip title="Puntos de vida actuales" arrow>
+                      <ButtonGroup variant="outlined" aria-label="primary button group">
+                        <IconButton color="primary" aria-label="delete" size="small" onClick={() => {decreasePv();}}>
+                          <RemoveCircleRoundedIcon fontSize="inherit"/>
+                        </IconButton>
+                        <Box sx={{mt: '0ch'}}>
+                          <TextField 
+                          hiddenLabel
+                          size="small"
+                          fullWidth
+                          id="pvText" 
+                          variant="outlined"
+                          value={pv}
+                          inputProps={{ style: { textAlign: 'center' }}}
+                          onChange={handlePvUpdate}
+                          />
+                        </Box>
+                        <IconButton color="primary" aria-label="delete" size="small" onClick={() => {addPv();}}>
+                          <AddCircleRoundedIcon fontSize="inherit" />
+                        </IconButton>
+                      </ButtonGroup>
+                    </Tooltip>
+                    <Typography sx={{mr: '1ch', fontWeight: 'bold'}}>
+                      {'/'}
+                    </Typography>
+                    <Tooltip title="Puntos de vida máximos" arrow>
+                      <Box sx={{mt: '0ch', width: 1/1.5}}>
+                        <TextField 
+                        hiddenLabel
+                        size="small"
+                        fullWidth
+                        id="currentPvText" 
+                        variant="outlined"
+                        inputProps={{ style: { textAlign: 'center' }, disabled: false}}
+                        onChange={handleCurrentPvUpdate}
+                        value={currentPv}
+                        />
+                      </Box>
+                    </Tooltip>
                   </Box>
-                </Box>
-
+                
                 <Stack direction="row" spacing={2} sx={{mt: '2ch'}}>
                   <FormControl>
                     <OutlinedInput
@@ -384,7 +391,7 @@ function Character() {
                       value={lvl}
                       onChange={handleLvlUpdate}
                       startAdornment={
-                        <Tooltip title={'Nivel del personaje'}>
+                        <Tooltip title={'Nivel del personaje'} arrow>
                           <InputAdornment position="start">
                             {'Nivel:'}
                           </InputAdornment>
@@ -401,7 +408,7 @@ function Character() {
                       value={xp}
                       onChange={handleXpUpdate}
                       startAdornment={
-                        <Tooltip title={'Puntos de experiencia'}>
+                        <Tooltip title={'Puntos de experiencia'} arrow>
                           <InputAdornment position="start">
                             {'XP:'}
                           </InputAdornment>
@@ -441,13 +448,14 @@ function Character() {
               <CardContent sx={{height: '1', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
                 {
                   ['atq', 'def', 'ins', 'pod'].map((mod, index) =>{
-                    const modValue = rolClass !== '' ? rolClasses[rolClass].advance.find(adv => adv.level === 1).mods[mod] : 0;
+                    const actualLvl = (lvl > 0 && lvl <= 10) ? lvl : 1;
+                    const modValue = rolClass !== '' ? rolClasses[rolClass].advance.find(adv => adv.level === actualLvl).mods[mod] : 0;
                     return <Box key={index} sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-around'}}>
                       <Typography sx={{fontWeight: 'bold', width: '30%', textAlign: 'center' }}>
                         {mod.toUpperCase()+':'}
                       </Typography>
                       <Typography sx={{fontWeight: 'bold', width: '25%', textAlign: 'center'}} variant="h6">
-                        {(modValue >= 0 ? '+ ' : '- ') + Math.abs(modValue)}
+                        {mod === 'pod' ? modValue + 10 : (modValue >= 0 ? '+ ' : '- ') + Math.abs(modValue)}
                       </Typography>
                       <Typography sx={{width: '20%', textAlign: 'center', }} color='secondary'>
                         {'+ 9'}
@@ -496,7 +504,7 @@ function Character() {
                     Skills
                   </Typography>
                   <Box>
-                    <Tooltip title="Añadir habilidad">
+                    <Tooltip title="Añadir habilidad" arrow>
                       <IconButton color="primary" aria-label="Añadir habilidad" onClick={handleClickSkillSelect}>
                         <AddRoundedIcon />
                       </IconButton>
