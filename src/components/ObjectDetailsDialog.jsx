@@ -19,7 +19,7 @@ import {
   Chip,
   Stack} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
-import DownloadForOfflineRoundedIcon from '@mui/icons-material/DownloadForOfflineRounded';
+import FileDownloadRoundedIcon from '@mui/icons-material/FileDownloadRounded';
 
 function UseDetails(props) {
   if(props.item.type !== 2)
@@ -103,6 +103,15 @@ function ObjectDetailsDialog(props) {
     onClose(item);
   }
 
+  const downloadTxtFile = () => {
+    const element = document.createElement("a");
+    const file = new Blob([JSON.stringify(item)], {type: 'text/plain'});
+    element.href = URL.createObjectURL(file);
+    element.download = item.name+'.itm';
+    document.body.appendChild(element); // Required for this to work in FireFox
+    element.click();
+  }
+
   return (
     <Dialog
       sx={{ '& .MuiDialog-paper': { width: '80%' } }}
@@ -154,8 +163,8 @@ function ObjectDetailsDialog(props) {
       </DialogContent>
       <DialogActions>
         <Tooltip title="Descargar item">
-          <IconButton aria-label="delete">
-            <DownloadForOfflineRoundedIcon />
+          <IconButton aria-label="delete" onClick={downloadTxtFile}>
+            <FileDownloadRoundedIcon />
           </IconButton>
         </Tooltip>
         <Tooltip title="Descartar item">

@@ -21,8 +21,6 @@ function Stat({statIndex, statName, fullStat, updateStatState, statValue, race})
 
   let mod = 0;
 
-
-
   if(race !== '' && !isNaN(race) && Object.getOwnPropertyNames(rolRaces[race].mods).includes(statName.toLowerCase())) {
     mod = rolRaces[race].mods[statName.toLowerCase()]
   }
@@ -33,7 +31,7 @@ function Stat({statIndex, statName, fullStat, updateStatState, statValue, race})
     } else {
       return (
         <Tooltip title={'Modificador de raza'} arrow>
-          <Typography color="secondary" sx={{ml: '1ch', width: '4ch', textAlign: 'center' }}>
+          <Typography key={statIndex} color="secondary" sx={{ml: '1ch', width: '4ch', textAlign: 'center' }}>
             {mod !== 0 ? '+ ' + mod : ''}
           </Typography>
         </Tooltip>
@@ -44,7 +42,7 @@ function Stat({statIndex, statName, fullStat, updateStatState, statValue, race})
 
   return (
     <Stack 
-      key={uuid()}
+      key={statIndex}
       direction="row"
       justifyContent="center"
       alignItems="center"

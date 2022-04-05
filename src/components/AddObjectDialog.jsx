@@ -94,6 +94,7 @@ function AddObjectDialog(props) {
     if(!isNaN(event.target.value) && !isNaN(parseInt(event.target.value))) {
       setConsUses(parseInt(event.target.value));
     }
+    
   }
   const [consDuration, setConsDuration] = useState(0);
 
@@ -221,7 +222,6 @@ function AddObjectDialog(props) {
         <Stack direction="row" justifyContent="center" spacing={2} sx={{mt: '1ch'}}>
           <FormControl sx={{width: '1', maxWidth: '20ch'}}>
             <TextField
-            
               key={'keypro'}
               id="mod-selection"
               select 
@@ -234,6 +234,7 @@ function AddObjectDialog(props) {
                   <InputAdornment position="start">
                     <TextField
                       size="small"
+                      key={'another'}
                       id="char-name-text" 
                       hiddenLabel
                       variant="standard" 

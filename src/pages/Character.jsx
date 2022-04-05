@@ -15,13 +15,16 @@ import { Container,
   Tooltip,
   Button,
   OutlinedInput,
-  InputAdornment
+  InputAdornment,
+  Input,
+  Label
 } from '@mui/material';
 
 import RemoveCircleRoundedIcon from '@mui/icons-material/RemoveCircleRounded';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
+import FileUploadRoundedIcon from '@mui/icons-material/FileUploadRounded';
 
 import Skill from '../components/Skill';
 import Stat from '../components/Stat';
@@ -45,33 +48,7 @@ function Character() {
     skills: [ 0, 2 ],
     currentPod: 10,
     maxPod: 10,
-    inventory: [ 
-      { qty: 1, item: {
-        id: uuid(),
-        type: 0, 
-        name: 'Espada pro', 
-        description: 'Una espada olvidada por los antiguos ocupantes de la ciudad.', 
-        dmg: 1 }},
-      { qty: 1, item:  { 
-        id: uuid(),
-        type: 1, 
-        name: 'Peto torpe', 
-        description: 'Peto mágico oxidado.', 
-        mods: { def: 2, per: 1, des: -1 }}},
-      { qty: 2, item: { 
-        id: uuid(),
-        type: 2, 
-        name: 'Poción de fuerza', 
-        description: 'Poción que mejora la fuerza del que la consume por un corto espacio de tiempo.', 
-        uses: 1,
-        duration: 2, 
-        mods: { fue: 1 }}},
-      { qty: 1, item: { 
-        id: uuid(),
-        type: 3,
-        name: 'Pase',
-        description: 'Un pase otorgado por el mismisimo Lord Carios para tener libre paso en la puerta norte de la muralla.'}},
-    ]
+    inventory: []
   };
 
   //chardata controllers
@@ -238,6 +215,19 @@ function Character() {
       addItemToInventory(newItem);
     }
   };
+
+  const handleAddItemFile = async (newItem) => {
+    newItem.preventDefault();
+    const reader = new FileReader();
+    reader.onload = async (newItem) => {
+      const text = (newItem.target.result);
+      const item = JSON.parse(text);
+      if(item) {
+        addItemToInventory(item)
+      }
+    };
+    reader.readAsText(newItem.target.files[0])
+  }
 
   //inventory controllers
   const [inventory, setInventory] = useLocalStorage('inventory', []);
@@ -457,7 +447,7 @@ function Character() {
                         {mod.toUpperCase()+':'}
                       </Typography>
                       <Typography sx={{fontWeight: 'bold', width: '25%', textAlign: 'center'}} variant="h6">
-                        {(modValue >= 0 ? '+ ' : '') + modValue}
+                        {(modValue >= 0 ? '+ ' : '- ') + Math.abs(modValue)}
                       </Typography>
                       <Typography sx={{width: '20%', textAlign: 'center', }} color='secondary'>
                         {'+ 9'}
@@ -555,7 +545,15 @@ function Character() {
                     Inventario
                   </Typography>
                   <Box>
-                    <Tooltip title="Añadir al inventario">
+                    <Tooltip title="Subir ítem" arrow>
+                      <label htmlFor="icon-button-file">
+                        <Input accept=".itm" id="icon-button-file" type="file" sx={{display: 'none'}} onChange={(e) => handleAddItemFile(e)}/>
+                        <IconButton color="primary" aria-label="Subir ítem" component="span">
+                          <FileUploadRoundedIcon />
+                        </IconButton>
+                      </label>
+                    </Tooltip>
+                    <Tooltip title="Añadir al inventario" arrow>
                       <IconButton color="primary" aria-label="Añadir al inventario" onClick={handleClickAddItem}>
                         <AddRoundedIcon />
                       </IconButton>
@@ -565,8 +563,8 @@ function Character() {
                 <Box>
                   <Stack>
                     {
-                      inventory.map((slot) => {
-                        return <InventorySlot key={uuid()} qty={slot.qty} item={slot.item} itemQtyUpdate={handleItemQtyUpdate} onDelete={removeItemFromInventory} />
+                      inventory.map((slot, index) => {
+                        return <InventorySlot key={index} qty={slot.qty} item={slot.item} itemQtyUpdate={handleItemQtyUpdate} onDelete={removeItemFromInventory} />
                       })
                     }
                   </Stack>
@@ -575,6 +573,7 @@ function Character() {
             </Card>
             <AddObjectDialog 
               id="add-item-menu"
+              key={uuid()}
               keepMounted
               open={addItemOpen}
               onClose={handleAddItemClose}
