@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { v4 as uuid } from 'uuid';
 import { Container, 
   Grid, 
@@ -31,6 +31,7 @@ import Stat from '../components/Stat';
 import SkillSelect from '../components/SkillSelect';
 import InventorySlot from '../components/InventorySlot';
 import AddObjectDialog from '../components/AddObjectDialog';
+import EquimentSlot from '../components/EquimentSlot';
 
 import { rolClasses, rolCharStats, rolItemTypes, rolRaces } from '../data/Data.js';
 import { useLocalStorage } from "../useLocalStorage";
@@ -48,7 +49,24 @@ function Character() {
     skills: [ 0, 2 ],
     currentPod: 10,
     maxPod: 10,
-    inventory: []
+    inventory: [],
+    equipment: [
+      { id:"2834e304-b37a-4eb2-bd1e-6fb0b12ed944",
+        type:0,
+        name:"Espada mágica",
+        description:"Una espada mágica bien chidori.",
+        mods:{dmg:2}},
+      { id:"q83gs304-b37a-4eb2-bd1e-6fb0b12ed944",
+        type:0,
+        name:"Espada no mágica",
+        description:"Una espada no mágica bien chidori.",
+        mods:{dmg:2, def: -1}},
+      { id:"c778d361-7ec1-4c0a-9526-5b7255dcaebf",
+        type:1,
+        name:"Peto chingon",
+        description:"Un peto mágico que aumenta las estadisticas.",
+        mods:{def:1,car:1}}
+    ]
   };
 
   //chardata controllers
@@ -231,6 +249,7 @@ function Character() {
 
   //inventory controllers
   const [inventory, setInventory] = useLocalStorage('inventory', []);
+  const [equipment, setEquipment] = useLocalStorage('equipment', []);
 
   const addItemToInventory = (item) => {
     setInventory(prevInventory => {
@@ -259,6 +278,62 @@ function Character() {
     })
   }
 
+  const handleItemEquip = (id) => {
+    let removed = {};
+    
+    setInventory(prevInventory => {
+      let newInventory = [...prevInventory];
+      const index = newInventory.indexOf(newInventory.find(o => o.item.id === id));
+      if (index > -1) {
+        if(newInventory[index].qty > 1) {
+          newInventory[index].qty--;
+          
+          removed = newInventory[index].item;
+          return newInventory;
+        } else {
+          removed = newInventory.splice(index, 1)[0].item;
+          return newInventory;
+        }
+      }
+    })
+
+    if(removed) {
+      setEquipment(prevEquipment => {
+        let newEquipment = [...prevEquipment];
+        newEquipment.push(removed);
+        return newEquipment;
+      })
+    }
+  }
+
+  const handleItemUnequip = (id) => {
+    let removed = {};
+    setEquipment(prevEquipment => {
+      let newEquipment = [...prevEquipment];
+      const index = newEquipment.indexOf(newEquipment.find(o => o.id === id));
+      if (index > -1) {
+        removed = newEquipment.splice(index, 1)[0];
+        return newEquipment;
+      }
+    });
+
+    if(removed) {
+      setInventory(prevInventory => {
+        let newInventory = [...prevInventory];
+        if(newInventory.find(o => o.item.id === id)) {
+          const index = newInventory.indexOf(newInventory.find(o => o.item.id === id));
+          if(index > -1) {
+            newInventory[index].qty++;
+            return newInventory;
+          }
+        } else {
+          newInventory.push({qty: 1, item: removed});
+          return newInventory;
+        }
+      })
+    }
+  }
+
   return (
     <>
       <Container maxWidth="lg" sx={{mt: '2ch'}}>
@@ -274,6 +349,7 @@ function Character() {
                   variant="outlined" 
                   value={charName}
                   onChange={handleNameUpdate}
+                  pattern="[0-9]*"
                 />
                 <Grid container spacing={1}>
                   <Grid item md={8} sm={6} xs={6}>
@@ -450,13 +526,16 @@ function Character() {
                   ['atq', 'def', 'ins', 'pod'].map((mod, index) =>{
                     const actualLvl = (lvl > 0 && lvl <= 10) ? lvl : 1;
                     const modValue = rolClass !== '' ? rolClasses[rolClass].advance.find(adv => adv.level === actualLvl).mods[mod] : 0;
+                    const nextLevelModValue = rolClass !== '' && lvl < 10 ? rolClasses[rolClass].advance.find(adv => adv.level === actualLvl + 1).mods[mod] : 0;
                     return <Box key={index} sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-around'}}>
                       <Typography sx={{fontWeight: 'bold', width: '30%', textAlign: 'center' }}>
                         {mod.toUpperCase()+':'}
                       </Typography>
-                      <Typography sx={{fontWeight: 'bold', width: '25%', textAlign: 'center'}} variant="h6">
-                        {mod === 'pod' ? modValue + 10 : (modValue >= 0 ? '+ ' : '- ') + Math.abs(modValue)}
-                      </Typography>
+                      <Tooltip title={'Siguiente nivel: ' + (mod === 'pod' ? (nextLevelModValue + 10) : (nextLevelModValue >= 0 ? '+' : '-') + Math.abs(nextLevelModValue))} arrow>
+                        <Typography sx={{fontWeight: 'bold', width: '25%', textAlign: 'center'}} variant="h6">
+                          {mod === 'pod' ? modValue + 10 : (modValue >= 0 ? '+ ' : '- ') + Math.abs(modValue)}
+                        </Typography>
+                      </Tooltip>
                       <Typography sx={{width: '20%', textAlign: 'center', }} color='secondary'>
                         {'+ 9'}
                       </Typography>
@@ -497,7 +576,7 @@ function Character() {
           </Grid>
 
           <Grid item lg={7} md={6} xs={12}>
-            <Card sx={{}}>
+            <Card sx={{height: '1'}}>
               <CardContent>
                 <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
                   <Typography variant="h6">
@@ -534,19 +613,34 @@ function Character() {
           </Grid>
 
           <Grid item lg={6} md={12} xs={12}>
-            <Card>
+            <Card sx={{height: '1'}}>
               <CardContent>
                 <Box>
                   <Typography variant="h6">
                     Equipo
                   </Typography>
                 </Box>
+                <Box>
+                  <Stack spacing={1}>
+                    {
+                      equipment.map((item, index) => {
+                        return (
+                          <EquimentSlot 
+                            key={index} 
+                            item={item}
+                            onUnequip={handleItemUnequip}
+                          />
+                        )
+                      })
+                    }
+                  </Stack>
+                </Box>
               </CardContent>
             </Card>
           </Grid>
 
           <Grid item lg={6} md={12} xs={12}>
-            <Card>
+            <Card sx={{height: '1'}}>
               <CardContent>
                 <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
                   <Typography variant="h6">
@@ -569,10 +663,22 @@ function Character() {
                   </Box>
                 </Box>
                 <Box>
-                  <Stack>
+                  <Stack
+                    spacing={1}
+                    sx={{
+                      mt:'1ch'
+                    }}
+                  >
                     {
                       inventory.map((slot, index) => {
-                        return <InventorySlot key={index} qty={slot.qty} item={slot.item} itemQtyUpdate={handleItemQtyUpdate} onDelete={removeItemFromInventory} />
+                        return <InventorySlot 
+                          key={index} 
+                          qty={slot.qty} 
+                          item={slot.item} 
+                          itemQtyUpdate={handleItemQtyUpdate} 
+                          onDelete={removeItemFromInventory} 
+                          onEquip={handleItemEquip}
+                        />
                       })
                     }
                   </Stack>

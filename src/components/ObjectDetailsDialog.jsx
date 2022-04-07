@@ -1,8 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { rolCharStats } from '../data/Data.js';
-import { 
-  Box,
+import {
   Typography, 
   Button,
   IconButton,
@@ -17,9 +16,11 @@ import {
   OutlinedInput,
   InputAdornment,
   Chip,
-  Stack} from '@mui/material';
+  Stack
+} from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FileDownloadRoundedIcon from '@mui/icons-material/FileDownloadRounded';
+import NoBackpackIcon from '@mui/icons-material/NoBackpack';
 
 function UseDetails(props) {
   if(props.item.type !== 2)
@@ -69,7 +70,6 @@ function ModificatorDetails(props) {
   */
   if(props.item.type === 3)
     return <></>;
-
   
   return (
     <Grid item xs={12}>
@@ -95,12 +95,12 @@ function ObjectDetailsDialog(props) {
   const [item, setItem] = React.useState(valueProp);
 
   const handleOk = () => {
-    onClose(item);
+    onClose();
   };
 
   const handleItemRemove = () => {
     onDelete(item.id);
-    onClose(item);
+    onClose();
   }
 
   const downloadTxtFile = () => {
@@ -162,12 +162,12 @@ function ObjectDetailsDialog(props) {
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Tooltip title="Descargar item">
+        <Tooltip title="Descargar ítem">
           <IconButton aria-label="delete" onClick={downloadTxtFile}>
             <FileDownloadRoundedIcon />
           </IconButton>
         </Tooltip>
-        <Tooltip title="Descartar item">
+        <Tooltip title="Descartar ítem">
           <IconButton aria-label="delete" onClick={handleItemRemove}>
             <DeleteIcon />
           </IconButton>
@@ -180,6 +180,7 @@ function ObjectDetailsDialog(props) {
 
 ObjectDetailsDialog.propTypes = {
   onClose: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
   item: PropTypes.object.isRequired,
   qty: PropTypes.number.isRequired

@@ -14,7 +14,7 @@ import {
   DialogTitle,
   Backdrop } from '@mui/material';
 import DoubleArrowRoundedIcon from '@mui/icons-material/DoubleArrowRounded';
-import InfoOutlinedIcon from '@mui/icons-material/InfoOutlined';
+import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
 
 const da = rolClasses;
 
@@ -59,7 +59,7 @@ function Skill({rolClass, skillIndex, reducePod }) {
         <Box sx={{display: 'flex', alignItems: 'center',}}>
           <Tooltip title="infomación" arrow>
             <IconButton aria-label="delete" color="primary" onClick={handleClickOpen}>
-              <InfoOutlinedIcon />
+              <InfoRoundedIcon />
             </IconButton>        
           </Tooltip>
           

@@ -17,7 +17,8 @@ function getStoredCharData(key, defaultValue) {
       skills: [ ],
       currentPod: 0,
       maxPod: 0,
-      inventory: []
+      inventory: [],
+      equipment: []
     };
     saved = JSON.stringify(charData)
   }
@@ -42,7 +43,8 @@ function getStoredCharDataFull() {
       skills: [ ],
       currentPod: 0,
       maxPod: 0,
-      inventory: []
+      inventory: [],
+      equipment: []
     };
     return charData;
   }
