@@ -1,9 +1,6 @@
-import React, { useState } from 'react';
-import { v4 as uuid } from 'uuid';
-import { 
-  TextField, 
+import React from 'react';
+import {  
   Typography,
-  Box,
   Tooltip,
   FormControl,
   OutlinedInput,
@@ -12,31 +9,61 @@ import {
 } from '@mui/material';
 import { rolCharStats, rolRaces } from '../data/Data.js';
 
-function Stat({statIndex, statName, fullStat, updateStatState, statValue, race}) {
+function Stat({statIndex, statName, fullStat, updateStatState, statValue, race, equipment}) {
   const handleStatUpdate = (event) => {
     if(!isNaN(event.target.value) && !isNaN(parseInt(event.target.value))) {
       updateStatState(statIndex, parseInt(event.target.value));
     }
   }
 
-  let mod = 0;
 
-  if(race !== '' && !isNaN(race) && Object.getOwnPropertyNames(rolRaces[race].mods).includes(statName.toLowerCase())) {
-    mod = rolRaces[race].mods[statName.toLowerCase()]
-  }
 
   function ModLabel() {
-    if(race === '0'){
+    if(race === '0' && !(equipment.lenght > 0)){
       return <></>
-    } else {
-      return (
-        <Tooltip title={'Modificador de raza'} arrow>
-          <Typography key={statIndex} color="secondary" sx={{ml: '1ch', width: '4ch', textAlign: 'center' }}>
-            {mod !== 0 ? '+ ' + mod : ''}
-          </Typography>
-        </Tooltip>
-      )
     }
+
+    let noEquipment = true;
+
+    equipment.map(equip => {
+      if(Object.getOwnPropertyNames(equip.mods).some(m => rolCharStats.map(s => s.short.toLowerCase()).includes(m))) {
+        noEquipment = false;
+      }
+    })
+
+    let raceMod = 0;
+
+    if(race !== '' && !isNaN(race) && Object.getOwnPropertyNames(rolRaces[race].mods).includes(statName.toLowerCase())) {
+      raceMod += rolRaces[race].mods[statName.toLowerCase()]
+    }
+
+    let equipMod = 0;
+
+    if(!noEquipment) {
+      equipment.map(e => {
+        if(Object.getOwnPropertyNames(e.mods).includes(statName.toLowerCase())) {
+          equipMod = e.mods[statName.toLowerCase()]
+        }
+      })
+    }
+
+    let tooltipText = '';
+
+    if(raceMod > 0 && equipMod === 0) {
+      tooltipText = 'Modificador de raza'
+    } else if(raceMod === 0 && equipMod > 0) {
+      tooltipText = 'Modificador de equipo'
+    } else {
+      tooltipText = 'Raza: ' + raceMod + ' equipo: ' + equipMod;
+    }
+
+    return (
+      <Tooltip title={tooltipText} arrow>
+        <Typography key={statIndex} color="secondary" sx={{ml: '1ch', width: '4ch', textAlign: 'center' }}>
+          {(raceMod + equipMod) !== 0 ? '+ ' + (raceMod + equipMod) : ''}
+        </Typography>
+      </Tooltip>
+    )
     
   }
 

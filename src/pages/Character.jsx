@@ -248,8 +248,8 @@ function Character() {
   }
 
   //inventory controllers
-  const [inventory, setInventory] = useLocalStorage('inventory', []);
   const [equipment, setEquipment] = useLocalStorage('equipment', []);
+  const [inventory, setInventory] = useLocalStorage('inventory', []);
 
   const addItemToInventory = (item) => {
     setInventory(prevInventory => {
@@ -512,6 +512,7 @@ function Character() {
                       statValue={charStats[index]} 
                       updateStatState={updateStats}
                       race={rolRace}
+                      equipment={equipment}
                       />
                     })
                   }

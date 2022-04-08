@@ -32,7 +32,6 @@ function InventorySlot({qty, item, itemQtyUpdate, onDelete, onEquip}) {
   }
 
   useEffect(() => {
-    console.log('itmqty updat')
     itemQtyUpdate(itemQty, item.id);
   },[itemQty])
 
