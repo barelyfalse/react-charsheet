@@ -561,7 +561,7 @@ function Character() {
                         </Tooltip>
                         <Tooltip title="Modificador de equipo">
                           <Typography sx={{width: noEquipMod ? '0' : '5ch', textAlign: 'center' }} color='secondary'>
-                            {equipMod === 0 ? '' : '+ '+equipMod}
+                            {equipMod === 0 ? '' : (equipMod >= 0 ? '+ ' : '- ') + Math.abs(equipMod)}
                           </Typography>
                         </Tooltip>
                       </Stack>
