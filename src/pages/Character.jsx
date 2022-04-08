@@ -33,7 +33,7 @@ import InventorySlot from '../components/InventorySlot';
 import AddObjectDialog from '../components/AddObjectDialog';
 import EquimentSlot from '../components/EquimentSlot';
 
-import { rolClasses, rolCharStats, rolItemTypes, rolRaces } from '../data/Data.js';
+import { rolClasses, rolCharStats, rolCharSkillStats, rolRaces } from '../data/Data.js';
 import { useLocalStorage } from "../useLocalStorage";
 
 function Character() {
@@ -344,7 +344,7 @@ function Character() {
                 <TextField
                   size="small"
                   fullWidth 
-                  id="outlined-basic" 
+                  id="char-name" 
                   label="Nombre" 
                   variant="outlined" 
                   value={charName}
@@ -528,20 +528,44 @@ function Character() {
                     const actualLvl = (lvl > 0 && lvl <= 10) ? lvl : 1;
                     const modValue = rolClass !== '' ? rolClasses[rolClass].advance.find(adv => adv.level === actualLvl).mods[mod] : 0;
                     const nextLevelModValue = rolClass !== '' && lvl < 10 ? rolClasses[rolClass].advance.find(adv => adv.level === actualLvl + 1).mods[mod] : 0;
-                    return <Box key={index} sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-around'}}>
-                      <Typography sx={{fontWeight: 'bold', width: '30%', textAlign: 'center' }}>
-                        {mod.toUpperCase()+':'}
-                      </Typography>
-                      <Tooltip title={'Siguiente nivel: ' + (mod === 'pod' ? (nextLevelModValue + 10) : (nextLevelModValue >= 0 ? '+' : '-') + Math.abs(nextLevelModValue))} arrow>
-                        <Typography sx={{fontWeight: 'bold', width: '25%', textAlign: 'center'}} variant="h6">
-                          {mod === 'pod' ? modValue + 10 : (modValue >= 0 ? '+ ' : '- ') + Math.abs(modValue)}
+                    let noEquipMod = true;
+                    equipment.map(equip => {
+                      if(Object.getOwnPropertyNames(equip.mods).some(m => rolCharSkillStats.map(s => s.short.toLowerCase()).includes(m))) {
+                        noEquipMod = false;
+                      }
+                    })
+                    let equipMod = 0;
+                    if(!noEquipMod) {
+                      equipment.map(e => {
+                        if(Object.getOwnPropertyNames(e.mods).includes(mod)) {
+                          equipMod += e.mods[mod];
+                        }
+                      })
+                    }
+
+                    return (
+                      <Stack 
+                        key={index} 
+                        direction="row" 
+                        alignItems="center" 
+                        justifyContent="center"
+                        spacing={{ xs: 0, sm: 2, md: 0 }}
+                      >
+                        <Typography sx={{fontWeight: 'bold', width:'5ch' }}>
+                          {mod.toUpperCase()+':'}
                         </Typography>
-                      </Tooltip>
-                      <Typography sx={{width: '20%', textAlign: 'center', }} color='secondary'>
-                        {'+ 9'}
-                      </Typography>
-                      
-                    </Box>
+                        <Tooltip title={'Siguiente nivel: ' + (mod === 'pod' ? (nextLevelModValue + 10) : (nextLevelModValue >= 0 ? '+' : '-') + Math.abs(nextLevelModValue))} arrow>
+                          <Typography sx={{fontWeight: 'bold', width:'4ch', textAlign: 'center'}} variant="h6">
+                            {mod === 'pod' ? modValue + 10 : (modValue >= 0 ? '+ ' : '- ') + Math.abs(modValue)}
+                          </Typography>
+                        </Tooltip>
+                        <Tooltip title="Modificador de equipo">
+                          <Typography sx={{width: noEquipMod ? '0' : '5ch', textAlign: 'center' }} color='secondary'>
+                            {equipMod === 0 ? '' : '+ '+equipMod}
+                          </Typography>
+                        </Tooltip>
+                      </Stack>
+                    )
                   })
                 }
                 

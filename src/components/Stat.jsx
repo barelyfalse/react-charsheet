@@ -19,7 +19,7 @@ function Stat({statIndex, statName, fullStat, updateStatState, statValue, race, 
 
 
   function ModLabel() {
-    if(race === '0' && !(equipment.lenght > 0)){
+    if(race === '' && !(equipment.lenght > 0)){
       return <></>
     }
 
@@ -42,7 +42,7 @@ function Stat({statIndex, statName, fullStat, updateStatState, statValue, race, 
     if(!noEquipment) {
       equipment.map(e => {
         if(Object.getOwnPropertyNames(e.mods).includes(statName.toLowerCase())) {
-          equipMod = e.mods[statName.toLowerCase()]
+          equipMod += e.mods[statName.toLowerCase()]
         }
       })
     }
