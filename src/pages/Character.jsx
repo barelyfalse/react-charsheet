@@ -710,9 +710,9 @@ function Character() {
                 </Box>
               </CardContent>
             </Card>
-            <AddObjectDialog 
+            <AddObjectDialog
+              key="object-diag"
               id="add-item-menu"
-              key={uuid()}
               keepMounted
               open={addItemOpen}
               onClose={handleAddItemClose}

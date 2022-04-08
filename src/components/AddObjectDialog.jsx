@@ -78,29 +78,46 @@ function AddObjectDialog(props) {
     setItemDesc(event.target.value);
   }
 
-  //basic detail controllers
+  //weapon damage controllers
+  const [weaponDamageText, setWeaponDamageText] = useState('0');
   const [weaponDamage, setWeaponDamage] = useState(0);
 
-  const handleWeaponDamageUpdate = (event) => {
-    if(!isNaN(event.target.value) && !isNaN(parseInt(event.target.value))) {
-      setWeaponDamage(parseInt(event.target.value));
+  const handleWeaponDamageTextUpdate = (event) => {
+    setWeaponDamageText(event.target.value);
+  }
+
+  const handleWeaponDamageUpdate = () => {
+    if(!isNaN(weaponDamageText) && !isNaN(parseInt(weaponDamageText))) {
+      setWeaponDamage(parseInt(weaponDamageText));
+    } else {
+      setWeaponDamageText(weaponDamage)
     }
   }
 
   //use duration controllers
+  const [consUsesText, setConsUsesText] = useState('1');
   const [consUses, setConsUses] = useState(1);
-
-  const handleConsUsesUpdate = (event) => {
-    if(!isNaN(event.target.value) && !isNaN(parseInt(event.target.value))) {
-      setConsUses(parseInt(event.target.value));
+  const handleConsUsesTextUpdate = (event) => {
+    setConsUsesText(event.target.value);
+  }
+  const handleConsUsesUpdate = () => {
+    if(!isNaN(consUsesText) && !isNaN(parseInt(consUsesText))) {
+      setConsUses(parseInt(consUsesText));
+    } else {
+      setConsUsesText(consUses)
     }
     
   }
-  const [consDuration, setConsDuration] = useState(0);
-
-  const handleConsDurationUpdate = (event) => {
-    if(!isNaN(event.target.value) && !isNaN(parseInt(event.target.value))) {
-      setConsDuration(parseInt(event.target.value));
+  const [consDurationText, setConsDurationText] = useState('0');
+  const [consDuration, setConsDuration] = useState(0);;
+  const handleConsDurationTextUpdate = (event) => {
+    setConsDurationText(event.target.value);
+  }
+  const handleConsDurationUpdate = () => {
+    if(!isNaN(consDurationText) && !isNaN(parseInt(consDurationText))) {
+      setConsDuration(parseInt(consDurationText));
+    } else {
+      setConsDurationText(consDuration)
     }
     
   }
@@ -114,12 +131,19 @@ function AddObjectDialog(props) {
 
   //mod value controllers
   const [modValue, setModValue] = useState(0);
+  const [modValueText, setModValueText] = useState('');
   
-  const handleModValueUpdate = (event) => {
-    if(!isNaN(event.target.value) && !isNaN(parseInt(event.target.value))) {
-      setModValue(parseInt(event.target.value));
+  const handleModValueTextUpdate = (event) => {
+    setModValueText(event.target.value);
+  }
+
+  const handleModValueUpdate = () => {
+    console.log('mod value loss focus')
+    if(!isNaN(modValueText) && !isNaN(parseInt(modValueText))) {
+      setModValue(parseInt(modValueText));
+    } else {
+      setModValueText(modValue)
     }
-    
   }
 
   //mods constroller
@@ -145,62 +169,6 @@ function AddObjectDialog(props) {
     })
   }
 
-  //input
-  
- 
-  function WeaponDetails() {
-    if(itemType !== 0)
-      return <></>;
-    
-    return (
-      <Grid item xs={12}>
-        <Box sx={{display: 'flex', justifyContent: 'center', mt: '1ch'}}>
-          <FormControl sx={{width: '15ch'}}>
-            <OutlinedInput
-              id="weapon-damage" 
-              value={weaponDamage}
-              startAdornment={<InputAdornment position="start">Daño:</InputAdornment>}
-              inputProps={{ style: { textAlign: 'center'} }}
-              onChange={handleWeaponDamageUpdate}
-            />
-          </FormControl>
-        </Box>
-      </Grid>
-    );
-  }
-  
-  function UseDetails() {
-    if(itemType !== 2)
-      return <></>;
-    
-    return (
-      <Grid item xs={12}>
-        <Stack direction="row" justifyContent="center" spacing={2} sx={{mt: '1ch'}}>
-          <FormControl sx={{width: '15ch'}}>
-            <OutlinedInput
-              id="consumable-uses" 
-              value={consUses}
-              size="small"
-              startAdornment={<InputAdornment position="start">Usos:</InputAdornment>}
-              inputProps={{ style: { textAlign: 'center'} }}
-              onChange={handleConsUsesUpdate}
-            />
-          </FormControl>
-          <FormControl sx={{width: '15ch'}}>
-            <OutlinedInput
-              id="consumable-duration" 
-              value={consDuration}
-              size="small"
-              startAdornment={<Tooltip title="Turnos"><InputAdornment position="start">Duración:</InputAdornment></Tooltip>}
-              inputProps={{ style: { textAlign: 'center'} }}
-              onChange={handleConsDurationUpdate}
-            />
-          </FormControl>
-        </Stack>
-      </Grid>
-    );
-  }
-
   function DeleteableChip(props) {
     let mod = props.mod;
     return (
@@ -215,14 +183,12 @@ function AddObjectDialog(props) {
 
   function ModificatorDetails() {
     if( itemType !== 1 && itemType !== 2)
-    return <></>
-
+      return <></>
     return(
       <Grid item xs={12}>
         <Stack direction="row" justifyContent="center" spacing={2} sx={{mt: '1ch'}}>
           <FormControl sx={{width: '1', maxWidth: '20ch'}}>
             <TextField
-              key={'keypro'}
               id="mod-selection"
               select 
               size="small"
@@ -233,13 +199,14 @@ function AddObjectDialog(props) {
                 startAdornment: (
                   <InputAdornment position="start">
                     <TextField
+                      key="mod-value"
                       size="small"
-                      key={'another'}
-                      id="char-name-text" 
+                      id="mod-value-text" 
                       hiddenLabel
                       variant="standard" 
-                      value={modValue}
-                      onChange={handleModValueUpdate}
+                      value={modValueText}
+                      onChange={handleModValueTextUpdate}
+                      onBlur={handleModValueUpdate}
                       inputProps={{ style: { textAlign: 'center' } }}
                       InputProps={{ disableUnderline: true }}
                       sx={{width: '6ch', mt: '.5ch'}}
@@ -268,9 +235,6 @@ function AddObjectDialog(props) {
                   return <MenuItem key={index + rolCharSkillStats.length + rolCharBasicStats.length} value={stat.toLowerCase()}>{stat}</MenuItem>
                 })
               }
-
-              
-              
             </TextField>
           </FormControl>
           <Button variant="contained" onClick={handleModsAdd}>Añadir</Button>
@@ -342,13 +306,127 @@ function AddObjectDialog(props) {
               onChange={handleItemDescUpdate}
             />
           </Grid>
-          <WeaponDetails />
-          <UseDetails />
-          <ModificatorDetails />
+          {
+            itemType === 0 ?
+            <Grid item xs={12}>
+              <Box sx={{display: 'flex', justifyContent: 'center', mt: '1ch'}}>
+                <FormControl sx={{width: '15ch'}}>
+                  <OutlinedInput
+                    key="weapon-dmg-val"
+                    id="weapon-damage" 
+                    value={weaponDamageText}
+                    startAdornment={<InputAdornment position="start">Daño:</InputAdornment>}
+                    inputProps={{ style: { textAlign: 'center'} }}
+                    onChange={handleWeaponDamageTextUpdate}
+                    onBlur={handleWeaponDamageUpdate}
+                  />
+                </FormControl>
+              </Box>
+            </Grid> :
+            <></>
+          }
+          {
+            itemType === 2 ?
+            <Grid item xs={12}>
+              <Stack direction="row" justifyContent="center" spacing={2} sx={{mt: '1ch'}}>
+                <FormControl sx={{width: '15ch'}}>
+                  <OutlinedInput
+                    key="item-uses"
+                    id="consumable-uses" 
+                    value={consUsesText}
+                    size="small"
+                    startAdornment={<InputAdornment position="start">Usos:</InputAdornment>}
+                    inputProps={{ style: { textAlign: 'center'} }}
+                    onChange={handleConsUsesTextUpdate}
+                    onBlur={handleConsUsesUpdate}
+                  />
+                </FormControl>
+                <FormControl sx={{width: '15ch'}}>
+                  <OutlinedInput
+                    key="item-dur"
+                    id="consumable-duration" 
+                    value={consDurationText}
+                    size="small"
+                    startAdornment={<Tooltip title="Turnos"><InputAdornment position="start">Duración:</InputAdornment></Tooltip>}
+                    inputProps={{ style: { textAlign: 'center'} }}
+                    onChange={handleConsDurationTextUpdate}
+                    onBlur={handleConsDurationUpdate}
+                  />
+                </FormControl>
+              </Stack>
+            </Grid> :
+            <></>
+          }
+          {
+            itemType === 1 || itemType === 2 ?
+            <Grid item xs={12}>
+              <Stack direction="row" justifyContent="center" spacing={2} sx={{mt: '1ch'}}>
+                <FormControl sx={{width: '1', maxWidth: '20ch'}}>
+                  <TextField
+                    id="mod-selection"
+                    select 
+                    size="small"
+                    label="Modificador"
+                    value={selectedMod}
+                    onChange={handleSelectedModUpdate}
+                    InputProps={{
+                      startAdornment: (
+                        <InputAdornment position="start">
+                          <TextField
+                            key="mod-value"
+                            size="small"
+                            id="mod-value-text" 
+                            hiddenLabel
+                            variant="standard" 
+                            value={modValueText}
+                            onChange={handleModValueTextUpdate}
+                            onBlur={handleModValueUpdate}
+                            inputProps={{ style: { textAlign: 'center' } }}
+                            InputProps={{ disableUnderline: true }}
+                            sx={{width: '6ch', mt: '.5ch'}}
+                          />
+                        </InputAdornment>
+                      ),
+                    }}
+                  >
+                    <MenuItem disabled value=""><em>Skill stats</em></MenuItem>
+                    {
+                      rolCharSkillStats.map((stat) => { return stat.short }).map((stat, index) => {
+                        return <MenuItem key={index} value={stat.toLowerCase()}>{stat}</MenuItem>
+                      })
+                    }
+
+                    <MenuItem disabled value=""><em>Basic stats</em></MenuItem>
+                    {
+                      rolCharBasicStats.map((stat) => { return stat.short }).map((stat, index) => {
+                        return <MenuItem key={index + rolCharSkillStats.length} value={stat.toLowerCase()}>{stat}</MenuItem>
+                      })
+                    }
+
+                    <MenuItem disabled value=""><em>Base stats</em></MenuItem>
+                    {
+                      rolCharStats.map((stat) => { return stat.short }).map((stat, index) => {
+                        return <MenuItem key={index + rolCharSkillStats.length + rolCharBasicStats.length} value={stat.toLowerCase()}>{stat}</MenuItem>
+                      })
+                    }
+                  </TextField>
+                </FormControl>
+                <Button variant="contained" onClick={handleModsAdd}>Añadir</Button>
+              </Stack>
+              <Stack direction="row" justifyContent="center" spacing="1ch" sx={{mt: '2ch'}}>
+                {
+                  Object.getOwnPropertyNames(mods).map((mod, index) => {
+                    return <DeleteableChip key={index} mod={mod} />
+                  })
+                }
+              </Stack>
+            </Grid> :
+            <></>
+          }
         </Grid>
       </DialogContent>
       <DialogActions>
-        <Button autoFocus onClick={handleCancel}>
+        <Button onClick={handleCancel}>
           Cancelar
         </Button>
         <Button onClick={handleOk}>Agregar</Button>
