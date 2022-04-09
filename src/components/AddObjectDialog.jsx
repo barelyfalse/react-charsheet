@@ -138,7 +138,6 @@ function AddObjectDialog(props) {
   }
 
   const handleModValueUpdate = () => {
-    console.log('mod value loss focus')
     if(!isNaN(modValueText) && !isNaN(parseInt(modValueText))) {
       setModValue(parseInt(modValueText));
     } else {

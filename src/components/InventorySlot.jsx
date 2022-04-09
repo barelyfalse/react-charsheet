@@ -25,9 +25,7 @@ function InventorySlot({qty, item, itemQtyUpdate, onDelete, onEquip}) {
 
   const handleItemQtyUpdate = (event) => {
     if(!isNaN(event.target.value) && !isNaN(parseInt(event.target.value))) {
-      
       setItemQty(parseInt(event.target.value))
-      console.log('set qty');
     }
   }
 

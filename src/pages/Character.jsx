@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { v4 as uuid } from 'uuid';
 import { Container, 
   Grid, 
@@ -17,7 +17,6 @@ import { Container,
   OutlinedInput,
   InputAdornment,
   Input,
-  Label
 } from '@mui/material';
 
 import RemoveCircleRoundedIcon from '@mui/icons-material/RemoveCircleRounded';
@@ -388,10 +387,11 @@ function Character() {
                             let modsLabel = '';
                             Object.getOwnPropertyNames(race.mods).map((mod) => {
                               modsLabel += ' ' + mod.toUpperCase() + ' +' + race.mods[mod];
+                              return null
                             });
                             return (
                               <MenuItem key={index} value={index}>
-                                <Tooltip title={modsLabel} arrow>
+                                <Tooltip title={modsLabel} placement="left" arrow>
                                   <Typography sx={{width: '1'}}>
                                     {race.name}
                                   </Typography>
@@ -554,12 +554,12 @@ function Character() {
                         <Typography sx={{fontWeight: 'bold', width:'5ch' }}>
                           {mod.toUpperCase()+':'}
                         </Typography>
-                        <Tooltip title={'Siguiente nivel: ' + (mod === 'pod' ? (nextLevelModValue + 10) : (nextLevelModValue >= 0 ? '+' : '-') + Math.abs(nextLevelModValue))} arrow>
+                        <Tooltip title={'Siguiente nivel: ' + (mod === 'pod' ? (nextLevelModValue + 10) : (nextLevelModValue >= 0 ? '+' : '-') + Math.abs(nextLevelModValue))} placement="right" arrow>
                           <Typography sx={{fontWeight: 'bold', width:'4ch', textAlign: 'center'}} variant="h6">
                             {mod === 'pod' ? modValue + 10 : (modValue >= 0 ? '+ ' : '- ') + Math.abs(modValue)}
                           </Typography>
                         </Tooltip>
-                        <Tooltip title="Modificador de equipo">
+                        <Tooltip title="Modificador de equipo" arrow>
                           <Typography sx={{width: noEquipMod ? '0' : '5ch', textAlign: 'center' }} color='secondary'>
                             {equipMod === 0 ? '' : (equipMod >= 0 ? '+ ' : '- ') + Math.abs(equipMod)}
                           </Typography>

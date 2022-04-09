@@ -83,7 +83,7 @@ function Stat({statIndex, statName, fullStat, updateStatState, statValue, race, 
           value={statValue}
           onChange={handleStatUpdate}
           startAdornment={
-            <Tooltip title={fullStat} arrow>
+            <Tooltip title={fullStat} placement="right" arrow>
               <InputAdornment position="start">
                 {statName}
               </InputAdornment>
