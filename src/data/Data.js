@@ -263,10 +263,95 @@ const rolClasses = [
       { level: 10, mods: { atq: 9, def: 3, ins: 3, pod: 5} },
     ],
     skills: [
+      { name: "Maestro de la emboscada",
+        description: "Ataque por sorpresa para todo el grupo a enemigos que no están en combate.",
+        type: "Ofensiva",
+        advance: [ 
+          { level: 1, cost: -1, duration: -1,
+            description: "El primer turno es para el grupo." },
+          { level: 2, cost: -1, duration: -1,
+            description: "El primer turno del equipo se realiza con ventaja" },
+        ]
+      },
+      { name: "Vista aguda",
+        description: "Valor extra en tiradas para percibir enemigos, trampas o emboscadas ocultas",
+        type: "Utilidad",
+        advance: [ 
+          { level: 1, cost: -1, duration: -1,
+            description: "+1 en PER" },
+          { level: 2, cost: -1, duration: -1,
+            description: "+2 en PER" },
+          { level: 3, cost: -1, duration: -1,
+            description: "+3 en PER" },
+        ]
+      },
+      { name: "Puntos débiles",
+        description: "Más golpes críticos.",
+        type: "Ofensiva",
+        advance: [ 
+          { level: 1, cost: -1, duration: -1,
+            description: "Críticos con dados 19 y 20." },
+        ]
+      },
+      { name: "Golpe letal",
+        description: "Crítico en el siguiente ataque si el objetivo no salva una tirada de CON.",
+        type: "Ofensiva",
+        advance: [ 
+          { level: 1, cost: 3, duration: 0,
+            description: "Salvada de 20 de CON." },
+          { level: 2, cost: 3, duration: 0,
+            description: "Salvada de 18 de CON." },
+        ]
+      },
+      { name: "Sigilo",
+        description: "El jugador entra en sigilo en estado oculto si supera una dificultad general de PER del enemigo.",
+        type: "Utilidad",
+        advance: [ 
+          { level: 1, cost: 1, duration: 0,
+            description: "Si el enemigo supera la dificultad de PER el jugador no entra en sigilo." },
+          { level: 2, cost: 1, duration: 0,
+            description: "Si el enemigo supera la dificultad de PER entra en sigilo en modo cubierto." },
+        ]
+      },
+      { name: "Acechante mortal",
+        description: "Multiplicador de daño al atacar el flanco de un enemigo en sigilo.",
+        type: "",
+        advance: [ 
+          { level: 1, cost: -1, duration: -1,
+            description: "Triple daño. El jugador sale de sigilo. (puede usar su acción bonus para volver a entrar en modo cubierto)" },
+          { level: 2, cost: -1, duration: -1,
+            description: "Triple daño. Si el daño es a distancia el jugador pasa a estado cubierto." },
+        ]
+      },
+      { name: "Caminata asesina",
+        description: "Mas capacidad para moverse.",
+        type: "Utilidad",
+        advance: [ 
+          { level: 1, cost: -1, duration: -1,
+            description: "2 metros más que el movimiento base." },
+          { level: 2, cost: -1, duration: -1,
+            description: "3 metros más que el movimiento base." },
+        ]
+      },
       { name: "",
         description: "",
-        cost: 0, 
-        duration: 0
+        type: "",
+        advance: [ 
+          { level: 1, cost: -1, duration: -1,
+            description: "" },
+          { level: 2, cost: -1, duration: -1,
+            description: "" },
+        ]
+      },
+      { name: "",
+        description: "",
+        type: "",
+        advance: [ 
+          { level: 1, cost: -1, duration: -1,
+            description: "" },
+          { level: 2, cost: -1, duration: -1,
+            description: "" },
+        ]
       },
     ]
   },
@@ -286,10 +371,19 @@ const rolClasses = [
       { level: 10, mods: { atq: 7, def: 3, ins: 4, pod: 6} },
     ],
     skills: [
-      { name: "",
-        description: "",
-        cost: 0, 
-        duration: 0
+      { name: "Prestidigitación",
+        description: "Ventaja al momento de realizar salvar dificultades de habilidad con las manos.",
+        advance: [ 
+          { level: 1, cost: 0, duration: 0,
+            description: "+1 DES" },
+        ]
+      },
+      { name: "Impostor",
+        description: "Imita las características de un individuo, en casi todos los sentidos.",
+        advance: [ 
+          { level: 1, cost: 4, duration: 0,
+            description: "Es posible imitarlo todo excepto la voz de una criatura." },
+        ]
       },
     ]
   },
@@ -309,10 +403,105 @@ const rolClasses = [
       { level: 10, mods: { atq: 9, def: 2, ins: 3, pod: 6} },
     ],
     skills: [
-      { name: "",
-        description: "",
-        cost: 0, 
-        duration: 0
+      { name: "Maestro de la emboscada",
+        description: "Ataque por sorpresa para todo el grupo a enemigos que no están en combate.",
+        action: "Ofensiva",
+        type: "Pasiva",
+        advance: [ 
+          { level: 1, cost: 0, duration: 0,
+            descriptions: ["El primer turno de la pelea es para el grupo."]},
+          { level: 2, cost: 0, duration: 0,
+            descriptions: ["El primer turno del equipo se realiza con ventaja."] },]
+      },
+      { name: "Fijar objetivo",
+        description: "Marca un objetivo, no se puede cambiar de objetivo a menos que se realice otra acción.",
+        action: "Ofensiva",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 2, duration: 0,
+            descriptions: ["Hasta que escape o muera recibirá un +2 en los daños que se le realicen."] },
+          { level: 2, cost: 2, duration: 0,
+            descriptions: ["Hasta que escape o muera recibirá un +3 en los daños que se le realicen."] },
+        ]
+      },
+      { name: "Disparo certero",
+        description: "Disparo que, de acertar, realiza daño extra al objetivo.",
+        action: "Ofensiva",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 2, duration: 0,
+            descriptions: ["+3 de daño"] },
+          { level: 2, cost: 2, duration: 0,
+            descriptions: ["+4 de daño"] },
+          { level: 2, cost: 1, duration: 0,
+            descriptions: ["+5 de daño"] },
+        ]
+      },
+      { name: "Tiro curvo",
+        description: "Se dispara un proyectil curvo que evada obstáculos.",
+        action: "Ofensiva",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 2, duration: 0,
+            descriptions: ["Se puede disparar a enemigos a media cobertura sin desventaja."] },
+          { level: 2, cost: 2, duration: 0,
+            descriptions: ["Se puede disparar a enemigos a cubierto sin ninguna desventaja."] },
+        ]
+      },
+      { name: "Múltiple disparo",
+        description: "Se pueden disparar varios tiros por turno.",
+        action: "Ofensiva",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 2, duration: 0,
+            descriptions: ["Se puede disparar 2 veces en un turno."] },
+          { level: 2, cost: 2, duration: 0,
+            descriptions: ["Se puede disparar 3 veces en un turno."] },
+        ]
+      },
+      { name: "Proyectil elemental",
+        description: "Uso de un proyectil especial elemental.",
+        action: "Ofensiva",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 3, duration: 0,
+            descriptions: ["Proyectiles de fuego (inflinge incendiado I 3 turnos)."] },
+          { level: 2, cost: 3, duration: 0,
+            descriptions: [
+              "Proyectiles de fuego (inflinge incendiado II 4 turnos).",
+              "Proyectiles de hielo (inflinge congelado I 2 turnos)."
+            ] 
+          },
+          { level: 3, cost: 3, duration: 0,
+            descriptions: [
+              "Proyectiles de fuego (inflinge incendiado II 4 turnos).",
+              "Proyectiles de hielo (inflinge congelado II 4 turnos).",
+              "Proyectiles de electricidad (inflinge electrocutado I 3 turnos)."
+            ] 
+          },
+        ]
+      },
+      { name: "Superviviente",
+        description: "Habilidades de naturaleza y supervivencia.",
+        action: "Utilidad",
+        type: "Pasiva",
+        advance: [ 
+          { level: 1, cost: 0, duration: 0,
+            descriptions: ["Encender fuego, crear antorchas, manipular animales, rastreo básico, crear trampa básica."] },
+          { level: 2, cost: 0, duration: 0,
+            descriptions: ["Improvisar arma, montar animal, conocimiento geográfico, encontrar alimento, crear trampa avanzada, rastreo avanzado."] },
+        ]
+      },
+      { name: "Movilidad superior",
+        description: "Mas capacidad para moverse.",
+        action: "Utilidad",
+        type: "Pasiva",
+        advance: [ 
+          { level: 1, cost: 0, duration: 0,
+            descriptions: ["2 metros más que el movimiento base."] },
+          { level: 2, cost: 0, duration: 0,
+            descriptions: ["3 metros más que el movimiento base."] },
+        ]
       },
     ]
   },
@@ -347,7 +536,6 @@ const rolRaces = [
   { name: "Humano",
     description: "",
     mods: { mis: 3 },
-    skills: []
   },
   { name: "Enano",
     description: "",

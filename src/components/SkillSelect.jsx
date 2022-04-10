@@ -1,18 +1,28 @@
 import * as React from 'react';
+import { 
+  Stack,
+  Button,
+  DialogTitle,
+  DialogContent,
+  DialogActions,
+  Dialog,
+  RadioGroup,
+  Radio,
+  FormControlLabel,
+  Typography,
+  Paper,
+  Chip,
+  Box,
+  List,
+  ListItem,
+  ListItemText,
+} from '@mui/material/'
 import PropTypes from 'prop-types';
-import Button from '@mui/material/Button';
-import DialogTitle from '@mui/material/DialogTitle';
-import DialogContent from '@mui/material/DialogContent';
-import DialogActions from '@mui/material/DialogActions';
-import Dialog from '@mui/material/Dialog';
-import RadioGroup from '@mui/material/RadioGroup';
-import Radio from '@mui/material/Radio';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import Typography from '@mui/material/Typography';
-import Paper from '@mui/material/Paper';
+
+import { rolClasses } from '../data/Data.js';
 
 function SkillSelect(props) {
-  const { onClose, value: valueProp, open, rolClassSkills, selectedRolClassSkills, ...other } = props;
+  const { onClose, value: valueProp, open, rolClass, selectedRolClassSkills, ...other } = props;
   const [value, setValue] = React.useState(valueProp);
   const radioGroupRef = React.useRef(null);
 
@@ -40,10 +50,13 @@ function SkillSelect(props) {
     setValue(event.target.value);
   };
 
+  if(!rolClass) {
+    return null
+  }
+
   return (
     <Dialog
-      sx={{ '& .MuiDialog-paper': { width: '80%', maxHeight: 435 } }}
-      maxWidth="lg"
+      sx={{ '& .MuiDialog-paper': { width: '100%' } }}
       fullWidth={true}
       TransitionProps={{ onEntering: handleEntering }}
       open={open}
@@ -58,39 +71,110 @@ function SkillSelect(props) {
           value={value}
           onChange={handleChange}
         >
-          {
-            rolClassSkills.map((skill, index) => {
-              var info = '';
-              if(skill.cost === 0 && skill.duration === 0) {
-                info = 'pasiva';
-              } else {
-                info = 'costo: ' + skill.cost + ', duración: ' + skill.duration;
-              }
-              return <Paper
-              elevation={selectedRolClassSkills.includes(index) ? 6 : 4}
-              sx={{
-                px: '1ch',
-                my: '.5ch',
-                py: '1ch',
-              }}
-              key={index}
-              >
-                <FormControlLabel
-                  value={index}
-                  control={<Radio />}
-                  label={skill.name}
-                  disabled={selectedRolClassSkills.includes(index)}
-                />
-                <Typography sx={selectedRolClassSkills.includes(index) ? {color: 'gray'}:{}}>
-                  {skill.description}
-                </Typography>
-                <Typography sx={{color: 'gray', mt: '1ch'}}>
-                  {!selectedRolClassSkills.includes(index) ? info : ''}
-                </Typography>
-                
-              </Paper>
-            })
-          }
+          <Stack spacing={2}>
+            {
+              rolClasses[rolClass].skills.map((skill, index) => {
+                return ( 
+                <Paper
+                  key={index}
+                  elevation={4}
+                  sx={{
+                    px: '1ch',
+                    py: '1ch',
+                  }}
+                >
+                  <Stack
+                    direction={{ xs: 'column', sm: 'row' }}
+                    alignItems={{ xs: 'start', sm: 'center' }}
+                    justifyContent="space-between"
+                  >
+                    <FormControlLabel
+                      value={index}
+                      control={<Radio />}
+                      label={skill.name}
+                      disabled={false}
+                    />
+                    <Stack
+                      direction="row"
+                      spacing={1}
+                    >
+                      <Chip
+                        label={skill.type}
+                        size="small" 
+                        color="primary"
+                      />
+                      <Chip
+                        label={skill.action}
+                        size="small"
+                        variant="outlined"
+                        color="primary"
+                      />
+                    </Stack>
+                    
+                  </Stack>
+                  
+                  <Typography sx={selectedRolClassSkills.includes(index) ? {color: 'gray'}:{}}>
+                    {skill.description}
+                  </Typography>
+                  <List >
+                    {
+                      skill.advance.map((adv, index) => {
+                        return (
+                          <ListItem key={index}>
+                            <ListItemText
+                              primary={
+                                skill.type === 'Pasiva' ?
+                                <Stack  direction="row" spacing={1}>
+                                  <Box>{'Nivel ' + adv.level}</Box>
+                                  <Chip
+                                    label={'pasiva'}
+                                    size="small"
+                                    variant="outlined"
+                                  />
+                                </Stack>:
+                                <Stack  direction="row" spacing={1}>
+                                  <Box>{'Nivel ' + adv.level}</Box>
+                                  <Chip
+                                    label={'costo: ' + adv.cost}
+                                    size="small"
+                                    variant="outlined"
+                                  />
+                                  { 
+                                    adv.duration === 0 ?
+                                    <Chip
+                                      label="instantánea"
+                                      size="small"
+                                      variant="outlined"
+                                    /> :
+                                    <Chip
+                                      label={'duración: ' + adv.duration}
+                                      size="small"
+                                      variant="outlined"
+                                    />
+                                  }
+                                </Stack>
+                              }
+                              secondary={
+                                <Box sx={{ml: '1ch'}}>
+                                  {
+                                    adv.descriptions.map((desc, index) =>{
+                                      return (
+                                        <Box key={index}>{desc}</Box>
+                                      )
+                                    })
+                                  }
+                                </Box>
+                              }
+                            />
+                          </ListItem>
+                        )
+                      })
+                    }
+                  </List>
+                </Paper> )
+              })
+            }
+          </Stack>
         </RadioGroup>
       </DialogContent>
       <DialogActions>
@@ -107,7 +191,6 @@ SkillSelect.propTypes = {
   onClose: PropTypes.func.isRequired,
   open: PropTypes.bool.isRequired,
   value: PropTypes.number.isRequired,
-  rolClassSkills: PropTypes.array.isRequired,
   selectedRolClassSkills: PropTypes.array.isRequired
 };
 

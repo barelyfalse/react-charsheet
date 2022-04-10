@@ -45,7 +45,7 @@ function Character() {
     currentPv: 10,
     maxPv: 10,
     stats: [ 2, 4, 3, 5, 2, 3 ],
-    skills: [ 0, 2 ],
+    skills: [ [ 0, 1 ], [2,2] ],
     currentPod: 10,
     maxPod: 10,
     inventory: [],
@@ -85,7 +85,7 @@ function Character() {
   function addSkill(skillId) {
     setCharSkills(prevSkills => {
       var newSkills = [...prevSkills];
-      newSkills.push(parseInt(skillId));
+      newSkills.push([skillId, 1]);
       return newSkills;
     })
   }
@@ -213,8 +213,8 @@ function Character() {
     setSkillSelectOpen(false);
 
     if (newValue) {
-      setSkillSelectValue(parseInt(newValue));
-      addSkill(newValue);
+      setSkillSelectValue(newValue);
+      addSkill(parseInt(newValue));
     }
   };
 
@@ -621,7 +621,7 @@ function Character() {
                   open={skillSelectOpen}
                   onClose={handleSkillSelectClose}
                   value={skillSelectValue}
-                  rolClassSkills={rolClasses[charData.rolClass].skills}
+                  rolClass={rolClass}
                   selectedRolClassSkills={charSkills}
                 />
                 <Box>
