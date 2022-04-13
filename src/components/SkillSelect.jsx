@@ -74,10 +74,11 @@ function SkillSelect(props) {
           <Stack spacing={2}>
             {
               rolClasses[rolClass].skills.map((skill, index) => {
+                const selected = selectedRolClassSkills.map(selected => selected[0]).includes(index);
                 return ( 
                 <Paper
                   key={index}
-                  elevation={4}
+                  elevation={selected ? 4 : 6}
                   sx={{
                     px: '1ch',
                     py: '1ch',
@@ -92,7 +93,7 @@ function SkillSelect(props) {
                       value={index}
                       control={<Radio />}
                       label={skill.name}
-                      disabled={false}
+                      disabled={selected}
                     />
                     <Stack
                       direction="row"
@@ -101,13 +102,13 @@ function SkillSelect(props) {
                       <Chip
                         label={skill.type}
                         size="small" 
-                        color="primary"
+                        color={!selected ? 'primary' : 'default'}
                       />
                       <Chip
                         label={skill.action}
                         size="small"
                         variant="outlined"
-                        color="primary"
+                        color={!selected ? 'primary' : 'default'}
                       />
                     </Stack>
                     
@@ -116,61 +117,66 @@ function SkillSelect(props) {
                   <Typography sx={selectedRolClassSkills.includes(index) ? {color: 'gray'}:{}}>
                     {skill.description}
                   </Typography>
-                  <List >
-                    {
-                      skill.advance.map((adv, index) => {
-                        return (
-                          <ListItem key={index}>
-                            <ListItemText
-                              primary={
-                                skill.type === 'Pasiva' ?
-                                <Stack  direction="row" spacing={1}>
-                                  <Box>{'Nivel ' + adv.level}</Box>
-                                  <Chip
-                                    label={'pasiva'}
-                                    size="small"
-                                    variant="outlined"
-                                  />
-                                </Stack>:
-                                <Stack  direction="row" spacing={1}>
-                                  <Box>{'Nivel ' + adv.level}</Box>
-                                  <Chip
-                                    label={'costo: ' + adv.cost}
-                                    size="small"
-                                    variant="outlined"
-                                  />
-                                  { 
-                                    adv.duration === 0 ?
+                  {
+                    !selected ?
+                    <List >
+                      {
+                        skill.advance.map((adv, index) => {
+                          return (
+                            <ListItem key={index}>
+                              <ListItemText
+                                primary={
+                                  skill.type === 'Pasiva' ?
+                                  <Stack  direction="row" spacing={1}>
+                                    <Box>{'Nivel ' + adv.level}</Box>
                                     <Chip
-                                      label="instantánea"
-                                      size="small"
-                                      variant="outlined"
-                                    /> :
-                                    <Chip
-                                      label={'duración: ' + adv.duration}
+                                      label={'pasiva'}
                                       size="small"
                                       variant="outlined"
                                     />
-                                  }
-                                </Stack>
-                              }
-                              secondary={
-                                <Box sx={{ml: '1ch'}}>
-                                  {
-                                    adv.descriptions.map((desc, index) =>{
-                                      return (
-                                        <Box key={index}>{desc}</Box>
-                                      )
-                                    })
-                                  }
-                                </Box>
-                              }
-                            />
-                          </ListItem>
-                        )
-                      })
-                    }
-                  </List>
+                                  </Stack>:
+                                  <Stack  direction="row" spacing={1}>
+                                    <Box>{'Nivel ' + adv.level}</Box>
+                                    <Chip
+                                      label={'costo: ' + adv.cost}
+                                      size="small"
+                                      variant="outlined"
+                                    />
+                                    { 
+                                      adv.duration === 0 ?
+                                      <Chip
+                                        label="instantánea"
+                                        size="small"
+                                        variant="outlined"
+                                      /> :
+                                      <Chip
+                                        label={'duración: ' + adv.duration}
+                                        size="small"
+                                        variant="outlined"
+                                      />
+                                    }
+                                  </Stack>
+                                }
+                                secondary={
+                                  <Box sx={{ml: '1ch'}}>
+                                    {
+                                      adv.descriptions.map((desc, index) =>{
+                                        return (
+                                          <Box key={index}>{desc}</Box>
+                                        )
+                                      })
+                                    }
+                                  </Box>
+                                }
+                              />
+                            </ListItem>
+                          )
+                        })
+                      }
+                    </List> :
+                    <></>
+                  }
+                  
                 </Paper> )
               })
             }
