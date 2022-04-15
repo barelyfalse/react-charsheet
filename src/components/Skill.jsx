@@ -57,8 +57,6 @@ function Skill({rolClass, skillIndex, reducePod, canLevelUp, levelUpSkill }) {
       
       setSnackOpen(true);
     }
-    
-    
   }
 
   //snackbar controllers
