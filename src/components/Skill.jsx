@@ -12,22 +12,22 @@ import {
   DialogActions, 
   DialogContentText, 
   DialogTitle,
-  Backdrop } from '@mui/material';
+  Stack,
+  List,
+  ListItem,
+  ListItemText,
+  Chip,
+  Snackbar,
+} from '@mui/material';
 import DoubleArrowRoundedIcon from '@mui/icons-material/DoubleArrowRounded';
 import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
+import CloseIcon from '@mui/icons-material/Close';
 
-const da = rolClasses;
-
-function Skill({rolClass, skillIndex, reducePod }) {
-  const skill = da[rolClass].skills[skillIndex];
-  var info = '';
-  if(skill.cost === 0 && skill.duration === 0) {
-    info = 'pasiva'
-  } else {
-    info = 'costo: ' + skill.cost;
-  }
+function Skill({rolClass, skillIndex, reducePod, canLevelUp, levelUpSkill }) {
+  const skill = rolClasses[rolClass].skills[skillIndex[0]];
 
   const [open, setOpen] = React.useState(false);
+  
 
   const handleClickOpen = () => {
     setOpen(true);
@@ -38,8 +38,50 @@ function Skill({rolClass, skillIndex, reducePod }) {
   };
 
   const handleClickUseSkill = () => {
-    reducePod(skill.cost);
+    reducePod(skill.advance[skillIndex[1] - 1].cost);
   };
+
+  const handleSkillLevelUpClick = () => {
+    //no max level
+    if(!skillIndex[1] < skill.advance.count) {
+      console.log('max level')
+      return;
+    }
+    //can level up
+    if(canLevelUp()) {
+      //level up
+      console.log('can level up');
+      levelUpSkill(skillIndex[0]);
+      setOpen(false);
+    } else {
+      
+      setSnackOpen(true);
+    }
+    
+    
+  }
+
+  //snackbar controllers
+  const [snackOpen, setSnackOpen] = React.useState(false);
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setSnackOpen(false);
+  };
+  const snackbarAction = (
+    <React.Fragment>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleSnackbarClose}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
 
   return (
     <Box>
@@ -49,42 +91,36 @@ function Skill({rolClass, skillIndex, reducePod }) {
         py: '1ch',
         px: '1.5ch',
         mt: '1ch',
-        display: 'flex',
-        alignItems: 'center',
-        justifyContent: 'space-between'
       }}>
-        <Typography>
-          <strong>{skill.name}</strong> ({info})
-        </Typography>
-        <Box sx={{display: 'flex', alignItems: 'center',}}>
-          <Tooltip title="infomación" arrow>
-            <IconButton aria-label="delete" color="primary" onClick={handleClickOpen}>
-              <InfoRoundedIcon />
-            </IconButton>        
-          </Tooltip>
-          
-          <Tooltip title={!info.localeCompare('pasiva') ? 'Habilidad pasiva' : 'Usar habilidad'} arrow>
-            <div>
-              <Button 
-                variant="contained" 
-                disabled={!info.localeCompare('pasiva')} 
-                size="small" 
-                endIcon={<DoubleArrowRoundedIcon />} 
-                onClick={handleClickUseSkill}
-              >
-                Usar
-              </Button>
-            </div>
-          </Tooltip>
-        </Box>
+        <Stack 
+          direction={{xs: 'column', sm: 'row'}} 
+          alignItems={{xs: 'start', sm: 'center'}}
+          justifyContent="space-between"
+        >
+          <Typography>
+            {skill.name + ' ' + 'I'.repeat(skillIndex[1])}
+          </Typography>
+          <Stack
+           direction="row" 
+           alignItems="center"
+          >
+            <Tooltip title="infomación" arrow>
+              <IconButton aria-label="info" color="primary" onClick={handleClickOpen}>
+                <InfoRoundedIcon />
+              </IconButton>        
+            </Tooltip>
+            
+            <Tooltip title={skill.type === 'Pasiva' ? 'pasiva' : 'Usar habilidad: -' + skill.advance[skillIndex[1] - 1].cost + ' POD'} arrow>
+              <div>
+                <IconButton aria-label="info" color="primary" onClick={handleClickUseSkill} disabled={skill.type === 'Pasiva'}>
+                  <DoubleArrowRoundedIcon />
+                </IconButton> 
+              </div>
+            </Tooltip>
+          </Stack>
+        </Stack>
       </Paper>
-      
-      <Backdrop
-        sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
-        open={open}
-        onClick={handleClose}
-      >
-      </Backdrop>
+
       <Dialog
         open={open}
         onClose={handleClose}
@@ -93,23 +129,111 @@ function Skill({rolClass, skillIndex, reducePod }) {
         maxWidth="xs"
       >
         <DialogTitle id="skill-dialog-title">
-          {skill.name}
+          {skill.name + ' ' + 'I'.repeat(skillIndex[1])}
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="skill-dialog-description">
-            {skill.description}
-            <br/>
-            Costo: {skill.cost}
-            <br/>
-            Duración: {skill.duration}
+            {
+              <Box>
+                <Typography>
+                  {skill.description}
+                </Typography>
+                <Stack
+                  direction="row"
+                  spacing={1}
+                  justifyContent="center"
+                  sx={{
+                    mt: '1ch'
+                  }}
+                >
+                  <Chip
+                    label={skill.type}
+                    size="small" 
+                    color="primary"
+                  />
+                  <Chip
+                    label={skill.action}
+                    size="small"
+                    variant="outlined"
+                    color="primary"
+                  />
+                </Stack>
+                <List>
+                  {
+                    skill.advance.map((adv, index) => {
+                      return (
+                        <ListItem key={index}>
+                          <ListItemText
+                            primary={
+                              skill.type === 'Pasiva' ?
+                              <Stack  direction="row" spacing={1}>
+                                <Box>{'Nivel ' + adv.level}</Box>
+                                <Chip
+                                  label={'pasiva'}
+                                  size="small"
+                                  variant="outlined"
+                                />
+                              </Stack>:
+                              <Stack  direction="row" spacing={1}>
+                                <Box>{'Nivel ' + adv.level}</Box>
+                                <Chip
+                                  label={'costo: ' + adv.cost}
+                                  size="small"
+                                  variant="outlined"
+                                />
+                                { 
+                                  adv.duration === 0 ?
+                                  <Chip
+                                    label="instantánea"
+                                    size="small"
+                                    variant="outlined"
+                                  /> :
+                                  <Chip
+                                    label={'duración: ' + adv.duration}
+                                    size="small"
+                                    variant="outlined"
+                                  />
+                                }
+                              </Stack>
+                            }
+                            secondary={
+                              <Box sx={{ml: '1ch'}}>
+                                {
+                                  adv.descriptions.map((desc, index) =>{
+                                    return (
+                                      <Box key={index}>{desc}</Box>
+                                    )
+                                  })
+                                }
+                              </Box>
+                            }
+                          />
+                        </ListItem>
+                      )
+                    })
+                  }
+                </List>
+              </Box>
+              
+            }
           </DialogContentText>
         </DialogContent>
         <DialogActions>
+          <Button onClick={handleSkillLevelUpClick}>
+            Subir nivel
+          </Button>
           <Button onClick={handleClose} autoFocus>
             Ok
           </Button>
         </DialogActions>
       </Dialog>
+      <Snackbar
+        open={snackOpen}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+        message="No se puede subir de nivel"
+        action={snackbarAction}
+      />
     </Box>
   )
 }

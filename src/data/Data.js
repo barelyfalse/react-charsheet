@@ -433,12 +433,12 @@ const rolClasses = [
             descriptions: ["+3 de daño"] },
           { level: 2, cost: 2, duration: 0,
             descriptions: ["+4 de daño"] },
-          { level: 2, cost: 1, duration: 0,
+          { level: 3, cost: 1, duration: 0,
             descriptions: ["+5 de daño"] },
         ]
       },
       { name: "Tiro curvo",
-        description: "Se dispara un proyectil curvo que evada obstáculos.",
+        description: "Se dispara un proyectil curvo que evade obstáculos.",
         action: "Ofensiva",
         type: "Activa",
         advance: [ 
@@ -465,18 +465,18 @@ const rolClasses = [
         type: "Activa",
         advance: [ 
           { level: 1, cost: 3, duration: 0,
-            descriptions: ["Proyectiles de fuego (inflinge incendiado I 3 turnos)."] },
+            descriptions: ["Proyectiles de fuego (inflinge incendiado I por 3 turnos)."] },
           { level: 2, cost: 3, duration: 0,
             descriptions: [
-              "Proyectiles de fuego (inflinge incendiado II 4 turnos).",
-              "Proyectiles de hielo (inflinge congelado I 2 turnos)."
+              "Proyectiles de fuego (inflinge incendiado II por 4 turnos).",
+              "Proyectiles de hielo (inflinge congelado I por 3 turnos)."
             ] 
           },
           { level: 3, cost: 3, duration: 0,
             descriptions: [
-              "Proyectiles de fuego (inflinge incendiado II 4 turnos).",
-              "Proyectiles de hielo (inflinge congelado II 4 turnos).",
-              "Proyectiles de electricidad (inflinge electrocutado I 3 turnos)."
+              "Proyectiles de fuego (inflinge incendiado III por 4 turnos).",
+              "Proyectiles de hielo (inflinge congelado II por 4 turnos).",
+              "Proyectiles de electricidad (inflinge electrocutado I por 3 turnos)."
             ] 
           },
         ]

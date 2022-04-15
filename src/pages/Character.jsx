@@ -80,6 +80,7 @@ function Character() {
     })
   }
 
+  //skill controllers
   const [charSkills, setCharSkills] = useLocalStorage('skills', []);
 
   function addSkill(skillId) {
@@ -89,6 +90,15 @@ function Character() {
       return newSkills;
     })
   }
+
+  function levelUpSkill(skillId) {
+    setCharSkills(prevSkills => {
+      var newSkills = [...prevSkills];
+      newSkills.find(s => s[0] === skillId)[1] += 1;
+      return newSkills;
+    })
+  }
+
 
   //name controllers 
   const [charName, setCharName] = useLocalStorage('name', '');
@@ -154,7 +164,14 @@ function Character() {
 
   const handleLvlUpdate = (event) => {
     if(!isNaN(event.target.value) && !isNaN(parseInt(event.target.value))) {
-      setLvl(parseInt(event.target.value));
+      const newLvl = parseInt(event.target.value);
+      setLvl(prevLvl => {
+        if(newLvl >= prevLvl) {
+          setLvl(newLvl);
+        } else {
+          setLvl(prevLvl);
+        }
+      });
     }
   }
 
@@ -213,7 +230,7 @@ function Character() {
     setSkillSelectOpen(false);
 
     if (newValue) {
-      setSkillSelectValue(newValue);
+      setSkillSelectValue(parseInt(newValue));
       addSkill(parseInt(newValue));
     }
   };
@@ -331,6 +348,16 @@ function Character() {
         }
       })
     }
+  }
+
+  //leveling logic
+  const canLevelUpSkill = () => {
+    const numberOfSkillLevels = charSkills.reduce((accum, skill) => {return accum + skill[1]}, 0);
+    return ((lvl + 4) > numberOfSkillLevels && (charSkills.length >= 5));
+  }
+
+  const canAddNewSkill = () => {
+    return ((lvl + 4) > charSkills.length);
   }
 
   return (
@@ -605,7 +632,7 @@ function Character() {
               <CardContent>
                 <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
                   <Typography variant="h6">
-                    Skills
+                    Habilidades
                   </Typography>
                   <Box>
                     <Tooltip title="Añadir habilidad" arrow>
@@ -628,7 +655,16 @@ function Character() {
                   <Stack>
                     {
                       charSkills.map((skillid, index) => {
-                        return <Skill key={index} rolClass={charData.rolClass} skillIndex={skillid} reducePod={reducePodSkill} />
+                        return (
+                          <Skill 
+                            key={index} 
+                            rolClass={rolClass} 
+                            skillIndex={skillid} 
+                            reducePod={reducePodSkill} 
+                            canLevelUp={canLevelUpSkill}
+                            levelUpSkill={levelUpSkill}
+                          />
+                        );
                       })
                     }
                   </Stack>
