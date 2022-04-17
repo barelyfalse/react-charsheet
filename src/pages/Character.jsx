@@ -650,6 +650,7 @@ function Character() {
                   value={skillSelectValue}
                   rolClass={rolClass}
                   selectedRolClassSkills={charSkills}
+                  canAddNewSkill={canAddNewSkill}
                 />
                 <Box>
                   <Stack>

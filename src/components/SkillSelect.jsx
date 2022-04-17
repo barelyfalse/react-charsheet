@@ -16,13 +16,17 @@ import {
   List,
   ListItem,
   ListItemText,
+  Snackbar,
+  Alert,
+  IconButton
 } from '@mui/material/'
 import PropTypes from 'prop-types';
+import CloseIcon from '@mui/icons-material/Close';
 
 import { rolClasses } from '../data/Data.js';
 
 function SkillSelect(props) {
-  const { onClose, value: valueProp, open, rolClass, selectedRolClassSkills, ...other } = props;
+  const { onClose, value: valueProp, open, rolClass, selectedRolClassSkills, canAddNewSkill, ...other } = props;
   const [value, setValue] = React.useState(valueProp);
   const radioGroupRef = React.useRef(null);
 
@@ -43,12 +47,39 @@ function SkillSelect(props) {
   };
 
   const handleOk = () => {
-    onClose(value);
+    if(canAddNewSkill()) {
+      onClose(value);
+    } else {
+      setSnackOpen(true);
+    }
+    
   };
 
   const handleChange = (event) => {
     setValue(event.target.value);
   };
+
+  //snackbar controllers
+  const [snackOpen, setSnackOpen] = React.useState(false);
+  const handleSnackbarClose = (event, reason) => {
+    if (reason === 'clickaway') {
+      return;
+    }
+
+    setSnackOpen(false);
+  };
+  const snackbarAction = (
+    <React.Fragment>
+      <IconButton
+        size="small"
+        aria-label="close"
+        color="inherit"
+        onClick={handleSnackbarClose}
+      >
+        <CloseIcon fontSize="small" />
+      </IconButton>
+    </React.Fragment>
+  );
 
   if(!rolClass) {
     return null
@@ -189,6 +220,14 @@ function SkillSelect(props) {
         </Button>
         <Button onClick={handleOk}>Aceptar</Button>
       </DialogActions>
+      <Snackbar
+        open={snackOpen}
+        autoHideDuration={6000}
+        onClose={handleSnackbarClose}
+        action={snackbarAction}
+      >
+      <Alert severity="warning">No se pueden agregar más habilidades</Alert>
+      </Snackbar>
     </Dialog>
   );
 }
