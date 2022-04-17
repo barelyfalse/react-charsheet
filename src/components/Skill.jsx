@@ -18,6 +18,7 @@ import {
   ListItemText,
   Chip,
   Snackbar,
+  Alert
 } from '@mui/material';
 import DoubleArrowRoundedIcon from '@mui/icons-material/DoubleArrowRounded';
 import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
@@ -229,9 +230,10 @@ function Skill({rolClass, skillIndex, reducePod, canLevelUp, levelUpSkill }) {
         open={snackOpen}
         autoHideDuration={6000}
         onClose={handleSnackbarClose}
-        message="No se puede subir de nivel"
         action={snackbarAction}
-      />
+      >
+      <Alert severity="warning">No se puede subir de nivel</Alert>
+      </Snackbar>
     </Box>
   )
 }
