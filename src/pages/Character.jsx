@@ -166,11 +166,7 @@ function Character() {
     if(!isNaN(event.target.value) && !isNaN(parseInt(event.target.value))) {
       const newLvl = parseInt(event.target.value);
       setLvl(prevLvl => {
-        if(newLvl >= prevLvl) {
-          setLvl(newLvl);
-        } else {
-          setLvl(prevLvl);
-        }
+        return newLvl;
       });
     }
   }

@@ -51,7 +51,6 @@ function Skill({rolClass, skillIndex, reducePod, canLevelUp, levelUpSkill }) {
     //can level up
     if(canLevelUp()) {
       //level up
-      console.log('can level up');
       levelUpSkill(skillIndex[0]);
       setOpen(false);
     } else {
