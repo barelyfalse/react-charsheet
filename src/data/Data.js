@@ -63,26 +63,19 @@ const rolClasses = [
       { level: 10, mods: { atq: 5, def: 2, ins: 6, pod: 7} },
     ],
     skills: [
-      { name: "Ataques múltiples",
-        description: "Puede atacar 2 veces.",
-        cost: 0, 
-        duration: 0
+      { name: "a",
+        description: "a",
+        action: "a",
+        type: "a",
+        advance: [ 
+          { level: 1, cost: 0, duration: 0, cast: 0,
+            descriptions: [
+              "a"] },
+          { level: 2, cost: 0, duration: 0, cast: 0,
+            descriptions: [
+              "a"] },
+        ]
       },
-      { name: "Transferir escencia",
-        description: "Capacidad para transferir puntos de vida.",
-        cost: 0, 
-        duration: 0
-      },
-      { name: "Congelar",
-        description: "Congela a un objetivo con un alcance de 5 metros.",
-        cost: 2, 
-        duration: 1
-      },
-      { name: "Barrera",
-        description: "Una barrera que bloquea daño físico y daño mágico elemental con una salud de 20.",
-        cost: 2, 
-        duration: 2
-      }
     ]
   },
 
@@ -102,10 +95,18 @@ const rolClasses = [
 
     ],
     skills: [
-      { name: "",
-        description: "",
-        cost: 0, 
-        duration: 0
+      { name: "a",
+        description: "a",
+        action: "a",
+        type: "a",
+        advance: [ 
+          { level: 1, cost: 0, duration: 0, cast: 0,
+            descriptions: [
+              "a"] },
+          { level: 2, cost: 0, duration: 0, cast: 0,
+            descriptions: [
+              "a"] },
+        ]
       },
     ]
   },
@@ -125,10 +126,18 @@ const rolClasses = [
       { level: 10, mods: { atq: 0,	def: 0, ins: 11, pod: 10} },
     ],
     skills: [
-      { name: "",
-        description: "",
-        cost: 0, 
-        duration: 0
+      { name: "a",
+        description: "a",
+        action: "a",
+        type: "a",
+        advance: [ 
+          { level: 1, cost: 0, duration: 0, cast: 0,
+            descriptions: [
+              "a"] },
+          { level: 2, cost: 0, duration: 0, cast: 0,
+            descriptions: [
+              "a"] },
+        ]
       },
     ]
   },
@@ -148,10 +157,18 @@ const rolClasses = [
 
     ],
     skills: [
-      { name: "",
-        description: "",
-        cost: 0, 
-        duration: 0
+      { name: "a",
+        description: "a",
+        action: "a",
+        type: "a",
+        advance: [ 
+          { level: 1, cost: 0, duration: 0, cast: 0,
+            descriptions: [
+              "a"] },
+          { level: 2, cost: 0, duration: 0, cast: 0,
+            descriptions: [
+              "a"] },
+        ]
       },
     ]
   },
@@ -171,10 +188,18 @@ const rolClasses = [
       { level: 10, mods: { atq: 1, def: 1, ins: 7, pod: 11} },
     ],
     skills: [
-      { name: "",
-        description: "",
-        cost: 0, 
-        duration: 0
+      { name: "a",
+        description: "a",
+        action: "a",
+        type: "a",
+        advance: [ 
+          { level: 1, cost: 0, duration: 0, cast: 0,
+            descriptions: [
+              "a"] },
+          { level: 2, cost: 0, duration: 0, cast: 0,
+            descriptions: [
+              "a"] },
+        ]
       },
     ]
   },
@@ -194,10 +219,18 @@ const rolClasses = [
       { level: 10, mods: { atq: 2, def: 6, ins: 6, pod: 6} },
     ],
     skills: [
-      { name: "",
-        description: "",
-        cost: 0, 
-        duration: 0
+      { name: "a",
+        description: "a",
+        action: "a",
+        type: "a",
+        advance: [ 
+          { level: 1, cost: 0, duration: 0, cast: 0,
+            descriptions: [
+              "a"] },
+          { level: 2, cost: 0, duration: 0, cast: 0,
+            descriptions: [
+              "a"] },
+        ]
       },
     ]
   },
@@ -224,7 +257,7 @@ const rolClasses = [
         advance: [ 
           { level: 1, cost: 0, duration: 0,
             descriptions: [
-              "Uso de armas cuerpo a cuerpo de todo porte."] },
+              "Uso de armas cuerpo a cuerpo de todo porte sin la penalización de ATQ."] },
         ]
       },
       { name: "Ataques múltiples",
@@ -838,74 +871,129 @@ const rolRaces = [
   { name: "Humano",
     description: "",
     mods: { mis: 3 },
+    skills: [],
+    initialequipment: [
+
+    ]
   },
   { name: "Enano",
     description: "",
     mods: { con: 2 },
-    skills: [      
+    skills: [    
       { name: "Resilencia enana",
-        description: "Resistencia a venenos.",
-        cost: 0, 
-        duration: 0
+        description: "Resistencia mejorada a venenos.",
+        action: "Defensiva",
+        type: "Pasiva",
+        advance: [ 
+          { level: 1, cost: 0, duration: 0, cast: 0,
+            descriptions: [
+              "+2 en CON en salvadas contra venenos."] },
+        ]
       },
       { name: "Habilidad con las herramientas",
-        description: "Facilidad para utilizar herramientas",
-        cost: 0, 
-        duration: 0
+        description: "Facilidad para utilizar herramientas.",
+        action: "Utilidad",
+        type: "Pasiva",
+        advance: [ 
+          { level: 1, cost: 0, duration: 0, cast: 0,
+            descriptions: [
+              "+2 en CON en salvadas contra venenos."] },
+        ]
       },
+    ],
+    initialequipment: [
+
     ]
   },
   { name: "Elfo",
     description: "",
     mods: { des: 2 },
-    skills: [      
+    skills: [  
       { name: "Visión oscura",
         description: "Puede ver con poca luz.",
-        cost: 0, 
-        duration: 0
+        action: "Utilidad",
+        type: "Pasiva",
+        advance: [ 
+          { level: 1, cost: 0, duration: 0, cast: 0,
+            descriptions: [
+              "Puede ver con un nivel bajo de luz de forma perfecta."] },
+        ]
       },
       { name: "Antepasado mágico",
-        description: "Estirpe mágica, resiste hechizos, +1 INS en salvadas contra talentos mágicos.",
-        cost: 0, 
-        duration: 0
+        description: "Estirpe mágica, facilidad para resistir hechizos.",
+        action: "Defensiva",
+        type: "Pasiva",
+        advance: [ 
+          { level: 1, cost: 0, duration: 0, cast: 0,
+            descriptions: [
+              "+1 INS en salvadas contra talentos mágicos."] },
+        ]
       },
+    ],
+    initialequipment: [
+      
     ]
   },
   { name: "Elfo oscuro",
     description: "",
     mods: { int: 2 },
-    skills: [      
+    skills: [  
       { name: "Visión nocturna",
         description: "Puede ver sin luz.",
-        cost: 0, 
-        duration: 0
+        action: "Utilidad",
+        type: "Pasiva",
+        advance: [ 
+          { level: 1, cost: 0, duration: 0, cast: 0,
+            descriptions: [
+              "Puede ver en oscuridad completa de forma perfecta."] },
+        ]
       },
       { name: "Ancestralidad",
-        description: "Ataque elemental mágico en area",
-        cost: 2, 
-        duration: 0
+        description: "Ataque elemental mágico en área (el elemento se elíje cuando se selecciona la clase).",
+        action: "Ofensiva",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 2, duration: 0, cast: 0,
+            descriptions: [
+              "Ataque de área, cono frontal de 2 metros de longitud y 1 de ancho."] },
+        ]
       },
+    ],
+    initialequipment: [
+      
     ]
   },
   { name: "Medio",
     description: "",
     mods: { des: 2, car: 1 },
-    skills: [ ]
+    skills: [ ],
+    initialequipment: [
+      
+    ]
   },
   { name: "Draconito",
     description: "Desendiente de dragones.",
     mods: { fue: 2, car: 1 },
-    skills: [ ]
+    skills: [ ],
+    initialequipment: [
+      
+    ]
   },
   { name: "Medio orco",
     description: "Mitad orco, mitad humano",
     mods: { con: 2, fue: 1 },
-    skills: [ ]
+    skills: [ ],
+    initialequipment: [
+      
+    ]
   },
   { name: "Medio elfo",
     description: "Mitad elfo, mitad humano",
     mods: { car: 2, mis: 1 },
-    skills: [ ]
+    skills: [ ],
+    initialequipment: [
+      
+    ]
   },
 ]
 

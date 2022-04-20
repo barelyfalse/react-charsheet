@@ -26,6 +26,7 @@ import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import FileUploadRoundedIcon from '@mui/icons-material/FileUploadRounded';
 
 import Skill from '../components/Skill';
+import InheritSkill from '../components/InheritSkill';
 import Stat from '../components/Stat';
 import SkillSelect from '../components/SkillSelect';
 import InventorySlot from '../components/InventorySlot';
@@ -650,6 +651,17 @@ function Character() {
                 />
                 <Box>
                   <Stack>
+                    {
+                      rolRaces[rolRace].skills.map((skill, index) => {
+                        return (
+                          <InheritSkill 
+                            key={index}
+                            skill={skill}
+                            reducePod={reducePodSkill}
+                          />
+                        )
+                      })
+                    }
                     {
                       charSkills.map((skillid, index) => {
                         return (
