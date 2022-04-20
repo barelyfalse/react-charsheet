@@ -61,9 +61,6 @@ export const useLocalStorage = (key, defaultValue) => {
     // storing input name
     var stored = getStoredCharDataFull();
     stored[key] = value;
-    if(key === 'rolClass') {
-      stored['skills'] = []
-    }
     localStorage.setItem('charData', JSON.stringify(stored));
   }, [key, value]);
 

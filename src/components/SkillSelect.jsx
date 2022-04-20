@@ -123,7 +123,7 @@ function SkillSelect(props) {
                     <FormControlLabel
                       value={index}
                       control={<Radio />}
-                      label={skill.name}
+                      label={<strong>{skill.name}</strong>}
                       disabled={selected}
                     />
                     <Stack
@@ -150,61 +150,72 @@ function SkillSelect(props) {
                   </Typography>
                   {
                     !selected ?
-                    <List >
-                      {
+                    <Stack spacing={2} sx={{mt: '1ch'}}>
+                      {  
                         skill.advance.map((adv, index) => {
-                          return (
-                            <ListItem key={index}>
-                              <ListItemText
-                                primary={
-                                  skill.type === 'Pasiva' ?
-                                  <Stack  direction="row" spacing={1}>
-                                    <Box>{'Nivel ' + adv.level}</Box>
-                                    <Chip
-                                      label={'pasiva'}
-                                      size="small"
-                                      variant="outlined"
-                                    />
-                                  </Stack>:
-                                  <Stack  direction="row" spacing={1}>
-                                    <Box>{'Nivel ' + adv.level}</Box>
-                                    <Chip
-                                      label={'costo: ' + adv.cost}
-                                      size="small"
-                                      variant="outlined"
-                                    />
-                                    { 
-                                      adv.duration === 0 ?
-                                      <Chip
-                                        label="instantánea"
-                                        size="small"
-                                        variant="outlined"
-                                      /> :
-                                      <Chip
-                                        label={'duración: ' + adv.duration}
-                                        size="small"
-                                        variant="outlined"
-                                      />
-                                    }
-                                  </Stack>
+                        return (
+                          <Box key={index}>
+                            {
+                              skill.type === 'Pasiva' ?
+                              <Stack  direction="row" spacing={1}>
+                                <Box>{'Nivel ' + adv.level}</Box>
+                                <Chip
+                                  label={'pasiva'}
+                                  size="small"
+                                  variant="outlined"
+                                />
+                              </Stack>:
+                              <Stack  direction="row" spacing={1}>
+                                <Box>{'Nivel ' + adv.level}</Box>
+                                <Chip
+                                  label={'costo: ' + adv.cost}
+                                  size="small"
+                                  variant="outlined"
+                                />
+                                { 
+                                  adv.duration === 0 ?
+                                  <></> :
+                                  <Chip
+                                    label={'turnos: ' + adv.duration}
+                                    size="small"
+                                    variant="outlined"
+                                  />
                                 }
-                                secondary={
-                                  <Box sx={{ml: '1ch'}}>
-                                    {
-                                      adv.descriptions.map((desc, index) =>{
-                                        return (
-                                          <Box key={index}>{desc}</Box>
-                                        )
-                                      })
-                                    }
-                                  </Box>
+                                {
+                                  adv.cast === -1 ?
+                                  <Chip
+                                    label="bonus"
+                                    size="small"
+                                    variant="outlined"
+                                  /> :
+                                  adv.cast === 0 ?
+                                  <Chip
+                                    label="acción"
+                                    size="small"
+                                    variant="outlined"
+                                  /> :
+                                  <Chip
+                                    label={'casteo: ' + adv.cast}
+                                    size="small"
+                                    variant="outlined"
+                                  />
                                 }
-                              />
-                            </ListItem>
-                          )
-                        })
+                              </Stack>
+                            }
+                            <Stack sx={{ml: '1.5ch'}}>
+                              {
+                                adv.descriptions.map((desc, index) =>{
+                                  return (
+                                    <Typography variant="caption" key={index}>{desc}</Typography>
+                                  )
+                                })
+                              }
+                            </Stack>
+                          </Box>
+                        )
+                      })
                       }
-                    </List> :
+                    </Stack> :
                     <></>
                   }
                   

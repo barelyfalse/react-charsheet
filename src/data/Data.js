@@ -217,10 +217,116 @@ const rolClasses = [
       { leve: 10, mods: { atq: 8, def: 9, ins: 0, pod: 4} },
     ],
     skills: [
-      { name: "",
-        description: "",
-        cost: 0, 
-        duration: 0
+      { name: "Adaptable en batalla",
+        description: "Puede utilizar cualquier tipo de arma cuerpo a cuerpo para luchar.",
+        action: "Ofensiva",
+        type: "Pasiva",
+        advance: [ 
+          { level: 1, cost: 0, duration: 0,
+            descriptions: [
+              "Uso de armas cuerpo a cuerpo de todo porte."] },
+        ]
+      },
+      { name: "Ataques múltiples",
+        description: "Múltiples ataques por turno.",
+        action: "Ofensiva",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 3, duration: 3,
+            descriptions: [
+              "Puede atacar 2 veces por turno."] },
+          { level: 2, cost: 2, duration: 3,
+            descriptions: [
+              "Puede atacar 2 veces por turno."] },
+          { level: 3, cost: 2, duration: 2,
+            descriptions: [
+              "Puede atacar 3 veces por turno."] },
+        ]
+      },
+      { name: "Golpe certero",
+        description: "El siguiente ataque aplica aturdimiento más un bonus de daño.",
+        action: "Ofensiva",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 2, duration: 0,
+            descriptions: [
+              "Inflinge aturdido por 1 turno.",
+              "+2 al daño total realizado."] },
+          { level: 2, cost: 2, duration: 0,
+            descriptions: [
+              "Inlflige aturdido por 1 turnos.",
+              "+4 al daño total realizado."] },
+        ]
+      },
+      { name: "Marca implacable",
+        description: "Cuando se ataca a un objetivo este tiene desventaja en su siguiente ataque.",
+        action: "Ofensiva",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 1, duration: 0,
+            descriptions: [
+              "Desventaja en su siguiente ataque."] },
+          { level: 2, cost: 1, duration: 0,
+            descriptions: [
+              "Desventaja en sus siguientes 2 ataques."] },
+        ]
+      },
+      { name: "Paso ligero",
+        description: "Aumenta el rango de movimiento.",
+        action: "Utilidad",
+        type: "Pasiva",
+        advance: [ 
+          { level: 1, cost: 0, duration: 0,
+            descriptions: ["2 metros más que el movimiento base."] },
+          { level: 2, cost: 0, duration: 0,
+            descriptions: ["3 metros más que el movimiento base."] },
+        ]
+      },
+      { name: "Golpe físico",
+        description: "Si ataca cuerpo a cuerpo puede añadir un golpe con el puño a su turno.",
+        action: "Ofensiva",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 1, duration: 0,
+            descriptions: [
+              "Golpe por ataque."] },
+        ]
+      },
+      { name: "Fortaleza mental",
+        description: "Inmunidad a los conjuros.",
+        action: "Defensiva",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 3, duration: 2,
+            descriptions: [
+              "Inmunidad por 2 turnos."] },
+          { level: 2, cost: 3, duration: 2,
+            descriptions: [
+              "Inmunidad por 3 turnos."] },
+        ]
+      },
+      { name: "Grito de batalla",
+        description: "Más daño y mas defensa.",
+        action: "Ofensiva",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 2, duration: 2,
+            descriptions: [
+              "+4 al daño realizado y +1 DEF"] },
+          { level: 2, cost: 2, duration: 2,
+            descriptions: [
+              "+5 al daño realizado y +1 DEF"] },
+        ]
+      },
+      { name: "Reacción rápida",
+        description: "Ventaja en tiradas de iniciativa e inmunidad a emboscadas.",
+        action: "Defensiva",
+        type: "Pasiva",
+        advance: [ 
+          { level: 1, cost: 0, duration: 0,
+            descriptions: [
+              "+2 en tiradas de inciativa."] },
+        ]
       },
     ]
   },
@@ -240,10 +346,96 @@ const rolClasses = [
       { level: 10, mods: {aqt: 11, def: 2, ins: 2, pod: 6} },
     ],
     skills: [
-      { name: "",
-        description: "",
-        cost: 0, 
-        duration: 0
+      { name: "Ataque veloz",
+        description: "Múltiples ataques por turno.",
+        action: "Ofensiva",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 3, duration: 3,
+            descriptions: [
+              "Puede atacar 2 veces por turno."] },
+          { level: 2, cost: 2, duration: 3,
+            descriptions: [
+              "Puede atacar 2 veces por turno."] },
+          { level: 3, cost: 3, duration: 2,
+            descriptions: [
+              "Puede atacar 3 veces por turno."] },
+        ]
+      },
+      { name: "Espíritu de lucha",
+        description: "Ventaja en ataques mientras se este en combate.",
+        action: "Ofensiva",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 2, duration: 3,
+            descriptions: [
+              "Ventaja en ATQ"] },
+          { level: 2, cost: 2, duration: 4,
+            descriptions: [
+              "Ventaja en ATQ"] },
+        ]
+      },
+      { name: "Precisión",
+        description: "Bonus en el daño del siguiente ataque.",
+        action: "Ofensiva",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 3, duration: 0,
+            descriptions: [
+              "+4 al daño"] },
+          { level: 2, cost: 3, duration: 0,
+            descriptions: [
+              "+5 al daño"] },
+        ]
+      },
+      { name: "Concentración",
+        description: "Multiplicador de daño al siguiente ataque.",
+        action: "Ofensiva",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 3, duration: 0, cast: 1,
+            descriptions: [
+              "Triple daño."] },
+        ]
+      },
+      { name: "Ojo infalible",
+        description: "Altamente perceptivo",
+        action: "Utilidad",
+        type: "Pasiva",
+        advance: [ 
+          { level: 1, cost: 0, duration: 0,
+            descriptions: [
+              "+2 en tiradas de PER."] },
+          { level: 2, cost: 0, duration: 0,
+            descriptions: [
+              "+3 en tiradas de PER."] }
+        ]
+      },
+      { name: "Ojo para las debilidades",
+        description: "Detecta las debilidades de un enemigo.",
+        action: "Utilidad",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 2, duration: 0,
+            descriptions: ["Detecta debilidades físicas de un objetivo."] },
+          { level: 2, cost: 2, duration: 0,
+            descriptions: [
+              "Detecta la debilidad física de un objetivo",
+              "Detecta debilidades en estructuras y mecanismos."] },
+        ]
+      },
+      { name: "Duelista maestro",
+        description: "Si falla un ataque puede volver a tirar con ventaja.",
+        action: "Ofensiva",
+        type: "Pasiva",
+        advance: [ 
+          { level: 1, cost: 0, duration: 0,
+            descriptions: [
+              "Solo sirve 1 ves por combate."] },
+          { level: 2, cost: 0, duration: 0,
+            descriptions: [
+              "Sirve 2 veces por combate, 1 vez hasta que se descanse."] },
+        ]
       },
     ]
   },
@@ -265,92 +457,99 @@ const rolClasses = [
     skills: [
       { name: "Maestro de la emboscada",
         description: "Ataque por sorpresa para todo el grupo a enemigos que no están en combate.",
-        type: "Ofensiva",
+        action: "Ofensiva",
+        type: "Pasiva",
         advance: [ 
-          { level: 1, cost: -1, duration: -1,
-            description: "El primer turno es para el grupo." },
-          { level: 2, cost: -1, duration: -1,
-            description: "El primer turno del equipo se realiza con ventaja" },
+          { level: 1, cost: 0, duration: 0, cast: 0,
+            descriptions: ["El primer turno es para el grupo."] },
+          { level: 2, cost: 0, duration: 0, cast: 0,
+            descriptions: ["El primer turno del equipo se realiza con ventaja"] },
         ]
       },
       { name: "Vista aguda",
-        description: "Valor extra en tiradas para percibir enemigos, trampas o emboscadas ocultas",
-        type: "Utilidad",
+        description: "Bonus en tiradas para percibir enemigos, trampas o emboscadas ocultas",
+        action: "Utilidad",
+        type: "Pasiva",
         advance: [ 
-          { level: 1, cost: -1, duration: -1,
-            description: "+1 en PER" },
-          { level: 2, cost: -1, duration: -1,
-            description: "+2 en PER" },
-          { level: 3, cost: -1, duration: -1,
-            description: "+3 en PER" },
+          { level: 1, cost: 0, duration: 0, cast: 0,
+            descriptions: ["+1 en PER"] },
+          { level: 2, cost: 0, duration: 0, cast: 0,
+            descriptions: ["+2 en PER"] },
+          { level: 3, cost: 0, duration: 0, cast: 0,
+            descriptions: ["+3 en PER"] },
         ]
       },
       { name: "Puntos débiles",
-        description: "Más golpes críticos.",
-        type: "Ofensiva",
+        description: "Más golpes críticos en tiradas de ataque.",
+        action: "Ofensiva",
+        type: "Pasiva",
         advance: [ 
-          { level: 1, cost: -1, duration: -1,
-            description: "Críticos con dados 19 y 20." },
+          { level: 1, cost: 0, duration: 0, cast: -1,
+            descriptions: ["Críticos con dados 19 y 20."] },
         ]
       },
       { name: "Golpe letal",
-        description: "Crítico en el siguiente ataque si el objetivo no salva una tirada de CON.",
-        type: "Ofensiva",
+        description: "Doble daño en el siguiente ataque si el objetivo no salva una tirada de CON.",
+        action: "Ofensiva",
+        type: "Activa",
         advance: [ 
-          { level: 1, cost: 3, duration: 0,
-            description: "Salvada de 20 de CON." },
-          { level: 2, cost: 3, duration: 0,
-            description: "Salvada de 18 de CON." },
+          { level: 1, cost: 3, duration: 0, cast: -1,
+            descriptions: ["Salvada de 20 de CON."] },
+          { level: 2, cost: 3, duration: 0, cast: -1,
+            descriptions: ["Salvada de 18 de CON."] },
         ]
       },
       { name: "Sigilo",
         description: "El jugador entra en sigilo en estado oculto si supera una dificultad general de PER del enemigo.",
-        type: "Utilidad",
+        action: "Utilidad",
+        type: "Activa",
         advance: [ 
-          { level: 1, cost: 1, duration: 0,
-            description: "Si el enemigo supera la dificultad de PER el jugador no entra en sigilo." },
-          { level: 2, cost: 1, duration: 0,
-            description: "Si el enemigo supera la dificultad de PER entra en sigilo en modo cubierto." },
+          { level: 1, cost: 1, duration: 0, cast: 0,
+            descriptions: ["Si el enemigo supera la dificultad de PER el jugador no entra en sigilo."] },
+          { level: 2, cost: 1, duration: 0, cast: 0,
+            descriptions: ["Si el enemigo supera la dificultad de PER entra en sigilo en modo cubierto."] },
         ]
       },
       { name: "Acechante mortal",
         description: "Multiplicador de daño al atacar el flanco de un enemigo en sigilo.",
-        type: "",
+        action: "Ofensiva",
+        type: "Pasiva",
         advance: [ 
-          { level: 1, cost: -1, duration: -1,
-            description: "Triple daño. El jugador sale de sigilo. (puede usar su acción bonus para volver a entrar en modo cubierto)" },
-          { level: 2, cost: -1, duration: -1,
-            description: "Triple daño. Si el daño es a distancia el jugador pasa a estado cubierto." },
+          { level: 1, cost: 0, duration: 0, cast: -1,
+            descriptions: ["Triple daño. El jugador sale de sigilo. (puede usar su acción bonus para volver a entrar en modo cubierto)"] },
+          { level: 2, cost: 0, duration: 0, cast: -1,
+            descriptions: ["Triple daño. Si el daño es a distancia el jugador pasa a estado cubierto."] },
         ]
       },
       { name: "Caminata asesina",
         description: "Mas capacidad para moverse.",
-        type: "Utilidad",
+        action: "Utilidad",
+        type: "Pasiva",
         advance: [ 
-          { level: 1, cost: -1, duration: -1,
-            description: "2 metros más que el movimiento base." },
-          { level: 2, cost: -1, duration: -1,
-            description: "3 metros más que el movimiento base." },
+          { level: 1, cost: 0, duration: 0, cast: -1,
+            descriptions: ["2 metros más que el movimiento base."] },
+          { level: 2, cost: 0, duration: 0, cast: -1,
+            descriptions: ["3 metros más que el movimiento base."] },
         ]
       },
-      { name: "",
-        description: "",
-        type: "",
+      { name: "Embeber arma",
+        description: "Utiliza venenos o infusiones para aplicar efectos con sus ataques.",
+        action: "Ofensiva",
+        type: "Activa",
         advance: [ 
-          { level: 1, cost: -1, duration: -1,
-            description: "" },
-          { level: 2, cost: -1, duration: -1,
-            description: "" },
+          { level: 1, cost: 1, duration: 3, cast: -1,
+            descriptions: ["Utiliza venenos en botellas del invetario."] },
         ]
       },
-      { name: "",
-        description: "",
-        type: "",
+      { name: "Sellar objetivo",
+        description: "Nose",
+        action: "Ofensiva",
+        type: "Activa",
         advance: [ 
-          { level: 1, cost: -1, duration: -1,
-            description: "" },
-          { level: 2, cost: -1, duration: -1,
-            description: "" },
+          { level: 1, cost: 3, duration: 0, cast: 0,
+            descriptions: ["a"] },
+          { level: 2, cost: 3, duration: 0, cast: 0,
+            descriptions: ["a"] },
         ]
       },
     ]
@@ -372,17 +571,112 @@ const rolClasses = [
     ],
     skills: [
       { name: "Prestidigitación",
-        description: "Ventaja al momento de realizar salvar dificultades de habilidad con las manos.",
+        description: "Ventaja al momento de salvar dificultades de habilidades con las manos.",
+        action: "Utilidad",
+        type: "Pasiva",
         advance: [ 
-          { level: 1, cost: 0, duration: 0,
-            description: "+1 DES" },
+          { level: 1, cost: 0, duration: 0, cast: 0,
+            descriptions: ["+2 en DES"]},
+          { level: 2, cost: 0, duration: 0, cast: 0,
+            descriptions: ["+3 en DES"]},
         ]
       },
       { name: "Impostor",
-        description: "Imita las características de un individuo, en casi todos los sentidos.",
+        description: "Imita las características de un individuo, en casi todos los sentidos. Solo figuras humanoides.",
+        action: "Utilidad",
+        type: "Activa",
         advance: [ 
-          { level: 1, cost: 4, duration: 0,
-            description: "Es posible imitarlo todo excepto la voz de una criatura." },
+          { level: 1, cost: 6, duration: 0, cast: 0,
+            descriptions: [
+              "Es posible imitarlo todo, excepto la voz de una criatura.",
+              "Duración máxima de 2 horas."
+            ] },
+          { level: 2, cost: 6, duration: 0, cast: 0,
+            descriptions: [
+              "Es posible imitarlo todo incluyendo la voz de una criatura.",
+              "Duración máxima de 6 horas."
+            ] },
+        ]
+      },
+      { name: "Sigilo",
+        description: "El jugador entra en sigilo en estado oculto si supera una dificultad general de PER del enemigo.",
+        action: "Utilidad",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 2, duration: 0, cast: 0,
+            descriptions: ["Si el enemigo supera la dificultad de PER el jugador no entra en sigilo."] },
+          { level: 2, cost: 2, duration: 0, cast: 0,
+            descriptions: ["Si el enemigo supera la dificultad de PER entra en sigilo en modo cubierto."] },
+        ]
+      },
+      { name: "Ilusión",
+        description: "Crea ilusiones no físicas.",
+        action: "Utilidad",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 3, duration: 0, cast: 1,
+            descriptions: [
+              "Pueden tener una duración máxima de 1 hora.",
+              "Pueden realizar movimientos simples."
+            ] 
+          },
+          { level: 2, cost: 2, duration: 0, cast: 1,
+            descriptions: [
+              "Tienen una duración máxima de 2 horas.",
+              "Pueden realizar movimientos simples."
+            ] },
+          { level: 3, cost: 2, duration: 0, cast: 1,
+            descriptions: [
+              "Tienen una duración máxima de 4 horas.",
+              "Pueden realizar movimientos complejos.",
+              "Pueden emitir sonidos simples."
+            ] },
+        ]
+      },
+      { name: "Engaño",
+        description: "Bonus en tiradas para determinar si una criatura oculta algo, miente o para descubrir criaturas u objetos escondidos.",
+        action: "Utilidad",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 2, duration: 0, cast: 0,
+            descriptions: ["+2 en PER"] },
+          { level: 2, cost: 2, duration: 0, cast: 0,
+            descriptions: ["+3 en PER"] },
+        ]
+      },
+      { name: "Ojo para las debilidades",
+        description: "Detecta las debilidades de un enemigo.",
+        action: "Utilidad",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 2, duration: 0, cast: 0,
+            descriptions: ["Detecta debilidades físicas de un objetivo."] },
+          { level: 2, cost: 2, duration: 0, cast: 0,
+            descriptions: [
+              "Detecta la debilidad física de un objetivo",
+              "Detecta debilidades en estructuras y mecanismos."] },
+        ]
+      },
+      { name: "Forzar cerraduras",
+        description: "Fuerza una cerradura, se tiene que superar la dificultad de destreza (es necesario tener ganzúas en el inventario).",
+        action: "Utilidad",
+        type: "Pasiva",
+        advance: [ 
+          { level: 1, cost: 0, duration: 0, cast: -1,
+            descriptions: ["Se puede realizar una tirada para tener 1/3 de oportunidad que la herramienta no se consuma."] },
+          { level: 2, cost: 0, duration: 0, cast: -1,
+            descriptions: ["Se puede realizar una tirada para tener 1/2 de oportunidad que la herramienta no se consuma."] },
+        ]
+      },
+      { name: "Manipulación",
+        description: "Bonus en tiradas de CAR para manipular objetivos.",
+        action: "Utilidad",
+        type: "Pasiva",
+        advance: [ 
+          { level: 1, cost: 0, duration: 0, cast: -1,
+            descriptions: ["+2 de CAR"] },
+          { level: 2, cost: 0, duration: 0, cast: -1,
+            descriptions: ["+3 de CAR"] },
         ]
       },
     ]
@@ -408,20 +702,20 @@ const rolClasses = [
         action: "Ofensiva",
         type: "Pasiva",
         advance: [ 
-          { level: 1, cost: 0, duration: 0,
+          { level: 1, cost: 0, duration: 0, cast: -1,
             descriptions: ["El primer turno de la pelea es para el grupo."]},
-          { level: 2, cost: 0, duration: 0,
+          { level: 2, cost: 0, duration: 0, cast: -1,
             descriptions: ["El primer turno del equipo se realiza con ventaja."] },]
       },
       { name: "Fijar objetivo",
-        description: "Marca un objetivo, no se puede cambiar de objetivo a menos que se realice otra acción.",
+        description: "Marca un objetivo, no se puede cambiar de objetivo a menos que se realice otra acción, el objetivo escape o muera.",
         action: "Ofensiva",
         type: "Activa",
         advance: [ 
-          { level: 1, cost: 2, duration: 0,
-            descriptions: ["Hasta que escape o muera recibirá un +2 en los daños que se le realicen."] },
-          { level: 2, cost: 2, duration: 0,
-            descriptions: ["Hasta que escape o muera recibirá un +3 en los daños que se le realicen."] },
+          { level: 1, cost: 2, duration: 0, cast: 0,
+            descriptions: ["+2 en los daños que se le realicen."] },
+          { level: 2, cost: 2, duration: 0, cast: 0,
+            descriptions: ["+3 en los daños que se le realicen."] },
         ]
       },
       { name: "Disparo certero",
@@ -429,11 +723,11 @@ const rolClasses = [
         action: "Ofensiva",
         type: "Activa",
         advance: [ 
-          { level: 1, cost: 2, duration: 0,
+          { level: 1, cost: 2, duration: 0, cast: -1,
             descriptions: ["+3 de daño"] },
-          { level: 2, cost: 2, duration: 0,
+          { level: 2, cost: 2, duration: 0, cast: -1,
             descriptions: ["+4 de daño"] },
-          { level: 3, cost: 1, duration: 0,
+          { level: 3, cost: 1, duration: 0, cast: -1,
             descriptions: ["+5 de daño"] },
         ]
       },
@@ -442,9 +736,9 @@ const rolClasses = [
         action: "Ofensiva",
         type: "Activa",
         advance: [ 
-          { level: 1, cost: 2, duration: 0,
+          { level: 1, cost: 2, duration: 0, cast: -1,
             descriptions: ["Se puede disparar a enemigos a media cobertura sin desventaja."] },
-          { level: 2, cost: 2, duration: 0,
+          { level: 2, cost: 2, duration: 0, cast: -1,
             descriptions: ["Se puede disparar a enemigos a cubierto sin ninguna desventaja."] },
         ]
       },
@@ -453,9 +747,9 @@ const rolClasses = [
         action: "Ofensiva",
         type: "Activa",
         advance: [ 
-          { level: 1, cost: 2, duration: 0,
+          { level: 1, cost: 2, duration: 0, cast: -1,
             descriptions: ["Se puede disparar 2 veces en un turno."] },
-          { level: 2, cost: 2, duration: 0,
+          { level: 2, cost: 2, duration: 0, cast: -1,
             descriptions: ["Se puede disparar 3 veces en un turno."] },
         ]
       },
@@ -464,15 +758,15 @@ const rolClasses = [
         action: "Ofensiva",
         type: "Activa",
         advance: [ 
-          { level: 1, cost: 3, duration: 0,
+          { level: 1, cost: 3, duration: 0, cast: -1,
             descriptions: ["Proyectiles de fuego (inflinge incendiado I por 3 turnos)."] },
-          { level: 2, cost: 3, duration: 0,
+          { level: 2, cost: 3, duration: 0, cast: -1,
             descriptions: [
               "Proyectiles de fuego (inflinge incendiado II por 4 turnos).",
               "Proyectiles de hielo (inflinge congelado I por 3 turnos)."
             ] 
           },
-          { level: 3, cost: 3, duration: 0,
+          { level: 3, cost: 3, duration: 0, cast: -1,
             descriptions: [
               "Proyectiles de fuego (inflinge incendiado III por 4 turnos).",
               "Proyectiles de hielo (inflinge congelado II por 4 turnos).",
@@ -486,9 +780,9 @@ const rolClasses = [
         action: "Utilidad",
         type: "Pasiva",
         advance: [ 
-          { level: 1, cost: 0, duration: 0,
+          { level: 1, cost: 0, duration: 0, cast: 0,
             descriptions: ["Encender fuego, crear antorchas, manipular animales, rastreo básico, crear trampa básica."] },
-          { level: 2, cost: 0, duration: 0,
+          { level: 2, cost: 0, duration: 0, cast: 0,
             descriptions: ["Improvisar arma, montar animal, conocimiento geográfico, encontrar alimento, crear trampa avanzada, rastreo avanzado."] },
         ]
       },
@@ -497,9 +791,9 @@ const rolClasses = [
         action: "Utilidad",
         type: "Pasiva",
         advance: [ 
-          { level: 1, cost: 0, duration: 0,
+          { level: 1, cost: 0, duration: 0, cast: 0,
             descriptions: ["2 metros más que el movimiento base."] },
-          { level: 2, cost: 0, duration: 0,
+          { level: 2, cost: 0, duration: 0, cast: 0,
             descriptions: ["3 metros más que el movimiento base."] },
         ]
       },
@@ -521,10 +815,18 @@ const rolClasses = [
       { level: 10, mods: { atq: 5, def: 4, ins: 0, pod: 9} },
     ],
     skills: [
-      { name: "",
-        description: "",
-        cost: 0, 
-        duration: 0
+      { name: "a",
+        description: "a",
+        action: "a",
+        type: "a",
+        advance: [ 
+          { level: 1, cost: 0, duration: 0, cast: 0,
+            descriptions: [
+              "a"] },
+          { level: 2, cost: 0, duration: 0, cast: 0,
+            descriptions: [
+              "a"] },
+        ]
       },
     ]
   },
