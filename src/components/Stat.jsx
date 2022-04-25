@@ -90,7 +90,7 @@ function Stat({statIndex, statName, fullStat, updateStatState, statValue, race, 
             </Tooltip>
           }
           inputProps={{ style: { textAlign: 'center'} }}
-          sx={{width: (race === '0' ? '1' : '15ch')}}
+          sx={{width: '15ch'}}
         />
       </FormControl>
       {
