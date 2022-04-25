@@ -131,100 +131,98 @@ function Skill({rolClass, skillIndex, reducePod, canLevelUp, levelUpSkill }) {
         </DialogTitle>
         <DialogContent>
           <DialogContentText id="skill-dialog-description">
-            {
-              <Box>
-                <Typography>
-                  {skill.description}
-                </Typography>
-                <Stack
-                  direction="row"
-                  spacing={1}
-                  justifyContent="center"
-                  sx={{
-                    mt: '1ch'
-                  }}
-                >
-                  <Chip
-                    label={skill.type}
-                    size="small" 
-                    color="primary"
-                  />
-                  <Chip
-                    label={skill.action}
-                    size="small"
-                    variant="outlined"
-                    color="primary"
-                  />
-                </Stack>
-                <Stack spacing={2} sx={{mt: '1ch'}}>
-                  {
-                    skill.advance.map((adv, index) => {
-                      return (
-                        <Box key={index}>
-                          {
-                            skill.type === 'Pasiva' ?
-                            <Stack  direction="row" spacing={1}>
-                              <Box>{'Nivel ' + adv.level}</Box>
+            {skill.description}
+          </DialogContentText>
+          {
+            <Box>
+              <Stack
+                direction="row"
+                spacing={1}
+                justifyContent="center"
+                sx={{
+                  mt: '1ch'
+                }}
+              >
+                <Chip
+                  label={skill.type}
+                  size="small" 
+                  color="primary"
+                />
+                <Chip
+                  label={skill.action}
+                  size="small"
+                  variant="outlined"
+                  color="primary"
+                />
+              </Stack>
+              <Stack spacing={2} sx={{mt: '1ch'}}>
+                {
+                  skill.advance.map((adv, index) => {
+                    return (
+                      <Box key={index}>
+                        {
+                          skill.type === 'Pasiva' ?
+                          <Stack  direction="row" spacing={1}>
+                            <Box>{'Nivel ' + adv.level}</Box>
+                            <Chip
+                              label={'pasiva'}
+                              size="small"
+                              variant="outlined"
+                            />
+                          </Stack>:
+                          <Stack  direction="row" spacing={1}>
+                            <Box>{'Nivel ' + adv.level}</Box>
+                            <Chip
+                              label={'costo: ' + adv.cost}
+                              size="small"
+                              variant="outlined"
+                            />
+                            { 
+                              adv.duration === 0 ?
+                              <></> :
                               <Chip
-                                label={'pasiva'}
+                                label={'turnos: ' + adv.duration}
                                 size="small"
                                 variant="outlined"
                               />
-                            </Stack>:
-                            <Stack  direction="row" spacing={1}>
-                              <Box>{'Nivel ' + adv.level}</Box>
-                              <Chip
-                                label={'costo: ' + adv.cost}
-                                size="small"
-                                variant="outlined"
-                              />
-                              { 
-                                adv.duration === 0 ?
-                                <></> :
-                                <Chip
-                                  label={'turnos: ' + adv.duration}
-                                  size="small"
-                                  variant="outlined"
-                                />
-                              }
-                              {
-                                adv.cast === -1 ?
-                                <Chip
-                                  label="bonus"
-                                  size="small"
-                                  variant="outlined"
-                                /> :
-                                adv.cast === 0 ?
-                                <Chip
-                                  label="acción"
-                                  size="small"
-                                  variant="outlined"
-                                /> :
-                                <Chip
-                                  label={'casteo: ' + adv.cast}
-                                  size="small"
-                                  variant="outlined"
-                                />
-                              }
-                            </Stack>
-                          }
-                          <Stack sx={{ml: '1.5ch'}}>
+                            }
                             {
-                              adv.descriptions.map((desc, index) =>{
-                                return (
-                                  <Typography variant="caption" key={index}>{desc}</Typography>
-                                )
-                              })
+                              adv.cast === -1 ?
+                              <Chip
+                                label="bonus"
+                                size="small"
+                                variant="outlined"
+                              /> :
+                              adv.cast === 0 ?
+                              <Chip
+                                label="acción"
+                                size="small"
+                                variant="outlined"
+                              /> :
+                              <Chip
+                                label={'casteo: ' + adv.cast}
+                                size="small"
+                                variant="outlined"
+                              />
                             }
                           </Stack>
-                        </Box>
-                      )
-                    })
-                  }
-                </Stack>
-              </Box>
-            }
-          </DialogContentText>
+                        }
+                        <Stack sx={{ml: '1.5ch'}}>
+                          {
+                            adv.descriptions.map((desc, index) =>{
+                              return (
+                                <Typography variant="caption" key={index}>{desc}</Typography>
+                              )
+                            })
+                          }
+                        </Stack>
+                      </Box>
+                    )
+                  })
+                }
+              </Stack>
+            </Box>
+          }
         </DialogContent>
         <DialogActions>
           <Button onClick={handleSkillLevelUpClick}>

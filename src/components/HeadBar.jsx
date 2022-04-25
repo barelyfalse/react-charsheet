@@ -29,11 +29,10 @@ export function HeadBar() {
   });
   
   const toggleDrawer = (anchor, open) => (event) => {
-  if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
-    return;
-  }
-
-  setState({ ...state, [anchor]: open });
+    if (event.type === 'keydown' && (event.key === 'Tab' || event.key === 'Shift')) {
+      return;
+    }
+    setState({ ...state, [anchor]: open });
   };
 
   const list = (anchor) => (
