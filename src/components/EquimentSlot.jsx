@@ -22,7 +22,7 @@ function EquimentSlot({item, onUnequip}) {
     initial: {
       opacity: 0,
       filter: 'blur(5px)',
-      transform: 'scaleX(1.2) scaleY(1.1)',
+      transform: 'scaleX(1.3) scaleY(1.1)',
     },
     animate: { 
       opacity: 1, 
@@ -30,11 +30,11 @@ function EquimentSlot({item, onUnequip}) {
       marginTop: '1ch',
       filter: 'blur(0px)',
       transform: 'scaleX(1) scaleY(1)',
-      transition: { ease: "easeInOut", duration: .4}
+      transition: { ease: "circInOut", duration: .4}
     },
     exit: {
       opacity: 0,
-      transform: 'scaleX(0.8) scaleY(0.9)',
+      transform: 'scaleX(0.9) scaleY(0.8)',
       height: 0, 
       marginTop: 0 ,
       filter: 'blur(5px)',
