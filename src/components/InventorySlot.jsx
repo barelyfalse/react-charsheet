@@ -102,13 +102,15 @@ function InventorySlot({qty, item, itemQtyUpdate, onDelete, onEquip}) {
           value={itemQty}
           sx={{
             width: '6ch',
+            minWidth: '6ch'
           }}
           onChange={handleItemQtyUpdate}
         />
         <Paper
           elevation={4}
           sx={{
-            width: '1', 
+            width: '1',
+            minWidth: '0ch',
             height: '1',
             pr: '1ch',
             pl: '1.5ch'
@@ -119,16 +121,14 @@ function InventorySlot({qty, item, itemQtyUpdate, onDelete, onEquip}) {
             alignItems="center"
             sx={{height: '1'}}
           >
-            <Stack
-              direction="row"
-              spacing={1}
-            >
-              <Typography>
+            <Box sx={{width: 'calc(100% - 19ch)'}}>
+              <Typography sx={{  whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}>
                 {item.name}
               </Typography>
-              <Chip label={rolItemTypes[item.itemtype]} size="small"/>
-            </Stack>
+            </Box>
+            
             <Box>
+              <Chip label={rolItemTypes[item.itemtype]} size="small"/>
               <Tooltip title="Información" arrow>
                 <IconButton color="primary" aria-label="Informacón" onClick={handleClickObjInfo}>
                   <InfoRoundedIcon />
