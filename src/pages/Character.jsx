@@ -652,6 +652,7 @@ function Character() {
                 <Box>
                   <Stack>
                     {
+                      rolRace ?
                       rolRaces[rolRace].skills.map((skill, index) => {
                         return (
                           <InheritSkill 
@@ -660,7 +661,7 @@ function Character() {
                             reducePod={reducePodSkill}
                           />
                         )
-                      })
+                      }) : null
                     }
                     {
                       charSkills.map((skillid, index) => {

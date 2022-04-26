@@ -68,7 +68,7 @@ function ModificatorDetails(props) {
     console.log(mod + ' ' + props.item.mods[mod]);
   })
   */
-  if(props.item.type === 3)
+  if(props.item.itemtype === 4)
     return <></>;
   
   return (

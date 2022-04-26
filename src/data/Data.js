@@ -20,31 +20,15 @@ const rolCharSkillStats = [
  ]
 
 const rolItemTypes = [
-  'Arma', 'Accesorio', 'Consumible', 'Misceláneo'
+  'Arma', 'Armadura', 'Accesorio', 'Consumible', 'Misceláneo'
 ];
 
-const commonItems = [
-  { id: '1',
-    type: 0, 
-    name: 'Espada pro', 
-    description: 'Una espada olvidada por los antiguos ocupantes de la ciudad.', 
-    mods: { dmg: 1 }},
-  { id: '2',
-    type: 1, 
-    name: 'Peto del tonto', 
-    description: 'Peto mágico oxidado.', 
-    mods: { def: 1, per: 1, des: -1 }},
-  { id: '3',
-    type: 2, 
-    name: 'Poción de fuerza', 
-    description: 'Poción que mejora la fuerza del que la consume por un corto espacio de tiempo.', 
-    uses: 1,
-    duration: 2, 
-    mods: { fue: 1 }},
-  { id: '4',
-    type: 3,
-    name: 'Pase de la puerta del norte',
-    descripción: 'Un pase otorgado por el mismisimo Lord Carios para tener libre paso en la puerta norte de la muralla.'}
+const rolWeaponTypes = [
+  'Distancia', 'Melé ligera',	'Melé normal', 'Melé pesada', 'Mágica',
+];
+
+const rolArmorTypes = [
+  'Ligera', 'Normal', 'Pesada'
 ]
 
 const rolClasses = [
@@ -62,6 +46,8 @@ const rolClasses = [
       { level: 9, mods: { atq: 5, def: 2, ins: 5, pod: 6} },
       { level: 10, mods: { atq: 5, def: 2, ins: 6, pod: 7} },
     ],
+    weapontypes: [0, 1, 4],
+    armortypes: [0],
     skills: [
       { name: "a",
         description: "a",
@@ -94,6 +80,8 @@ const rolClasses = [
       { level: 10, mods: { atq:0, def: 0, ins: 9, pod: 11} },
 
     ],
+    weapontypes: [4],
+    armortypes: [0],
     skills: [
       { name: "a",
         description: "a",
@@ -125,6 +113,8 @@ const rolClasses = [
       { level: 9,	mods: { atq: 0,	def: 0, ins: 10, pod: 8} },
       { level: 10, mods: { atq: 0,	def: 0, ins: 11, pod: 10} },
     ],
+    weapontypes: [4],
+    armortypes: [0],
     skills: [
       { name: "a",
         description: "a",
@@ -156,6 +146,8 @@ const rolClasses = [
       { level: 10, mods: { atq: 1, def: 0, ins:	10,	pod: 9} },
 
     ],
+    weapontypes: [4],
+    armortypes: [1],
     skills: [
       { name: "a",
         description: "a",
@@ -187,6 +179,8 @@ const rolClasses = [
       { level: 9, mods: { atq: 0,	def: 1, ins: 7, pod: 10} },
       { level: 10, mods: { atq: 1, def: 1, ins: 7, pod: 11} },
     ],
+    weapontypes: [4],
+    armortypes: [0],
     skills: [
       { name: "a",
         description: "a",
@@ -218,6 +212,8 @@ const rolClasses = [
       { level: 9, mods: { atq: 2, def: 5, ins: 6, pod: 5} },
       { level: 10, mods: { atq: 2, def: 6, ins: 6, pod: 6} },
     ],
+    weapontypes: [3, 4],
+    armortypes: [2],
     skills: [
       { name: "a",
         description: "a",
@@ -249,13 +245,15 @@ const rolClasses = [
       { level: 9, mods: { atq: 7, def: 8, ins: 0, pod: 4} },
       { leve: 10, mods: { atq: 8, def: 9, ins: 0, pod: 4} },
     ],
+    weapontypes: [0, 1, 2, 3],
+    armortypes: [1],
     skills: [
       { name: "Adaptable en batalla",
         description: "Puede utilizar cualquier tipo de arma cuerpo a cuerpo para luchar.",
         action: "Ofensiva",
         type: "Pasiva",
         advance: [ 
-          { level: 1, cost: 0, duration: 0,
+          { level: 1, cost: 0, duration: 0, cast: -1,
             descriptions: [
               "Uso de armas cuerpo a cuerpo de todo porte sin la penalización de ATQ."] },
         ]
@@ -265,13 +263,13 @@ const rolClasses = [
         action: "Ofensiva",
         type: "Activa",
         advance: [ 
-          { level: 1, cost: 3, duration: 3,
+          { level: 1, cost: 3, duration: 3, cast: -1,
             descriptions: [
               "Puede atacar 2 veces por turno."] },
-          { level: 2, cost: 2, duration: 3,
+          { level: 2, cost: 2, duration: 3, cast: -1,
             descriptions: [
               "Puede atacar 2 veces por turno."] },
-          { level: 3, cost: 2, duration: 2,
+          { level: 3, cost: 2, duration: 2, cast: -1,
             descriptions: [
               "Puede atacar 3 veces por turno."] },
         ]
@@ -281,11 +279,11 @@ const rolClasses = [
         action: "Ofensiva",
         type: "Activa",
         advance: [ 
-          { level: 1, cost: 2, duration: 0,
+          { level: 1, cost: 2, duration: 0, cast: -1,
             descriptions: [
               "Inflinge aturdido por 1 turno.",
               "+2 al daño total realizado."] },
-          { level: 2, cost: 2, duration: 0,
+          { level: 2, cost: 2, duration: 0, cast: -1,
             descriptions: [
               "Inlflige aturdido por 1 turnos.",
               "+4 al daño total realizado."] },
@@ -296,10 +294,10 @@ const rolClasses = [
         action: "Ofensiva",
         type: "Activa",
         advance: [ 
-          { level: 1, cost: 1, duration: 0,
+          { level: 1, cost: 1, duration: 0, cast: -1,
             descriptions: [
               "Desventaja en su siguiente ataque."] },
-          { level: 2, cost: 1, duration: 0,
+          { level: 2, cost: 1, duration: 0, cast: -1,
             descriptions: [
               "Desventaja en sus siguientes 2 ataques."] },
         ]
@@ -309,9 +307,9 @@ const rolClasses = [
         action: "Utilidad",
         type: "Pasiva",
         advance: [ 
-          { level: 1, cost: 0, duration: 0,
+          { level: 1, cost: 0, duration: 0, cast: -1,
             descriptions: ["2 metros más que el movimiento base."] },
-          { level: 2, cost: 0, duration: 0,
+          { level: 2, cost: 0, duration: 0, cast: -1,
             descriptions: ["3 metros más que el movimiento base."] },
         ]
       },
@@ -320,7 +318,7 @@ const rolClasses = [
         action: "Ofensiva",
         type: "Activa",
         advance: [ 
-          { level: 1, cost: 1, duration: 0,
+          { level: 1, cost: 1, duration: 0, cast: -1,
             descriptions: [
               "Golpe por ataque."] },
         ]
@@ -330,10 +328,10 @@ const rolClasses = [
         action: "Defensiva",
         type: "Activa",
         advance: [ 
-          { level: 1, cost: 3, duration: 2,
+          { level: 1, cost: 3, duration: 2, cast: 0,
             descriptions: [
               "Inmunidad por 2 turnos."] },
-          { level: 2, cost: 3, duration: 2,
+          { level: 2, cost: 3, duration: 2, cast: 0,
             descriptions: [
               "Inmunidad por 3 turnos."] },
         ]
@@ -343,10 +341,10 @@ const rolClasses = [
         action: "Ofensiva",
         type: "Activa",
         advance: [ 
-          { level: 1, cost: 2, duration: 2,
+          { level: 1, cost: 2, duration: 2, cast: -1,
             descriptions: [
               "+4 al daño realizado y +1 DEF"] },
-          { level: 2, cost: 2, duration: 2,
+          { level: 2, cost: 2, duration: 2, cast: -1,
             descriptions: [
               "+5 al daño realizado y +1 DEF"] },
         ]
@@ -356,7 +354,7 @@ const rolClasses = [
         action: "Defensiva",
         type: "Pasiva",
         advance: [ 
-          { level: 1, cost: 0, duration: 0,
+          { level: 1, cost: 0, duration: 0, cast: -1,
             descriptions: [
               "+2 en tiradas de inciativa."] },
         ]
@@ -378,19 +376,21 @@ const rolClasses = [
       { level: 9, mods: { atq: 10, def: 2, ins: 1, pod: 6} },
       { level: 10, mods: {aqt: 11, def: 2, ins: 2, pod: 6} },
     ],
+    weapontypes: [0, 1, 2],
+    armortypes: [0],
     skills: [
       { name: "Ataque veloz",
         description: "Múltiples ataques por turno.",
         action: "Ofensiva",
         type: "Activa",
         advance: [ 
-          { level: 1, cost: 3, duration: 3,
+          { level: 1, cost: 3, duration: 3, cast: -1,
             descriptions: [
               "Puede atacar 2 veces por turno."] },
-          { level: 2, cost: 2, duration: 3,
+          { level: 2, cost: 2, duration: 3, cast: -1,
             descriptions: [
               "Puede atacar 2 veces por turno."] },
-          { level: 3, cost: 3, duration: 2,
+          { level: 3, cost: 3, duration: 2, cast: -1,
             descriptions: [
               "Puede atacar 3 veces por turno."] },
         ]
@@ -400,10 +400,10 @@ const rolClasses = [
         action: "Ofensiva",
         type: "Activa",
         advance: [ 
-          { level: 1, cost: 2, duration: 3,
+          { level: 1, cost: 2, duration: 3, cast: 0,
             descriptions: [
               "Ventaja en ATQ"] },
-          { level: 2, cost: 2, duration: 4,
+          { level: 2, cost: 2, duration: 4, cast: 0,
             descriptions: [
               "Ventaja en ATQ"] },
         ]
@@ -413,10 +413,10 @@ const rolClasses = [
         action: "Ofensiva",
         type: "Activa",
         advance: [ 
-          { level: 1, cost: 3, duration: 0,
+          { level: 1, cost: 3, duration: 0, cast: -1,
             descriptions: [
               "+4 al daño"] },
-          { level: 2, cost: 3, duration: 0,
+          { level: 2, cost: 3, duration: 0,  cast: -1,
             descriptions: [
               "+5 al daño"] },
         ]
@@ -436,10 +436,10 @@ const rolClasses = [
         action: "Utilidad",
         type: "Pasiva",
         advance: [ 
-          { level: 1, cost: 0, duration: 0,
+          { level: 1, cost: 0, duration: 0, cast: -1,
             descriptions: [
               "+2 en tiradas de PER."] },
-          { level: 2, cost: 0, duration: 0,
+          { level: 2, cost: 0, duration: 0,  cast: -1,
             descriptions: [
               "+3 en tiradas de PER."] }
         ]
@@ -449,9 +449,9 @@ const rolClasses = [
         action: "Utilidad",
         type: "Activa",
         advance: [ 
-          { level: 1, cost: 2, duration: 0,
+          { level: 1, cost: 2, duration: 0,  cast: 0,
             descriptions: ["Detecta debilidades físicas de un objetivo."] },
-          { level: 2, cost: 2, duration: 0,
+          { level: 2, cost: 2, duration: 0,  cast: 0,
             descriptions: [
               "Detecta la debilidad física de un objetivo",
               "Detecta debilidades en estructuras y mecanismos."] },
@@ -462,10 +462,10 @@ const rolClasses = [
         action: "Ofensiva",
         type: "Pasiva",
         advance: [ 
-          { level: 1, cost: 0, duration: 0,
+          { level: 1, cost: 0, duration: 0,  cast: -1,
             descriptions: [
               "Solo sirve 1 ves por combate."] },
-          { level: 2, cost: 0, duration: 0,
+          { level: 2, cost: 0, duration: 0,  cast: -1,
             descriptions: [
               "Sirve 2 veces por combate, 1 vez hasta que se descanse."] },
         ]
@@ -487,6 +487,8 @@ const rolClasses = [
       { level: 9, mods: { atq: 8, def: 2, ins: 3, pod: 5} },
       { level: 10, mods: { atq: 9, def: 3, ins: 3, pod: 5} },
     ],
+    weapontypes: [0, 1, 2],
+    armortypes: [0],
     skills: [
       { name: "Maestro de la emboscada",
         description: "Ataque por sorpresa para todo el grupo a enemigos que no están en combate.",
@@ -571,7 +573,7 @@ const rolClasses = [
         type: "Activa",
         advance: [ 
           { level: 1, cost: 1, duration: 3, cast: -1,
-            descriptions: ["Utiliza venenos en botellas del invetario."] },
+            descriptions: ["Utiliza venenos en botellas del invetario para imbuir el arma con sus efectos"] },
         ]
       },
       { name: "Sellar objetivo",
@@ -602,6 +604,8 @@ const rolClasses = [
       { level: 9, mods: { atq: 6, def: 2, ins: 3, pod: 5} },
       { level: 10, mods: { atq: 7, def: 3, ins: 4, pod: 6} },
     ],
+    weapontypes: [0, 1, 2],
+    armortypes: [0],
     skills: [
       { name: "Prestidigitación",
         description: "Ventaja al momento de salvar dificultades de habilidades con las manos.",
@@ -729,6 +733,8 @@ const rolClasses = [
       { level: 9, mods: { atq: 9, def: 1, ins: 2, pod: 6} },
       { level: 10, mods: { atq: 9, def: 2, ins: 3, pod: 6} },
     ],
+    weapontypes: [0, 1, 2],
+    armortypes: [1],
     skills: [
       { name: "Maestro de la emboscada",
         description: "Ataque por sorpresa para todo el grupo a enemigos que no están en combate.",
@@ -847,6 +853,8 @@ const rolClasses = [
       { level: 9, mods: { atq: 5, def: 4, ins: 0, pod: 8} },
       { level: 10, mods: { atq: 5, def: 4, ins: 0, pod: 9} },
     ],
+    weapontypes: [0, 1, 2],
+    armortypes: [1],
     skills: [
       { name: "a",
         description: "a",
@@ -1002,7 +1010,8 @@ export {
   rolCharStats, 
   rolCharSkillStats, 
   rolItemTypes, 
-  commonItems, 
   rolCharBasicStats,
-  rolRaces
+  rolRaces,
+  rolWeaponTypes,
+  rolArmorTypes,
 };

@@ -29,9 +29,31 @@ function InventorySlot({qty, item, itemQtyUpdate, onDelete, onEquip}) {
     }
   }
 
+  /*
   useEffect(() => {
     itemQtyUpdate(itemQty, item.id);
   },[itemQty])
+  */
+
+  console.log(item);
+
+  const unequippableItem = () => {
+    if(item.itemtype < 3) {
+      switch(item.itemtype) {
+        case 0:
+          //arma
+          return false;
+        case 1:
+          //armadura
+          return false;
+        case 2:
+          //accesorio
+          return false;
+        default:
+          return true;
+      }
+    } else return true;
+  }
 
   const handleClickObjInfo = () => {
     setObjDetailsOpen(true);
@@ -42,7 +64,7 @@ function InventorySlot({qty, item, itemQtyUpdate, onDelete, onEquip}) {
   };
 
   const handleItemEquip = () => {
-    if(item.type === 0 || item.type === 1) {
+    if(item.itemtype < 3) {
       onEquip(item.id);
     }
   }
@@ -83,7 +105,7 @@ function InventorySlot({qty, item, itemQtyUpdate, onDelete, onEquip}) {
             <Typography>
               {item.name}
             </Typography>
-            <Chip label={rolItemTypes[item.type]} size="small" sx={{ml: '1ch'}}/>
+            <Chip label={rolItemTypes[item.itemtype]} size="small" sx={{ml: '1ch'}}/>
           </Stack>
           <Box>
             <Tooltip title="Información" arrow>
@@ -91,9 +113,9 @@ function InventorySlot({qty, item, itemQtyUpdate, onDelete, onEquip}) {
                 <InfoRoundedIcon />
               </IconButton>
             </Tooltip>
-            <Tooltip title={item.type > 1 ? 'No equipable':'Equipar ítem'} arrow>
+            <Tooltip title={item.itemtype > 2 ? 'No equipable':'Equipar ítem'} arrow>
               <span>
-                <IconButton color="primary" aria-label="Equipar ítem" disabled={item.type > 1} onClick={handleItemEquip}>
+                <IconButton color="primary" aria-label="Equipar ítem" disabled={unequippableItem()} onClick={handleItemEquip}>
                   <NoBackpackIcon />
                 </IconButton>
               </span>
