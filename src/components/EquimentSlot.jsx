@@ -10,6 +10,7 @@ import { Box,
 import { rolCharStats } from '../data/Data.js';
 import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
 import BackpackRoundedIcon from '@mui/icons-material/BackpackRounded';
+import { motion } from "framer-motion";
 
 function EquimentSlot({item, onUnequip}) {
 
@@ -17,8 +18,36 @@ function EquimentSlot({item, onUnequip}) {
     onUnequip(item.id);
   }
 
+  const variant = {
+    initial: {
+      opacity: 0,
+      filter: 'blur(5px)',
+      transform: 'scaleX(1.2) scaleY(1.1)',
+    },
+    animate: { 
+      opacity: 1, 
+      height: '7ch',
+      marginTop: '1ch',
+      filter: 'blur(0px)',
+      transform: 'scaleX(1) scaleY(1)',
+      transition: { ease: "easeInOut", duration: .4}
+    },
+    exit: {
+      opacity: 0,
+      transform: 'scaleX(0.8) scaleY(0.9)',
+      height: 0, 
+      marginTop: 0 ,
+      filter: 'blur(5px)',
+      transition: { ease: "easeInOut", duration: .4}
+    },
+  }
+
   return (
-    <Box>
+    <motion.div
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      variants={variant}>
       <Paper
         elevation={4}
         sx={{
@@ -66,7 +95,7 @@ function EquimentSlot({item, onUnequip}) {
           </Box>
         </Stack>
       </Paper>
-    </Box>
+    </motion.div>
   )
 }
 

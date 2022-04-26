@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {createRef, useEffect, useState} from 'react';
 import { v4 as uuid } from 'uuid';
 import { Container, 
   Grid, 
@@ -18,6 +18,7 @@ import { Container,
   InputAdornment,
   Input,
 } from '@mui/material';
+import { motion, AnimatePresence, useMotionValue } from "framer-motion"
 
 import RemoveCircleRoundedIcon from '@mui/icons-material/RemoveCircleRounded';
 import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
@@ -37,38 +38,6 @@ import { rolClasses, rolCharStats, rolCharSkillStats, rolRaces } from '../data/D
 import { useLocalStorage } from "../useLocalStorage";
 
 function Character() {
-  var charData = {
-    charId: 123,
-    name: "Nombre",
-    rolClass: 0,
-    lvl: 1,
-    xp: 0,
-    currentPv: 10,
-    maxPv: 10,
-    stats: [ 2, 4, 3, 5, 2, 3 ],
-    skills: [ [ 0, 1 ], [2,2] ],
-    currentPod: 10,
-    maxPod: 10,
-    inventory: [],
-    equipment: [
-      { id:"2834e304-b37a-4eb2-bd1e-6fb0b12ed944",
-        type:0,
-        name:"Espada mágica",
-        description:"Una espada mágica bien chidori.",
-        mods:{dmg:2}},
-      { id:"q83gs304-b37a-4eb2-bd1e-6fb0b12ed944",
-        type:0,
-        name:"Espada no mágica",
-        description:"Una espada no mágica bien chidori.",
-        mods:{dmg:2, def: -1}},
-      { id:"c778d361-7ec1-4c0a-9526-5b7255dcaebf",
-        type:1,
-        name:"Peto chingon",
-        description:"Un peto mágico que aumenta las estadisticas.",
-        mods:{def:1,car:1}}
-    ]
-  };
-
   //chardata controllers
   const [charStats, setCharStats] = useLocalStorage('stats', [0, 0, 0, 0, 0, 0]);
 
@@ -285,8 +254,9 @@ function Character() {
       let newInventory = [...prevInventory];
       const index = newInventory.indexOf(newInventory.find(o => o.item.id === id));
       if (index > -1) {
-          let removed = newInventory.splice(index, 1);
+          newInventory.splice(index, 1);
           return newInventory;
+      } else {
       }
     })
   }
@@ -299,7 +269,7 @@ function Character() {
       const index = newInventory.indexOf(newInventory.find(o => o.item.id === id));
       if (index > -1) {
         if(newInventory[index].qty > 1) {
-          newInventory[index].qty--;
+          newInventory[index].qty = newInventory[index].qty - 1;
           
           removed = newInventory[index].item;
           return newInventory;
@@ -356,6 +326,13 @@ function Character() {
   const canAddNewSkill = () => {
     return ((lvl + 4) > charSkills.length);
   }
+
+  //a
+  const [firstMount, setFirstMount] = useState(true);
+
+  useEffect(() => {
+    console.log('first')
+  }, [])
 
   return (
     <>
@@ -554,7 +531,7 @@ function Character() {
                     const nextLevelModValue = rolClass !== '' && lvl < 10 ? rolClasses[rolClass].advance.find(adv => adv.level === actualLvl + 1).mods[mod] : 0;
                     let noEquipMod = true;
                     equipment.map(equip => {
-                      if(Object.getOwnPropertyNames(equip.mods).some(m => rolCharSkillStats.map(s => s.short.toLowerCase()).includes(m))) {
+                      if(equip.mods && Object.getOwnPropertyNames(equip.mods).some(m => rolCharSkillStats.map(s => s.short.toLowerCase()).includes(m))) {
                         noEquipMod = false;
                       }
                     })
@@ -692,19 +669,19 @@ function Character() {
                   </Typography>
                 </Box>
                 <Box>
-                  <Stack spacing={1}>
+                  <AnimatePresence initial={false}>
                     {
-                      equipment.map((item, index) => {
+                      equipment.map((item) => {
                         return (
                           <EquimentSlot 
-                            key={index} 
+                            key={item.id} 
                             item={item}
                             onUnequip={handleItemUnequip}
                           />
                         )
                       })
                     }
-                  </Stack>
+                  </AnimatePresence>
                 </Box>
               </CardContent>
             </Card>
@@ -734,25 +711,22 @@ function Character() {
                   </Box>
                 </Box>
                 <Box>
-                  <Stack
-                    spacing={1}
-                    sx={{
-                      mt:'1ch'
-                    }}
-                  >
+                  <AnimatePresence initial={false}>
                     {
-                      inventory.map((slot, index) => {
-                        return <InventorySlot 
-                          key={index} 
-                          qty={slot.qty} 
-                          item={slot.item} 
-                          itemQtyUpdate={handleItemQtyUpdate} 
-                          onDelete={removeItemFromInventory} 
-                          onEquip={handleItemEquip}
-                        />
+                      inventory.map((slot) => {
+                        return (
+                          <InventorySlot
+                            key={slot.item.id}
+                            qty={slot.qty} 
+                            item={slot.item} 
+                            itemQtyUpdate={handleItemQtyUpdate} 
+                            onDelete={removeItemFromInventory} 
+                            onEquip={handleItemEquip}
+                          />
+                        )
                       })
                     }
-                  </Stack>
+                  </AnimatePresence>
                 </Box>
               </CardContent>
             </Card>

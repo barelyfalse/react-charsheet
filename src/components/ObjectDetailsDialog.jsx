@@ -20,7 +20,6 @@ import {
 } from '@mui/material';
 import DeleteIcon from '@mui/icons-material/Delete';
 import FileDownloadRoundedIcon from '@mui/icons-material/FileDownloadRounded';
-import NoBackpackIcon from '@mui/icons-material/NoBackpack';
 
 function UseDetails(props) {
   if(props.item.type !== 2)
@@ -57,6 +56,7 @@ function UseDetails(props) {
             disabled={true}
           />
         </FormControl>
+
       </Stack>
     </Grid>
   )
@@ -75,6 +75,7 @@ function ModificatorDetails(props) {
     <Grid item xs={12}>
       <Stack direction="row" justifyContent="center" spacing={2} sx={{mt: '1ch'}}>
         {
+          props.item.mods ?
           Object.getOwnPropertyNames(props.item.mods).map((mod, index) => {
             return <Chip 
               key={index} 
@@ -82,7 +83,7 @@ function ModificatorDetails(props) {
               color={props.item.mods[mod] > 0 ? 'success' : 'error'}
               variant={rolCharStats.map((skill) => { return skill.short }).includes(mod.toUpperCase()) ? "outlined" : ""}
             />
-          })
+          }) : null
         }
       </Stack>
     </Grid>
@@ -159,6 +160,7 @@ function ObjectDetailsDialog(props) {
           </Grid>
           <UseDetails item={item} />
           <ModificatorDetails item={item} />
+          <Typography variant="caption">{item.id}</Typography>
         </Grid>
       </DialogContent>
       <DialogActions>

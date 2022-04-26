@@ -12,13 +12,11 @@ import { Box,
 } from '@mui/material'
 import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
 import NoBackpackIcon from '@mui/icons-material/NoBackpack';
+import { motion } from "framer-motion"
 
 
 function InventorySlot({qty, item, itemQtyUpdate, onDelete, onEquip}) {
-
-  //inventory detail controllers
-  const [objDetailsOpen, setObjDetailsOpen] = React.useState(false);
-  //add new set state if want to set new values to objects
+  const [objDetailsOpen, setObjDetailsOpen] = useState(false);
 
   //item quantity controllers
   const [itemQty, setItemQty] = useState(qty);
@@ -28,14 +26,6 @@ function InventorySlot({qty, item, itemQtyUpdate, onDelete, onEquip}) {
       setItemQty(parseInt(event.target.value))
     }
   }
-
-  /*
-  useEffect(() => {
-    itemQtyUpdate(itemQty, item.id);
-  },[itemQty])
-  */
-
-  console.log(item);
 
   const unequippableItem = () => {
     if(item.itemtype < 3) {
@@ -69,71 +59,102 @@ function InventorySlot({qty, item, itemQtyUpdate, onDelete, onEquip}) {
     }
   }
 
+  const variant = {
+    initial: {
+      opacity: 0,
+      filter: 'blur(5px)',
+      transform: 'scaleX(1.2) scaleY(1.1)',
+    },
+    animate: { 
+      opacity: 1, 
+      height: '6.5ch',
+      marginTop: '1ch',
+      filter: 'blur(0px)',
+      transform: 'scaleX(1) scaleY(1)',
+      transition: { ease: "easeInOut", duration: .4}
+    },
+    exit: {
+      opacity: 0,
+      transform: 'scaleX(0.8) scaleY(0.9)',
+      height: 0, 
+      marginTop: 0 ,
+      filter: 'blur(5px)',
+      transition: { ease: "easeInOut", duration: .4}
+    },
+  }
+
   return (
-    <Stack
-      direction="row"
-      alignItems="center"
-      spacing={1}
-    >
-      <TextField
-        hiddenLabel
-        variant="standard"
-        size="small"
-        inputProps={{ style: { textAlign: 'center' }}}
-        value={itemQty}
-        sx={{
-          width: '6ch',
-        }}
-        onChange={handleItemQtyUpdate}
-      />
-      <Paper
+    <motion.div
+      initial="initial"
+      animate="animate"
+      exit="exit"
+      variants={variant}>
+      <Stack
+        direction="row"
+        alignItems="center"
+        spacing={1}
+        sx={{height: '1'}}
+      >
+        <TextField
+          hiddenLabel
+          variant="standard"
+          inputProps={{ style: { textAlign: 'center' }}}
+          value={itemQty}
+          sx={{
+            width: '6ch',
+          }}
+          onChange={handleItemQtyUpdate}
+        />
+        <Paper
           elevation={4}
           sx={{
-          py: '1ch',
-          px: '1.5ch',
-          width: '1'
-          
-      }}>
-        <Stack
-          direction="row"
-          justifyContent="space-between"
-          alignItems="center"
-        >
+            width: '1', 
+            height: '1',
+            pr: '1ch',
+            pl: '1.5ch'
+        }}>
           <Stack
             direction="row"
+            justifyContent="space-between"
+            alignItems="center"
+            sx={{height: '1'}}
           >
-            <Typography>
-              {item.name}
-            </Typography>
-            <Chip label={rolItemTypes[item.itemtype]} size="small" sx={{ml: '1ch'}}/>
-          </Stack>
-          <Box>
-            <Tooltip title="Información" arrow>
-              <IconButton color="primary" aria-label="Informacón" onClick={handleClickObjInfo}>
-                <InfoRoundedIcon />
-              </IconButton>
-            </Tooltip>
-            <Tooltip title={item.itemtype > 2 ? 'No equipable':'Equipar ítem'} arrow>
-              <span>
-                <IconButton color="primary" aria-label="Equipar ítem" disabled={unequippableItem()} onClick={handleItemEquip}>
-                  <NoBackpackIcon />
+            <Stack
+              direction="row"
+              spacing={1}
+            >
+              <Typography>
+                {item.name}
+              </Typography>
+              <Chip label={rolItemTypes[item.itemtype]} size="small"/>
+            </Stack>
+            <Box>
+              <Tooltip title="Información" arrow>
+                <IconButton color="primary" aria-label="Informacón" onClick={handleClickObjInfo}>
+                  <InfoRoundedIcon />
                 </IconButton>
-              </span>
-            </Tooltip>
-          </Box>
+              </Tooltip>
+              <Tooltip title={item.itemtype > 2 ? 'No equipable':'Equipar ítem'} arrow>
+                <span>
+                  <IconButton color="primary" aria-label="Equipar ítem" disabled={unequippableItem()} onClick={handleItemEquip}>
+                    <NoBackpackIcon />
+                  </IconButton>
+                </span>
+              </Tooltip>
+            </Box>
+            
+          </Stack>
           
-        </Stack>
-        
-      </Paper>
-      <ObjectDetailsDialog
-        keepMounted
-        open={objDetailsOpen}
-        onClose={handleObjInfoClose}
-        onDelete={onDelete}
-        item={item}
-        qty={qty}
-      />
-    </Stack>
+        </Paper>
+        <ObjectDetailsDialog
+          open={objDetailsOpen}
+          onClose={handleObjInfoClose}
+          onDelete={onDelete}
+          item={item}
+          qty={qty}
+        />
+      </Stack>
+    </motion.div>
   )
 }
 
