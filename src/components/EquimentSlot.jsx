@@ -58,10 +58,11 @@ function EquimentSlot({item, onUnequip}) {
         <Stack
           direction="row"
           justifyContent="space-between"
+          alignItems="center"
           sx={{width: '1'}}
         >
-          <Box>
-            <Typography>
+          <Box sx={{width: 'calc(100% - 9ch)'}}>
+            <Typography sx={{whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}>
               {item.name}
             </Typography>
             <Stack 
