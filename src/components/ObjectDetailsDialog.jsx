@@ -80,7 +80,7 @@ function ObjectDetailsDialog(props) {
   const WeaponInfo = () => {
     return (
       <>
-        <Chip label={rolWeaponTypes[item.weapontype]} variant="outlined" />
+        <Chip label={'Arma ' + rolWeaponTypes[item.weapontype].toLowerCase()} variant="outlined" />
       </>
     )
   }
