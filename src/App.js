@@ -28,6 +28,13 @@ function App() {
         // dark: will be calculated from palette.secondary.main,
         contrastText: '#ffcc00',
       },
+      chip: {
+        positive: '#34a853',
+        negative: '#a83a34',
+        neutral: '#7a7a7a',
+        extra: '#2e9e8f',
+        extra2: '#5b2e9e'
+      },
       // Used by `getContrastText()` to maximize the contrast between
       // the background and the text.
       contrastThreshold: 3,

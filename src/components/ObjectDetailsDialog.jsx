@@ -1,7 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
-import { rolCharStats } from '../data/Data.js';
+import { rolCharStats, rolItemTypes, rolWeaponTypes, rolArmorTypes } from '../data/Data.js';
 import {
+  useTheme,
   Typography, 
   Button,
   IconButton,
@@ -21,46 +22,7 @@ import {
 import DeleteIcon from '@mui/icons-material/Delete';
 import FileDownloadRoundedIcon from '@mui/icons-material/FileDownloadRounded';
 
-function UseDetails(props) {
-  if(props.item.type !== 2)
-    return <></>;
-  
-  return (
-    <Grid item xs={12} sx={{mt: '2ch'}}>
-      <Stack direction="row" spacing={2} justifyContent="center">
-        <FormControl sx={{width: '15ch'}}>
-          <OutlinedInput
-            id="item-detail" 
-            value={
-              props.item.uses
-            }
-            startAdornment={<InputAdornment position="start">
-            {
-              'Usos'
-            }</InputAdornment>}
-            inputProps={{ style: { textAlign: 'center'} }}
-            disabled={true}
-          />
-        </FormControl>
-        <FormControl sx={{width: '15ch'}}>
-          <OutlinedInput
-            id="item-detail" 
-            value={
-              props.item.duration
-            }
-            startAdornment={<InputAdornment position="start">
-            {
-              'Duración'
-            }</InputAdornment>}
-            inputProps={{ style: { textAlign: 'center'} }}
-            disabled={true}
-          />
-        </FormControl>
 
-      </Stack>
-    </Grid>
-  )
-}
 
 function ModificatorDetails(props) {
   /*
@@ -94,6 +56,7 @@ function ModificatorDetails(props) {
 function ObjectDetailsDialog(props) {
   const { onClose, onDelete, item: valueProp, open, qty, ...other } = props;
   const [item, setItem] = React.useState(valueProp);
+  const chipPalette = useTheme().palette.chip;
 
   const handleOk = () => {
     onClose();
@@ -113,55 +76,90 @@ function ObjectDetailsDialog(props) {
     element.click();
   }
 
+  
+  const WeaponInfo = () => {
+    return (
+      <>
+        <Chip label={rolWeaponTypes[item.weapontype]} variant="outlined" />
+      </>
+    )
+  }
+
+  const ArmorInfo = () => {
+    return (
+      <>
+        <Chip label={'Armadura ' + rolArmorTypes[item.armortype].toLowerCase()} variant="outlined" />
+      </>
+    )
+  }
+
+  const ConsumableInfo = () => {
+    return (
+      <>
+        <Chip label={'Usos: ' + item.uses} variant="outlined" />
+        <Chip label={
+          item.duration === 0 ?
+          'Instantánea' :
+          'Duración: ' + item.duration
+          } 
+          variant="outlined" />
+      </>
+    )
+  }
+
+  const ItemModificators = () => {
+    return (
+      <>
+        {
+          props.item.mods ?
+          Object.getOwnPropertyNames(props.item.mods).map((mod, index) => {
+            return <Chip 
+              key={index} 
+              label={mod.toUpperCase() + ' ' + (props.item.mods[mod] > 0 ? '+':'') +props.item.mods[mod]}
+              color={props.item.mods[mod] > 0 ? 'success' : 'error'}
+              variant={rolCharStats.map((skill) => { return skill.short }).includes(mod.toUpperCase()) ? "outlined" : ""}
+            />
+          }) : null
+        }
+      </>
+    )
+  } 
+
   return (
     <Dialog
-      sx={{ '& .MuiDialog-paper': { width: '80%' } }}
+      sx={{ '& .MuiDialog-paper': { } }}
       maxWidth="sm"
       fullWidth={true}
       TransitionProps={{  }}
       open={open}
       {...other}
     >
-      <DialogTitle>Información del item</DialogTitle>
+      <DialogTitle>Información del ítem</DialogTitle>
       <DialogContent>
-        <Grid container spacing={1} sx={{
-          mt: '1ch',
-          display: 'flex',
-          alignItems: 'center'
-        }}>
-          <Grid item xs={1}>
-            <Tooltip title="Cantidad">
-              <Typography sx={{textAlign: 'center', textWeight: 'bold' }} variant="h6">{qty}</Typography>
-            </Tooltip>
-            
-          </Grid>
-          <Grid item xs={11}>
-            <TextField
-              size="small"
-              fullWidth
-              id="item-name" 
-              label="Nombre del item" 
-              variant="outlined" 
-              value={item.name}
-              disabled={true}
-            />
-          </Grid>
-
-          <Grid item xs={12} sx={{mt: '2ch'}}>
-            <TextField
-              id="item-description"
-              label="Descripción"
-              multiline
-              fullWidth
-              maxRows={4}
-              value={item.description}
-              disabled={true}
-            />
-          </Grid>
-          <UseDetails item={item} />
-          <ModificatorDetails item={item} />
-          <Typography variant="caption">{item.id}</Typography>
-        </Grid>
+        <Stack direction="row" alignItems="center" spacing={1}>
+          <Typography variant="h4">{item.name}</Typography>
+          <Chip label={rolItemTypes[item.itemtype]} />
+        </Stack>
+        <br />
+        <Typography color={chipPalette.neutral} variant="h6">Descripción:</Typography>
+        <Typography sx={{ml: '1ch'}}>{item.description}</Typography>
+        <br />
+        <Stack direction="row" spacing={1} justifyContent="center">
+          {
+            item.itemtype === 0 ?
+            <WeaponInfo /> : null
+          }
+          {
+            item.itemtype === 1 ?
+            <ArmorInfo /> : null
+          }
+          {
+            item.itemtype === 3 ?
+            <ConsumableInfo /> : null
+          }
+          <ItemModificators />
+        </Stack>
+        
       </DialogContent>
       <DialogActions>
         <Tooltip title="Descargar ítem">
