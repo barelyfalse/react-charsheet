@@ -69,6 +69,11 @@ function Character() {
     })
   }
 
+  function resetSkills() {
+    setCharSkills([]);
+    console.log('Skills reseted');
+  }
+
 
   //name controllers 
   const [charName, setCharName] = useLocalStorage('name', '');
@@ -120,7 +125,7 @@ function Character() {
 
   const handleClassSelChange = (event) => {
     setRolClass(event.target.value.toString());
-    resetInventory();
+    resetSkills();
   };
 
   //race select controllers
