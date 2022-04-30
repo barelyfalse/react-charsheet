@@ -120,6 +120,7 @@ function Character() {
 
   const handleClassSelChange = (event) => {
     setRolClass(event.target.value.toString());
+    resetInventory();
   };
 
   //race select controllers
@@ -244,7 +245,11 @@ function Character() {
   const handleItemQtyUpdate = (qty, id) => {
     setInventory(prevInventory => {
       let newInventory = [...prevInventory];
+      console.log(newInventory);
+      
       newInventory.find(o => o.item.id === id).qty = qty;
+      
+      console.log(newInventory);
       return newInventory;
     })
   }
@@ -317,6 +322,32 @@ function Character() {
     }
   }
 
+  function equipmentStatus() {
+    let status = { weapons: 0, armor: 0, accesories: 0 }
+    equipment.map((e) => { 
+      switch(e.itemtype) {
+        case 0: 
+          status.weapons++;
+          break;
+        case 1:
+          status.armor++;
+          break;
+        case 2:
+          status.accesories++;
+          break;
+        default:
+          console.log('wrong item type on equipment status!');
+      }
+    });
+    return status;
+  }
+
+  const resetInventory = () => {
+    setInventory([]);
+    setEquipment([]);
+    console.log('inventory reseted');
+  }
+
   //leveling logic
   const canLevelUpSkill = () => {
     const numberOfSkillLevels = charSkills.reduce((accum, skill) => {return accum + skill[1]}, 0);
@@ -326,13 +357,6 @@ function Character() {
   const canAddNewSkill = () => {
     return ((lvl + 4) > charSkills.length);
   }
-
-  //a
-  const [firstMount, setFirstMount] = useState(true);
-
-  useEffect(() => {
-    console.log('first')
-  }, [])
 
   return (
     <>
@@ -722,6 +746,8 @@ function Character() {
                             itemQtyUpdate={handleItemQtyUpdate} 
                             onDelete={removeItemFromInventory} 
                             onEquip={handleItemEquip}
+                            rolClass={rolClass}
+                            equipmentStatus={equipmentStatus()}
                           />
                         )
                       })

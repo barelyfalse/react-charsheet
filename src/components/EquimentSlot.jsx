@@ -24,8 +24,8 @@ function EquimentSlot({item, onUnequip}) {
       filter: 'blur(5px)',
       transform: 'scaleX(1.3) scaleY(1.1)',
     },
-    animate: { 
-      opacity: 1, 
+    animate: {
+      opacity: 1,
       height: '7ch',
       marginTop: '1ch',
       filter: 'blur(0px)',

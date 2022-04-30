@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react'
-import { rolItemTypes } from '../data/Data.js';
+import { rolItemTypes, rolClasses } from '../data/Data.js';
 import ObjectDetailsDialog from './ObjectDetailsDialog';
 import { Box, 
   Paper, 
@@ -15,30 +15,41 @@ import NoBackpackIcon from '@mui/icons-material/NoBackpack';
 import { motion } from "framer-motion"
 
 
-function InventorySlot({qty, item, itemQtyUpdate, onDelete, onEquip}) {
+function InventorySlot({qty, item, itemQtyUpdate, onDelete, onEquip, rolClass, equipmentStatus}) {
   const [objDetailsOpen, setObjDetailsOpen] = useState(false);
 
   //item quantity controllers
+  const [itemQtyText, setItemQtyText] = useState(''+qty);
   const [itemQty, setItemQty] = useState(qty);
-
+  const handleItemQtyTextUpdate = (event) => {
+    setItemQtyText(event.target.value.trim())
+  }
   const handleItemQtyUpdate = (event) => {
-    if(!isNaN(event.target.value) && !isNaN(parseInt(event.target.value))) {
-      setItemQty(parseInt(event.target.value))
+    if(!isNaN(itemQtyText) && !isNaN(parseInt(itemQtyText))) {
+      setItemQty(parseInt(itemQtyText));
+      itemQtyUpdate(parseInt(itemQtyText), item.id);
+    } else {
+      setItemQtyText(itemQty);
     }
   }
+
+  useEffect(() => {
+    //console.log('qty updated');
+    setItemQty(qty);
+  },[qty])
 
   const unequippableItem = () => {
     if(item.itemtype < 3) {
       switch(item.itemtype) {
         case 0:
           //arma
-          return false;
+          return !rolClasses[rolClass].weapontypes.includes(item.weapontype) || !equipmentStatus.weapons < 1;
         case 1:
           //armadura
-          return false;
+          return !rolClasses[rolClass].armortypes.includes(item.armortype) || !equipmentStatus.armor < 1;
         case 2:
           //accesorio
-          return false;
+          return !equipmentStatus.accesories < 2;
         default:
           return true;
       }
@@ -99,12 +110,13 @@ function InventorySlot({qty, item, itemQtyUpdate, onDelete, onEquip}) {
           hiddenLabel
           variant="standard"
           inputProps={{ style: { textAlign: 'center' }}}
-          value={itemQty}
+          value={itemQtyText}
           sx={{
             width: '6ch',
             minWidth: '6ch'
           }}
-          onChange={handleItemQtyUpdate}
+          onChange={handleItemQtyTextUpdate}
+          onBlur={handleItemQtyUpdate}
         />
         <Paper
           elevation={4}
@@ -147,11 +159,11 @@ function InventorySlot({qty, item, itemQtyUpdate, onDelete, onEquip}) {
           
         </Paper>
         <ObjectDetailsDialog
+          item={item}
+          qty={qty}
           open={objDetailsOpen}
           onClose={handleObjInfoClose}
           onDelete={onDelete}
-          item={item}
-          qty={qty}
         />
       </Stack>
     </motion.div>

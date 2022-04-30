@@ -14,7 +14,7 @@ const rolCharSkillStats = [
   {name: 'Poder', short: 'POD'},
 ]
 
- const rolCharBasicStats = [
+const rolCharBasicStats = [
    {name: 'Puntos de vida', short: 'PV'},
    {name: 'Daño', short: 'DMG'},
  ]
