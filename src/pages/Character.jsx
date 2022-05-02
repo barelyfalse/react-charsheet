@@ -25,6 +25,7 @@ import AddCircleRoundedIcon from '@mui/icons-material/AddCircleRounded';
 import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import FileUploadRoundedIcon from '@mui/icons-material/FileUploadRounded';
+import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
 
 import Skill from '../components/Skill';
 import InheritSkill from '../components/InheritSkill';
@@ -33,6 +34,7 @@ import SkillSelect from '../components/SkillSelect';
 import InventorySlot from '../components/InventorySlot';
 import AddObjectDialog from '../components/AddObjectDialog';
 import EquimentSlot from '../components/EquimentSlot';
+import ClassInfoDialog from '../components/ClassInfoDialog';
 
 import { rolClasses, rolCharStats, rolCharSkillStats, rolRaces } from '../data/Data.js';
 import { useLocalStorage } from "../useLocalStorage";
@@ -363,6 +365,17 @@ function Character() {
     return ((lvl + 4) > charSkills.length);
   }
 
+  //class info dialog controllers
+  const [classInfoDiaOpen, setClassInfoDiaOpen] = useState(false);
+
+  const handleClassInfoDiaClickOpen = () => {
+    setClassInfoDiaOpen(true);
+  };
+
+  const handleClassInfoDiaClose = () => {
+    setClassInfoDiaOpen(false);
+  };
+
   return (
     <>
       <Container maxWidth="lg" sx={{mt: '2ch'}}>
@@ -381,27 +394,35 @@ function Character() {
                   pattern="[0-9]*"
                 />
                 <Grid container spacing={1}>
-                  <Grid item md={8} sm={6} xs={6}>
-                    <FormControl fullWidth sx={{ mt: '2ch' }}>
-                      <TextField
-                        id="rol-class-selection"
-                        select
-                        size="small"
-                        label="Clase"
-                        value={rolClass}
-                        onChange={handleClassSelChange}
-                      >
-                        <MenuItem disabled value=""><em>Clase</em></MenuItem>
-                        {
-                          rolClasses.map(stat => stat.name).map((rolClass, index) => {
-                            return <MenuItem key={index} value={index}>{rolClass}</MenuItem>
-                          })
-                        }
-                      </TextField>
-                    </FormControl>
+                  <Grid item md={7} sm={6} xs={6}>
+                    <Stack direction="row" alignContent="center" sx={{ mt: '2ch' }}>
+                      <FormControl fullWidth>
+                        <TextField
+                          id="rol-class-selection"
+                          select
+                          size="small"
+                          label="Clase"
+                          value={rolClass}
+                          onChange={handleClassSelChange}
+                        >
+                          <MenuItem disabled value=""><em>Clase</em></MenuItem>
+                          {
+                            rolClasses.map(stat => stat.name).map((rolClass, index) => {
+                              return <MenuItem key={index} value={index}>{rolClass}</MenuItem>
+                            })
+                          }
+                        </TextField>
+                      </FormControl>
+                      <Tooltip title="Información de la clase" arrow>
+                        <IconButton color="primary" aria-label="Inforamción de clase" onClick={handleClassInfoDiaClickOpen}>
+                          <InfoRoundedIcon />
+                        </IconButton>
+                      </Tooltip>
+                    </Stack>
+                    <ClassInfoDialog open={classInfoDiaOpen} rolClass={rolClass} handleClose={handleClassInfoDiaClose} />
                   </Grid>
                   
-                  <Grid item md={4} sm={6} xs={6}>
+                  <Grid item md={5} sm={6} xs={6}>
                     <FormControl fullWidth sx={{ mt: '2ch' }}>
                       <TextField
                         id="rol-race-selection"
@@ -421,7 +442,7 @@ function Character() {
                             });
                             return (
                               <MenuItem key={index} value={index}>
-                                <Tooltip title={modsLabel} placement="left" arrow>
+                                <Tooltip title={modsLabel} placement="right" arrow>
                                   <Typography sx={{width: '1'}}>
                                     {race.name}
                                   </Typography>

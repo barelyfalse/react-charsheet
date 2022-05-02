@@ -374,7 +374,7 @@ const rolClasses = [
       { level: 7, mods: { atq: 8, def: 1, ins: 0, pod: 6} },
       { level: 8, mods: { atq: 9, def: 1, ins: 0, pod: 6} },
       { level: 9, mods: { atq: 10, def: 2, ins: 1, pod: 6} },
-      { level: 10, mods: {aqt: 11, def: 2, ins: 2, pod: 6} },
+      { level: 10, mods: {atq: 11, def: 2, ins: 2, pod: 6} },
     ],
     weapontypes: [0, 1, 2],
     armortypes: [0],
