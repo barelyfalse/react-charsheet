@@ -48,6 +48,9 @@ const rolClasses = [
     ],
     weapontypes: [0, 1, 4],
     armortypes: [0],
+    initialequipment: [
+      
+    ],
     skills: [
       { name: "a",
         description: "a",
@@ -132,7 +135,7 @@ const rolClasses = [
     ]
   },
   { name: "Sacerdote",
-    description: "Profesa su fe, sigue un código de conducta, no se centra en el combate más bien en sanar las heridas de sus compañeros y dar magias de soporte.",
+    description: "Profesa su fé, sigue un código de conducta, no se centra en el combate más bien en sanar las heridas de sus compañeros y dar magias de soporte.",
     advance: [
       { level: 1, mods: { atq: -2, def: 0, ins:	4, pod: 3} },
       { level: 2, mods: { atq: -1, def: 0, ins:	4, pod: 3} },
@@ -149,22 +152,101 @@ const rolClasses = [
     weapontypes: [4],
     armortypes: [1],
     skills: [
-      { name: "a",
-        description: "a",
-        action: "a",
-        type: "a",
+      { name: "Bendición",
+        description: "El objetivo tiene ventaja en una tirada de elección por una cantidad de turnos.",
+        action: "Utilidad",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 2, duration: 3, cast: 0,
+            descriptions: [] },
+          { level: 2, cost: 2, duration: 4, cast: 0,
+            descriptions: [] },
+        ]
+      },
+      { name: "Sanador bendecido",
+        description: "Parte de la curación realizada por el sacerdote le afecta a él mismo.",
+        action: "Utilidad",
+        type: "Pasiva",
         advance: [ 
           { level: 1, cost: 0, duration: 0, cast: 0,
             descriptions: [
-              "a"] },
+              "1/3 de la sanación."] },
           { level: 2, cost: 0, duration: 0, cast: 0,
             descriptions: [
-              "a"] },
+              "1/2 de la sanación."] },
+        ]
+      },
+      { name: "Sanación",
+        description: "Cura PV a objetivos.",
+        action: "Defensiva",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 2, duration: 0, cast: 0,
+            descriptions: [
+              "Cura 6 PV."] },
+          { level: 2, cost: 2, duration: 0, cast: 0,
+            descriptions: [
+              "Cura 10 PV."] },
+          { level: 3, cost: 2, duration: 0, cast: 0,
+            descriptions: [
+              "Cura 12 PV."] },
+        ]
+      },
+      { name: "Purificación",
+        description: "Remueve debuffs o estados mágicos negativos, de un objetivo.",
+        action: "Defensiva",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 3, duration: 0, cast: 0,
+            descriptions: [] },
+          { level: 2, cost: 2, duration: 0, cast: 0,
+            descriptions: [] },
+        ]
+      },
+      { name: "Juicio ineludible",
+        description: "El objetivo tira con desventaja en su siguiente salvación.",
+        action: "Utilidad",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 3, duration: 0, cast: -1,
+            descriptions: [] },
+        ]
+      },
+      { name: "Escudo divino",
+        description: "Casteado sobre un objetivo para protegerlo, el escudo tiene PV por 1/3 de los PV totales de la criatura.",
+        action: "Defensiva",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 3, duration: 3, cast: 0,
+            descriptions: [] },
+          { level: 2, cost: 2, duration: 3, cast: 0,
+            descriptions: [] },
+        ]
+      },
+      { name: "Área santa",
+        description: "Establece una área de 6 metros de diámetro alrededor del sacerdote que purifica el suelo, anula miasmas o venenos, y da una penalización a las salvaciones de unidades enemigas corruptas, no-muertos o malignos por una cantidad de turnos.",
+        action: "Defensiva",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 4, duration: 4, cast: 1,
+            descriptions: [
+              "-1 a todas las salvaciónes enemigas."] },
+          { level: 2, cost: 3, duration: 4, cast: 1,
+            descriptions: [
+              "-2 a todas las salvaciónes enemigas."] },
+        ]
+      },
+      { name: "Asistencia divina",
+        description: "Si un aliado esta inconciente puede reanimarsele con 70% de su vida máxima.",
+        action: "Utilidad",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 2, duration: 0, cast: 0,
+            descriptions: [] },
         ]
       },
     ]
   },
-
   { name: "Mago oscuro",
     description: "Magia negra, maleficios, posesiones, nigromancia y uso de magia prohibida.",
     advance: [
@@ -182,17 +264,111 @@ const rolClasses = [
     weapontypes: [4],
     armortypes: [0],
     skills: [
-      { name: "a",
-        description: "a",
-        action: "a",
-        type: "a",
+      { name: "Meteoro oscuro",
+        description: "Ataque mágico de EA.",
+        action: "Ofensiva",
+        type: "Activa",
         advance: [ 
-          { level: 1, cost: 0, duration: 0, cast: 0,
+          { level: 1, cost: 4, duration: 0, cast: 1,
             descriptions: [
-              "a"] },
-          { level: 2, cost: 0, duration: 0, cast: 0,
+              "Ataque de 3 metros de diámetro.",
+              "6 de daño por unidad dentro del área."] },
+          { level: 2, cost: 4, duration: 0, cast: 1,
             descriptions: [
-              "a"] },
+              "Ataque de 3 metros de diámetro.",
+              "8 de daño por unidad dentro del área."] },
+        ]
+      },
+      { name: "Caminata oscura",
+        description: "Puede avanzar por una cantidad de turnos siendo invulnerable. De la misma forma, no puede ser objetivo de talentos mágicos de aliados.",
+        action: "Utilidad",
+        type: "Actividad",
+        advance: [ 
+          { level: 1, cost: 3, duration: 1, cast: 0,
+            descriptions: [
+              "Puede avanzar 5 metros."] },
+          { level: 2, cost: 3, duration: 1, cast: 0,
+            descriptions: [
+              "Puede avanzar 6 metros",
+              ] },
+        ]
+      },
+      { name: "Sed negra",
+        description: "Absorbe una cantidad de PV del objetivo.",
+        action: "Utilidad",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 2, duration: 0, cast: -1,
+            descriptions: [
+              "Absorbe 4 PV."] },
+          { level: 2, cost: 2, duration: 0, cast: -1,
+            descriptions: [
+              "Absorbe 8 PV."] },
+          { level: 3, cost: 2, duration: 0, cast: -1,
+            descriptions: [
+              "Absorbe 1d20."] },
+        ]
+      },
+      { name: "Control tortuoso",
+        description: "Inhabilita la acción de un sentido del objetivo por una cantidad de turnos generando dolor. Se puede inhabilitar sentidos (vista, olfato, gusto, oido), o partes del cuerpo (brazos, piernas, etc.).",
+        action: "Utilidad",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 4, duration: 1, cast: 0,
+            descriptions: [] },
+          { level: 2, cost: 3, duration: 1, cast: 0,
+            descriptions: [] },
+        ]
+      },
+      { name: "Maldición",
+        description: "Penalización en la siguiente tirada del objetivo.",
+        action: "Ofensiva",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 2, duration: 0, cast: 0,
+            descriptions: [
+              "-10 de penalización."] },
+        ]
+      },
+      { name: "Corrosión espiritual",
+        description: "Penalización en las estadísticas de habilidad.",
+        action: "Ofensiva",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 2, duration: 2, cast: 0,
+            descriptions: [
+              "-1 en todas las estadísticas de habilidad."] },
+          { level: 2, cost: 2, duration: 3, cast: 0,
+            descriptions: [
+              "-2 en todas las estadísticas de habilidad."] },
+        ]
+      },
+      { name: "Nigromancia",
+        description: "Se invoca un no muerto (clase: arquero, guerrero, mago). El nivel de la habilidad es el nivel de la criatura invocada y el modificador para las estadísticas de habilidad. PV y  por: 1d20 ",
+        action: "Utilidad",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 5, duration: 4, cast: 1,
+            descriptions: [
+              "Invoca no-muertos de nivel 1."] },
+          { level: 2, cost: 5, duration: 4, cast: 1,
+            descriptions: [
+              "Invoca no-muertos de nivel 2."] },
+          { level: 3, cost: 5, duration: 4, cast: 1,
+            descriptions: [
+              "Invoca no-muertos de nivel 3."] },
+        ]
+      },
+      { name: "Ritual pagano",
+        description: "Con un casteo permanete aplica el efecto \"confundido.\", el mago oscuro no puede realizar otra acción mientras este casteando el talento.",
+        action: "Utilidad",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 1, duration: 0, cast: 0,
+            descriptions: [] },
+          { level: 2, cost: 1, duration: 0, cast: 0,
+            descriptions: [
+              "El talento puede realizarse como EA de 3 metros de diámetro afectando a las unidades dentro de esta."] },
         ]
       },
     ]
@@ -215,17 +391,124 @@ const rolClasses = [
     weapontypes: [3, 4],
     armortypes: [2],
     skills: [
-      { name: "a",
-        description: "a",
-        action: "a",
-        type: "a",
+      { name: "Llamar la atención",
+        description: "Un talento que obliga a los enemigos que fallen la salvación a atacar al jugador por una cantidad de turnos.",
+        action: "Defensiva",
+        type: "Activa",
         advance: [ 
-          { level: 1, cost: 0, duration: 0, cast: 0,
+          { level: 1, cost: 2, duration: 2, cast: 0,
             descriptions: [
-              "a"] },
-          { level: 2, cost: 0, duration: 0, cast: 0,
+              "Afecta a un enemigo."] },
+          { level: 2, cost: 2, duration: 2, cast: 0,
             descriptions: [
-              "a"] },
+              "Puede dirigirse a grupos de enemigos hasta un máximo de 5 objetivos."] },
+        ]
+      },
+      { name: "Barrera santa",
+        description: "Un muro de mágico que absorbe los ataques enemigos. PV de la barrera por: 1d20 + INS.",
+        action: "Defensiva",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 3, duration: 4, cast: 0,
+            descriptions: [
+              "Tamaño variable máximo de 3 metros de alto por 2 de ancho."] },
+          { level: 2, cost: 3, duration: 4, cast: 0,
+            descriptions: [
+              "Tamaño variable máximo de 4 metros de alto por 3 de ancho.", 
+              "Se puede aplicar también al rededor de un objetivo"] },
+        ]
+      },
+      { name: "Sanación",
+        description: "Cura PV a objetivos.",
+        action: "Defensiva",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 2, duration: 0, cast: 0,
+            descriptions: [
+              "Cura 6 PV"] },
+          { level: 2, cost: 2, duration: 0, cast: 0,
+            descriptions: [
+              "Cura 10 PV"] },
+          { level: 3, cost: 2, duration: 0, cast: 0,
+            descriptions: [
+              "Cura 12 PV"] },
+        ]
+      },
+      { name: "Lazo santo",
+        description: "El daño del objetivo se comparte con el jugador.",
+        action: "Defensiva",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 2, duration: 3, cast: 0,
+            descriptions: [
+              "El jugador absorbe 1/2 del daño."] },
+          { level: 2, cost: 2, duration: 3, cast: 0,
+            descriptions: [
+              "El jugador decide el procentaje de daño a absorber."] },
+        ]
+      },
+      { name: "Penitencia divina",
+        description: "Debuff de daño al objetivo.",
+        action: "Defensiva",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 1, duration: 2, cast: 0,
+            descriptions: [
+              "-5 de daño."] },
+          { level: 2, cost: 1, duration: 3, cast: 0,
+            descriptions: [
+              "-6 de daño."] },
+        ]
+      },
+      { name: "Bendecir",
+        description: "Ventaja al objetivo en una tirada de elección.",
+        action: "Utilidad",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 3, duration: 5, cast: -1,
+            descriptions: [
+              "Ventaja en una salvada de elección."] },
+        ]
+      },
+      { name: "Martillo bendito",
+        description: "Ataque de EA, provoca el estado aturdido más una cantidad de daño.",
+        action: "Ofensiva",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 2, duration: 1, cast: 0,
+            descriptions: [
+              "Ataque en forma de cono de 2 metros de ancho y 3 metros de alcance.",
+              "Aplica \"aturdido\" por 1 turno."] },
+          { level: 2, cost: 2, duration: 2, cast: 0,
+            descriptions: [
+              "Ataque en forma de cono de 2 metros de ancho y 3 metros de alcance.",
+              "Aplica \"aturdido\" por 2 turno."] },
+        ]
+      },
+      { name: "Opresión divina",
+        description: "Inhabilita la acción de un sentido del objetivo por una cantidad de turnos. Se puede inhabilitar sentidos (vista, olfato, gusto, oido) o partes del cuerpo (brazos, piernas, etc.).",
+        action: "Ofensiva",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 3, duration: 1, cast: 0,
+            descriptions: [] },
+          { level: 2, cost: 3, duration: 2, cast: 0,
+            descriptions: [] },
+        ]
+      },
+      { name: "Protección divina",
+        description: "Inmunidad al daño por una cantidad de turnos.",
+        action: "Defensiva",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 2, duration: 2, cast: 1,
+            descriptions: [
+              "Imunidad al daño por 2 turnos.",
+              "El casteo puede ser interrumpido por un ataque."] },
+          { level: 2, cost: 2, duration: 3, cast: 1,
+            descriptions: [
+              "Imunidad al daño por 3 turnos.",
+              "El casteo puede ser interrumpido por un ataque."] },
         ]
       },
     ]
@@ -856,15 +1139,74 @@ const rolClasses = [
     weapontypes: [0, 1, 2],
     armortypes: [1],
     skills: [
-      { name: "a",
-        description: "a",
-        action: "a",
-        type: "a",
+      { name: "Cinturón de artificios",
+        description: "Habilidad que le permite al artificiero utilizar los ítems de una manera más eficiente para poder utilizarlos en combate.",
+        action: "Ofensiva",
+        type: "Pasiva",
         advance: [ 
           { level: 1, cost: 0, duration: 0, cast: 0,
             descriptions: [
+              "Los artificios mecánicos pueden utilizarse como accion del turno."
+            ] },
+        ]
+      },
+      { name: "Crear artificio mecánico",
+        description: "Crea un ítem con propiedades personalizadas para utilizar en combate.",
+        action: "Utilidad",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 5, duration: 0, cast: 4,
+            descriptions: [
+
+            ] },
+        ]
+      },
+      { name: "Crear mejunje químico",
+        description: "Crea un mejunje químico, pueden ser dañinos o pueden ser curativos. Se pueden utilizar químicos para elaborar artificios mecánicos.\nLos resultados de este proceso pueden ser:",
+        action: "Utilidad",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 3, duration: 0, cast: 3,
+            descriptions: [
               "a"] },
-          { level: 2, cost: 0, duration: 0, cast: 0,
+        ]
+      },
+      { name: "Desarmar ítem mecánico",
+        description: "Desarma un ítem mecánico, si se supera una dificultad de DES de 18 se pueden obtener piezas mecánicas.",
+        action: "Utilidad",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 3, duration: 0, cast: 2,
+            descriptions: [
+              "a"] },
+        ]
+      },
+      { name: "Crear arma a distancia",
+        description: "Crea armas a distancia",
+        action: "Utilidad",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 10, duration: 0, cast: 4,
+            descriptions: [
+              "a"] },
+        ]
+      },
+      { name: "Crear trampa mecánica",
+        description: "Crea una trampa mecánica.",
+        action: "Utilidad",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 3, duration: 0, cast: 2,
+            descriptions: [
+              "a"] },
+        ]
+      },
+      { name: "Reparar ítem mecánico",
+        description: "Repara ítems mecánicos rotos",
+        action: "Utilidad",
+        type: "Activa",
+        advance: [ 
+          { level: 1, cost: 4, duration: 0, cast: 3,
             descriptions: [
               "a"] },
         ]
@@ -879,10 +1221,7 @@ const rolRaces = [
   { name: "Humano",
     description: "",
     mods: { mis: 3 },
-    skills: [],
-    initialequipment: [
-
-    ]
+    skills: []
   },
   { name: "Enano",
     description: "",
@@ -905,12 +1244,9 @@ const rolRaces = [
         advance: [ 
           { level: 1, cost: 0, duration: 0, cast: 0,
             descriptions: [
-              "+2 en CON en salvadas contra venenos."] },
+              "+1 en DES en salvadas de agilidad con herramientas."] },
         ]
       },
-    ],
-    initialequipment: [
-
     ]
   },
   { name: "Elfo",
@@ -937,9 +1273,6 @@ const rolRaces = [
               "+1 INS en salvadas contra talentos mágicos."] },
         ]
       },
-    ],
-    initialequipment: [
-      
     ]
   },
   { name: "Elfo oscuro",
@@ -966,42 +1299,27 @@ const rolRaces = [
               "Ataque de área, cono frontal de 2 metros de longitud y 1 de ancho."] },
         ]
       },
-    ],
-    initialequipment: [
-      
     ]
   },
   { name: "Medio",
     description: "",
     mods: { des: 2, car: 1 },
-    skills: [ ],
-    initialequipment: [
-      
-    ]
+    skills: [ ]
   },
   { name: "Draconito",
     description: "Desendiente de dragones.",
     mods: { fue: 2, car: 1 },
-    skills: [ ],
-    initialequipment: [
-      
-    ]
+    skills: [ ]
   },
   { name: "Medio orco",
     description: "Mitad orco, mitad humano",
     mods: { con: 2, fue: 1 },
-    skills: [ ],
-    initialequipment: [
-      
-    ]
+    skills: [ ]
   },
   { name: "Medio elfo",
     description: "Mitad elfo, mitad humano",
     mods: { car: 2, mis: 1 },
-    skills: [ ],
-    initialequipment: [
-      
-    ]
+    skills: [ ]
   },
 ]
 
