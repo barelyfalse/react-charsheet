@@ -145,7 +145,7 @@ function SkillSelect(props) {
                     
                   </Stack>
                   
-                  <Typography sx={selectedRolClassSkills.includes(index) ? {color: 'gray'}:{}}>
+                  <Typography sx={selectedRolClassSkills.includes(index) ? {color: 'gray'}:{}} textAlign="justify">
                     {skill.description}
                   </Typography>
                   {
