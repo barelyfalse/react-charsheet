@@ -42,7 +42,7 @@ import { useLocalStorage } from "../useLocalStorage";
 function Character() {
   //general props
   const gProps = {
-    bRad: '1.5ch'
+    bRad: '1ch'
   };
 
   //chardata controllers

@@ -87,7 +87,7 @@ function SkillSelect(props) {
 
   return (
     <Dialog
-      sx={{ '& .MuiDialog-paper': { width: '100%' } }}
+      sx={{ '& .MuiDialog-paper': { width: '100%', borderRadius: '2ch' } }}
       fullWidth={true}
       TransitionProps={{ onEntering: handleEntering }}
       open={open}
