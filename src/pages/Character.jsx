@@ -40,6 +40,11 @@ import { rolClasses, rolCharStats, rolCharSkillStats, rolRaces } from '../data/D
 import { useLocalStorage } from "../useLocalStorage";
 
 function Character() {
+  //general props
+  const gProps = {
+    bRad: '1.5ch'
+  };
+
   //chardata controllers
   const [charStats, setCharStats] = useLocalStorage('stats', [0, 0, 0, 0, 0, 0]);
 
@@ -381,7 +386,7 @@ function Character() {
       <Container maxWidth="lg" sx={{mt: '2ch'}}>
         <Grid container spacing={1}>
           <Grid item sm={7} xs={12}>
-            <Card>
+            <Card sx={{borderRadius: gProps.bRad}}>
               <CardContent>
                 <TextField
                   size="small"
@@ -460,7 +465,7 @@ function Character() {
           </Grid>
 
           <Grid item sm={5} xs={12}>
-            <Card>
+            <Card sx={{borderRadius: gProps.bRad}}>
               <CardContent>
                 
                   <Box sx={{display: 'flex', alignItems: 'center'}}>
@@ -550,7 +555,7 @@ function Character() {
           </Grid>
 
           <Grid item lg={3} md={3} xs={6}>
-            <Card sx={{height: '1'}}>
+            <Card sx={{height: '1', borderRadius: gProps.bRad}}>
               <CardContent sx={{height: '1', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
                 <Stack>
                   {
@@ -572,7 +577,7 @@ function Character() {
             </Card>
           </Grid>
           <Grid item lg={2} md={3} xs={6}>
-            <Card sx={{height: '1'}}>
+            <Card sx={{height: '1', borderRadius: gProps.bRad}}>
               <CardContent sx={{height: '1', display: 'flex', flexDirection: 'column', justifyContent: 'center'}}>
                 {
                   ['atq', 'def', 'ins', 'pod'].map((mod, index) =>{
@@ -652,7 +657,7 @@ function Character() {
           </Grid>
 
           <Grid item lg={7} md={6} xs={12}>
-            <Card sx={{height: '1'}}>
+            <Card sx={{height: '1', borderRadius: gProps.bRad}}>
               <CardContent>
                 <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
                   <Typography variant="h6">
@@ -711,7 +716,7 @@ function Character() {
           </Grid>
 
           <Grid item lg={6} md={12} xs={12}>
-            <Card sx={{height: '1'}}>
+            <Card sx={{height: '1', borderRadius: gProps.bRad}}>
               <CardContent>
                 <Box>
                   <Typography variant="h6">
@@ -738,7 +743,7 @@ function Character() {
           </Grid>
 
           <Grid item lg={6} md={12} xs={12}>
-            <Card sx={{height: '1'}}>
+            <Card sx={{height: '1', borderRadius: gProps.bRad}}>
               <CardContent>
                 <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between'}}>
                   <Typography variant="h6">
