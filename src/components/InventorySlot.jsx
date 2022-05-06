@@ -129,17 +129,17 @@ function InventorySlot({qty, item, itemQtyUpdate, onDelete, onEquip, rolClass, e
         }}>
           <Stack
             direction="row"
-            justifyContent="space-between"
+            justifyContent="end"
             alignItems="center"
             sx={{height: '1'}}
           >
-            <Box sx={{width: 'calc(100% - 19ch)'}}>
-              <Typography sx={{  whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}>
+            <Box sx={{width: '1', minWidth: '0ch'}}>
+              <Typography sx={{whiteSpace: 'nowrap', overflow: 'hidden', textOverflow: 'ellipsis'}}>
                 {item.name}
               </Typography>
             </Box>
             
-            <Box>
+            <Stack direction="row" alignItems="center">
               <Chip label={rolItemTypes[item.itemtype]} size="small"/>
               <Tooltip title="Información" arrow>
                 <IconButton color="primary" aria-label="Informacón" onClick={handleClickObjInfo}>
@@ -153,7 +153,7 @@ function InventorySlot({qty, item, itemQtyUpdate, onDelete, onEquip, rolClass, e
                   </IconButton>
                 </span>
               </Tooltip>
-            </Box>
+            </Stack>
             
           </Stack>
           
