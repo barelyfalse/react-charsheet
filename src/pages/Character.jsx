@@ -26,6 +26,8 @@ import EditRoundedIcon from '@mui/icons-material/EditRounded';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import FileUploadRoundedIcon from '@mui/icons-material/FileUploadRounded';
 import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
+import VisibilityOffRoundedIcon from '@mui/icons-material/VisibilityOffRounded';
+import VisibilityRoundedIcon from '@mui/icons-material/VisibilityRounded';
 
 import Skill from '../components/Skill';
 import InheritSkill from '../components/InheritSkill';
@@ -36,7 +38,7 @@ import AddObjectDialog from '../components/AddObjectDialog';
 import EquimentSlot from '../components/EquimentSlot';
 import ClassInfoDialog from '../components/ClassInfoDialog';
 
-import { rolClasses, rolCharStats, rolCharSkillStats, rolRaces } from '../data/Data.js';
+import { rolClasses, rolCharStats, rolCharSkillStats, rolRaces, rolCharHandicaps } from '../data/Data.js';
 import { useLocalStorage } from "../useLocalStorage";
 
 function Character() {
@@ -380,6 +382,16 @@ function Character() {
   const handleClassInfoDiaClose = () => {
     setClassInfoDiaOpen(false);
   };
+
+  //handicap controllers
+  const [handicap, setHandicap] = useLocalStorage('handicap', '');
+  const handleHandicapChange = (event) => {
+    setHandicap(event.target.value.toString());
+  };
+  const [visibleSecrets, setVisibleSecrets] = useState(false);
+  const handleVisibleSecrets = () => {
+    setVisibleSecrets(!visibleSecrets);
+  }
 
   return (
     <>
@@ -794,6 +806,43 @@ function Character() {
               open={addItemOpen}
               onClose={handleAddItemClose}
             />
+          </Grid>
+          
+          <Grid item sm={12} xs={12}>
+            <Card sx={{height: '1', borderRadius: gProps.bRad}}>
+              <CardContent>
+                <Box sx={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', mb: '2ch'}}>
+                  <Typography variant="h6">
+                    Desventaja
+                  </Typography>
+                  <IconButton color="primary" aria-label="delete" onClick={handleVisibleSecrets}>
+                    {visibleSecrets ?
+                      <VisibilityOffRoundedIcon fontSize="inherit" /> :
+                      <VisibilityRoundedIcon fontSize="inherit" />
+                    }
+                  </IconButton>
+                </Box>
+                <FormControl fullWidth sx={{filter: visibleSecrets ? 'blur(0px)' : 'blur(4px)'}}>
+                  <TextField
+                    id="handicap-selection"
+                    select
+                    size="small"
+                    label="Desventaja"
+                    value={handicap}
+                    onChange={handleHandicapChange}
+                    disabled={!visibleSecrets}
+                  >
+                    <MenuItem disabled value=""><em>Desventaja</em></MenuItem>
+                    {
+                      rolCharHandicaps.map((hc, index) => {
+                        return <MenuItem key={index} value={index}>{hc}</MenuItem>
+                      })
+                    }
+                  </TextField>
+                </FormControl>
+                
+              </CardContent>
+            </Card>
           </Grid>
 
           <Grid item sm={12} xs={12}>

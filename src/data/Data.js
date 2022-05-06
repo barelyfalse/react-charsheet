@@ -134,6 +134,7 @@ const rolClasses = [
       },
     ]
   },
+
   { name: "Sacerdote",
     description: "Profesa su fé, sigue un código de conducta, no se centra en el combate más bien en sanar las heridas de sus compañeros y dar magias de soporte.",
     advance: [
@@ -247,6 +248,7 @@ const rolClasses = [
       },
     ]
   },
+
   { name: "Mago oscuro",
     description: "Magia negra, maleficios, posesiones, nigromancia y uso de magia prohibida.",
     advance: [
@@ -1213,8 +1215,6 @@ const rolClasses = [
       },
     ]
   },
-
-
 ];
 
 const rolRaces = [
@@ -1323,6 +1323,25 @@ const rolRaces = [
   },
 ]
 
+const rolCharHandicaps = [
+  'Le aterra un animal común',
+  'Roba impulsivamente',
+  'Le teme a los infantes',
+  'Le aterran las alturas',
+  'No puede nadar',
+  'Tiene una enfermedad misteriosa',
+  'Un fantasma vengativo le persigue',
+  'Un enemigo poderoso le persigue',
+  'Tiene una maldición',
+  'Maldice en voz alta sin pensar',
+  'Porta un misterioso objeto mágico el cual todo mundo quiere',
+  'Odia el desorden',
+  'Odia toda la gente',
+  'Odia una especie',
+  'Le falta un brazo',
+  'La palabra “acuerdo” le provoca risa',
+];
+
 export {
   rolClasses, 
   rolCharStats, 
@@ -1332,4 +1351,5 @@ export {
   rolRaces,
   rolWeaponTypes,
   rolArmorTypes,
+  rolCharHandicaps
 };

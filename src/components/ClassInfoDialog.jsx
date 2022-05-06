@@ -21,6 +21,7 @@ import {
 import { rolClasses, rolWeaponTypes, rolArmorTypes } from '../data/Data';
 
 function ClassInfoDialog({open, rolClass, handleClose}) {
+  if(!rolClass) return<></>;
 
   const handleDialogClose = () => {
     handleClose();

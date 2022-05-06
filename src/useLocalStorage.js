@@ -18,7 +18,8 @@ function getStoredCharData(key, defaultValue) {
       currentPod: 0,
       maxPod: 0,
       inventory: [],
-      equipment: []
+      equipment: [],
+      handicap: '',
     };
     saved = JSON.stringify(charData)
   }
@@ -44,7 +45,8 @@ function getStoredCharDataFull() {
       currentPod: 0,
       maxPod: 0,
       inventory: [],
-      equipment: []
+      equipment: [],
+      handicap: '',
     };
     return charData;
   }
