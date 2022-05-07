@@ -841,8 +841,8 @@ function Character() {
                   </Typography>
                   <IconButton color="primary" aria-label="delete" onClick={handleVisibleSecrets}>
                     {visibleSecrets ?
-                      <VisibilityOffRoundedIcon fontSize="inherit" /> :
-                      <VisibilityRoundedIcon fontSize="inherit" />
+                      <VisibilityRoundedIcon fontSize="inherit" /> :
+                      <VisibilityOffRoundedIcon fontSize="inherit" />
                     }
                   </IconButton>
                 </Box>
