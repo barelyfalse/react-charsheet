@@ -239,7 +239,7 @@ function AddObjectDialog(props) {
 
   return (
     <Dialog
-      sx={{ '& .MuiDialog-paper': { width: '100%' } }}
+      sx={{ '& .MuiDialog-paper': { width: '100%', borderRadius: '2ch' } }}
       TransitionProps={{  }}
       open={open}
       {...other}

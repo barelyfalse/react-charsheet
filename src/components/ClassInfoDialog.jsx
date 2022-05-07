@@ -31,6 +31,7 @@ function ClassInfoDialog({open, rolClass, handleClose}) {
 
   return (
     <Dialog
+      sx={{ '& .MuiDialog-paper': { width: '100%', borderRadius: '2ch' } }}
       open={open}
       
       keepMounted

@@ -127,7 +127,7 @@ function ObjectDetailsDialog(props) {
 
   return (
     <Dialog
-      sx={{ '& .MuiDialog-paper': { } }}
+      sx={{ '& .MuiDialog-paper': { borderRadius: '2ch'} }}
       maxWidth="sm"
       fullWidth={true}
       TransitionProps={{  }}
