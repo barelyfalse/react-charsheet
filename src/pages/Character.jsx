@@ -29,6 +29,9 @@ import InfoRoundedIcon from '@mui/icons-material/InfoRounded';
 import VisibilityOffRoundedIcon from '@mui/icons-material/VisibilityOffRounded';
 import VisibilityRoundedIcon from '@mui/icons-material/VisibilityRounded';
 
+import RemoveOutlinedIcon from '@mui/icons-material/RemoveOutlined';
+import AddOutlinedIcon from '@mui/icons-material/AddOutlined';
+
 import Skill from '../components/Skill';
 import InheritSkill from '../components/InheritSkill';
 import Stat from '../components/Stat';
@@ -526,6 +529,27 @@ function Character() {
                       </Box>
                     </Tooltip>
                   </Box>
+                  {
+                    /**
+                    <Box>
+                    <ButtonGroup variant="contained" aria-label="outlined primary button group">
+                      <IconButton color="primary" aria-label="sume" component="span" size="small">
+                        <RemoveOutlinedIcon />
+                      </IconButton>
+                      <TextField 
+                      sx={{width: '7ch'}}
+                      inputProps={{ style: { textAlign: 'center' }}}
+                      size="small"
+                      id="basic" 
+                      variant="outlined" />
+                      <IconButton color="primary" aria-label="suma" component="span" size="small">
+                        <AddOutlinedIcon />
+                      </IconButton>
+                    </ButtonGroup>
+                  </Box>
+                    
+                     */
+                  }
                 
                 <Stack direction="row" spacing={2} sx={{mt: '2ch'}}>
                   <FormControl>
