@@ -44,7 +44,7 @@ export function HeadBar() {
   >
     <List>
       <Link to={'/'} style={{color: 'white', textDecoration: 'none'}}>
-        <ListItem button key='newchar'>
+        <ListItem button key='home'>
           <ListItemIcon>
             <CottageRoundedIcon />   
           </ListItemIcon>
@@ -55,7 +55,7 @@ export function HeadBar() {
       <Divider />
 
       <Link to={'character'} style={{color: 'white', textDecoration: 'none'}}>
-        <ListItem button key='newchar'>
+        <ListItem button key='char'>
           <ListItemIcon>
             <ReceiptLongRoundedIcon />  
           </ListItemIcon>
@@ -63,7 +63,7 @@ export function HeadBar() {
         </ListItem>
       </Link>
 
-      <Link to={'/'} style={{color: 'white', textDecoration: 'none'}}>
+      <Link to={'newcharacter'} style={{color: 'white', textDecoration: 'none'}}>
         <ListItem button key='newchar'>
           <ListItemIcon>
             <AddCircleOutlineRoundedIcon />  
@@ -73,7 +73,7 @@ export function HeadBar() {
       </Link>
 
       <Link to={'/'} style={{color: 'white', textDecoration: 'none'}}>
-        <ListItem button key='newchar'>
+        <ListItem button key='info'>
           <ListItemIcon>
             <MenuBookRoundedIcon />  
           </ListItemIcon>

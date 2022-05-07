@@ -5,6 +5,7 @@ import { HeadBar } from './components/HeadBar';
 import Character from './pages/Character';
 import Home from './pages/Home';
 import NotFoundPage from './pages/NotFoundPage';
+import NewCharacter from './pages/NewCharacter';
 import { ThemeProvider, createTheme } from '@mui/material/styles';
 import { CssBaseline } from '@mui/material';
 import '@fontsource/roboto/300.css';
@@ -55,6 +56,7 @@ function App() {
         <Routes>
           <Route path="/" element={ <Home /> }>
           </Route>
+          <Route path="newcharacter" element={ <NewCharacter /> }/>
           <Route path="character" element={ <Character /> }/>
           <Route path="*" element={ <NotFoundPage /> }/>
         </Routes>
