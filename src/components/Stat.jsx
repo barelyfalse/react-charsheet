@@ -9,14 +9,12 @@ import {
 } from '@mui/material';
 import { rolCharStats, rolRaces } from '../data/Data.js';
 
-function Stat({statIndex, statName, fullStat, updateStatState, statValue, race, equipment}) {
+function Stat({statIndex, statName, fullStat, updateStatState, statValue, race, equipment, disabled}) {
   const handleStatUpdate = (event) => {
     if(!isNaN(event.target.value) && !isNaN(parseInt(event.target.value))) {
       updateStatState(statIndex, parseInt(event.target.value));
     }
   }
-
-
 
   function ModLabel() {
     if(race === '' && !(equipment.lenght > 0)){
@@ -82,6 +80,7 @@ function Stat({statIndex, statName, fullStat, updateStatState, statValue, race, 
           size="small"
           value={statValue}
           onChange={handleStatUpdate}
+          disabled={disabled}
           startAdornment={
             <Tooltip title={fullStat} placement="right" arrow>
               <InputAdornment position="start">

@@ -68,3 +68,34 @@ export const useLocalStorage = (key, defaultValue) => {
 
   return [value, setValue];
 };
+
+export const isCreated = () => {
+  if(localStorage.getItem('charData').name !== null) {
+    const initial = JSON.parse(localStorage.getItem('charData'));
+    return initial.name;
+  } else {
+    return false;
+  }
+}
+
+export const createNewCharacter = (rolRace, rolClass, name, handicap, stats, pv) => {
+  localStorage.removeItem("charData");
+  var charData = {
+    charId: 123,
+    name: name,
+    rolClass: rolClass,
+    rolRace: rolRace,
+    lvl: 1,
+    xp: 0,
+    currentPv: pv,
+    maxPv: pv,
+    stats: stats,
+    skills: [ ],
+    currentPod: 0,
+    maxPod: 0,
+    inventory: [],
+    equipment: [],
+    handicap: handicap,
+  };
+  localStorage.setItem('charData', JSON.stringify(charData));
+}

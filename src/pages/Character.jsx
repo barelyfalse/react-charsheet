@@ -1,6 +1,7 @@
 import React, {createRef, useEffect, useState} from 'react';
 import { v4 as uuid } from 'uuid';
-import { Container, 
+import {
+  Container, 
   Grid, 
   Card, 
   CardContent, 
@@ -49,6 +50,12 @@ function Character() {
   const gProps = {
     bRad: '1ch'
   };
+
+  //edit controllers
+  const [editFields, setEditFields] = useState(true);
+  const handleEditFields = () => {
+    setEditFields(prevEditFields => !prevEditFields);
+  }
 
   //chardata controllers
   const [charStats, setCharStats] = useLocalStorage('stats', [0, 0, 0, 0, 0, 0]);
@@ -398,7 +405,7 @@ function Character() {
 
   return (
     <>
-      <Container maxWidth="lg" sx={{mt: '2ch'}}>
+      <Container maxWidth="lg" sx={{mt: '2ch', mb: '5ch'}}>
         <Grid container spacing={1}>
           <Grid item sm={7} xs={12}>
             <Card sx={{borderRadius: gProps.bRad}}>
@@ -409,9 +416,9 @@ function Character() {
                   id="char-name" 
                   label="Nombre" 
                   variant="outlined" 
+                  disabled={editFields}
                   value={charName}
                   onChange={handleNameUpdate}
-                  pattern="[0-9]*"
                 />
                 <Grid container spacing={1}>
                   <Grid item md={7} sm={6} xs={6}>
@@ -424,6 +431,7 @@ function Character() {
                           label="Clase"
                           value={rolClass}
                           onChange={handleClassSelChange}
+                          disabled={editFields}
                         >
                           <MenuItem disabled value=""><em>Clase</em></MenuItem>
                           {
@@ -451,6 +459,7 @@ function Character() {
                         label="Raza"
                         value={rolRace}
                         onChange={handleRaceSelChange}
+                        disabled={editFields}
                       >
                         <MenuItem disabled value=""><em>Raza</em></MenuItem>
                         {
@@ -525,6 +534,7 @@ function Character() {
                         inputProps={{ style: { textAlign: 'center' }, disabled: false}}
                         onChange={handleCurrentPvUpdate}
                         value={currentPv}
+                        disabled={editFields}
                         />
                       </Box>
                     </Tooltip>
@@ -605,6 +615,7 @@ function Character() {
                       updateStatState={updateStats}
                       race={rolRace}
                       equipment={equipment}
+                      disabled={editFields}
                       />
                     })
                   }
@@ -854,7 +865,7 @@ function Character() {
                     label="Desventaja"
                     value={handicap}
                     onChange={handleHandicapChange}
-                    disabled={!visibleSecrets}
+                    disabled={!visibleSecrets || editFields}
                   >
                     <MenuItem disabled value=""><em>Desventaja</em></MenuItem>
                     {
@@ -872,7 +883,7 @@ function Character() {
           <Grid item sm={12} xs={12}>
             <Box sx={{width: 1, my: '1ch', display: 'flex', justifyContent: 'center'}}>
               <Tooltip title="Editar hoja">
-                <Button variant="contained" endIcon={<EditRoundedIcon />}>
+                <Button variant="contained" endIcon={<EditRoundedIcon />} onClick={handleEditFields}>
                   Editar
                 </Button>
               </Tooltip>

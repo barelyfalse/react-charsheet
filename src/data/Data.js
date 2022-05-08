@@ -1219,12 +1219,12 @@ const rolClasses = [
 
 const rolRaces = [
   { name: "Humano",
-    description: "",
+    description: "Humano.",
     mods: { mis: 3 },
     skills: []
   },
   { name: "Enano",
-    description: "",
+    description: "Enano.",
     mods: { con: 2 },
     skills: [    
       { name: "Resilencia enana",
@@ -1250,7 +1250,7 @@ const rolRaces = [
     ]
   },
   { name: "Elfo",
-    description: "",
+    description: "Elfo.",
     mods: { des: 2 },
     skills: [  
       { name: "Visión oscura",
@@ -1276,7 +1276,7 @@ const rolRaces = [
     ]
   },
   { name: "Elfo oscuro",
-    description: "",
+    description: "Elfo oscuro.",
     mods: { int: 2 },
     skills: [  
       { name: "Visión nocturna",
@@ -1302,7 +1302,7 @@ const rolRaces = [
     ]
   },
   { name: "Medio",
-    description: "",
+    description: "Medio.",
     mods: { des: 2, car: 1 },
     skills: [ ]
   },
